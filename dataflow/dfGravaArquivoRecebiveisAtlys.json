@@ -1,0 +1,48 @@
+{
+	"name": "dfGravaArquivoRecebiveisAtlys",
+	"properties": {
+		"folder": {
+			"name": "Atlys"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "arq_atlys_rcbl",
+						"type": "DatasetReference"
+					},
+					"name": "srcArqAtlysRcbl"
+				},
+				{
+					"dataset": {
+						"referenceName": "connExecQry",
+						"type": "DatasetReference"
+					},
+					"name": "BuscaLoteArqAtual"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "CVTB_ATLYS_RCBL",
+						"type": "DatasetReference"
+					},
+					"name": "GravaTabContestacoesAtlysRcbl"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FakeKey2"
+				},
+				{
+					"name": "FakeKey1"
+				},
+				{
+					"name": "Join"
+				}
+			],
+			"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tCLIENTE_ID as string,\n\t\tNOMECLIENTE as string,\n\t\tCNPJ_CPF as string,\n\t\tCONTA_CLIENTE as string,\n\t\tCLASSE_RECEBER as string,\n\t\tOPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tNUMERO_FATURA as string,\n\t\tMES_ANO_REFERENTE as string,\n\t\tVALOR_DOCTO_ORIGINAL as string,\n\t\tFATURA_ATRIBUIDA as string,\n\t\tMESANOFATURA as string,\n\t\tVALOR_FATURA as string,\n\t\tSALDO_DEVIDO_ORIG as string,\n\t\tDATA_EMISSAO_FATURA as date 'yyyyMMdd',\n\t\tVALOR_TOTAL_PAGAMENTO as string,\n\t\tDATA_FEBRABAN as date 'yyyyMMdd',\n\t\tVALOR_ATRIBUICAO as string,\n\t\tUF as string,\n\t\tDATA_ATRIBUICAO_PGTO as date 'yyyyMMdd',\n\t\tHORA_ATRIBUICAO_PGTO as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['atlys/validados_a_processar','atlys/processados']) ~> srcArqAtlysRcbl\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(38,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqAtlysRcbl derive(SyntheticKey = 1,\n\t\tNEW_VALOR_DOCTO_ORIGINAL = replace(VALOR_DOCTO_ORIGINAL, ',' , '.'),\n\t\tNEW_VALOR_FATURA = replace(VALOR_FATURA, ',' , '.'),\n\t\tNEW_SALDO_DEVIDO_ORIG = replace(SALDO_DEVIDO_ORIG, ',' , '.'),\n\t\tNEW_VALOR_TOTAL_PAGAMENTO = replace(VALOR_TOTAL_PAGAMENTO, ',' , '.'),\n\t\tNEW_VALOR_ATRIBUICAO = replace(VALOR_ATRIBUICAO, ',' , '.')) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_ATLYS_RCBL as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tID_CLIENTE as string,\n\t\tNOME_CLIENTE as string,\n\t\tCNPJ_CPF as string,\n\t\tCONTA_CLIENTE as string,\n\t\tCLASSE_RECEBER as string,\n\t\tOPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tNUMERO_FATURA as string,\n\t\tMES_ANO_REFERENTE as string,\n\t\tVALOR_DOCTO_ORIGINAL as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tMES_ANO_FATURA as string,\n\t\tVALOR_FATURA as decimal(15,2),\n\t\tSALDO_DEVIDO_ORIG as decimal(15,2),\n\t\tDATA_EMISSAO_FATURA as timestamp,\n\t\tVALOR_TOTAL_PAGAMENTO as decimal(15,2),\n\t\tDATA_FEBRABAN as timestamp,\n\t\tVALOR_ATRIBUICAO as decimal(15,2),\n\t\tUF as string,\n\t\tDATA_ATRIBUICAO_PGTO as timestamp,\n\t\tHORA_ATRIBUICAO_PGTO as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tID_CLIENTE = CLIENTE_ID,\n\t\tNOME_CLIENTE = NOMECLIENTE,\n\t\tCNPJ_CPF,\n\t\tCONTA_CLIENTE,\n\t\tCLASSE_RECEBER,\n\t\tOPERADORA,\n\t\tCODIGO_OPERADORA,\n\t\tNUMERO_FATURA,\n\t\tMES_ANO_REFERENTE,\n\t\tVALOR_DOCTO_ORIGINAL = NEW_VALOR_DOCTO_ORIGINAL,\n\t\tFATURA_ATRIBUIDA,\n\t\tMES_ANO_FATURA = MESANOFATURA,\n\t\tVALOR_FATURA = NEW_VALOR_FATURA,\n\t\tSALDO_DEVIDO_ORIG = NEW_SALDO_DEVIDO_ORIG,\n\t\tDATA_EMISSAO_FATURA,\n\t\tVALOR_TOTAL_PAGAMENTO = NEW_VALOR_TOTAL_PAGAMENTO,\n\t\tDATA_FEBRABAN,\n\t\tVALOR_ATRIBUICAO = NEW_VALOR_ATRIBUICAO,\n\t\tUF,\n\t\tDATA_ATRIBUICAO_PGTO,\n\t\tHORA_ATRIBUICAO_PGTO\n\t)) ~> GravaTabContestacoesAtlysRcbl"
+		}
+	}
+}

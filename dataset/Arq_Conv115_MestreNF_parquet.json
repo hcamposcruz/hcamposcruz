@@ -1,0 +1,24 @@
+{
+	"name": "Arq_Conv115_MestreNF_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Conv115"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "convenio115MestreNFTeste",
+				"folderPath": "parquet/convenio115MestreNF",
+				"container": "arq-conv115"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

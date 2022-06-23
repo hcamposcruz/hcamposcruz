@@ -1,0 +1,102 @@
+{
+	"name": "CVTB_FATURA_ITEM_KENAN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseConv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Kenan"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_FATURA_ITEM_KENAN",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "ID_LOTE_ARQUIVO",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "CONTA_COBRANCA",
+				"type": "varchar"
+			},
+			{
+				"name": "CPF_CNPJ",
+				"type": "varchar"
+			},
+			{
+				"name": "ID_FATURA",
+				"type": "varchar"
+			},
+			{
+				"name": "ID_OPEN_ITEM",
+				"type": "varchar"
+			},
+			{
+				"name": "DESC_OPEN_ITEM",
+				"type": "varchar"
+			},
+			{
+				"name": "VLR_ITEM",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "VLR_CONTESTADO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "VLR_PAGO_ITEM",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "DT_FECHA_SALDO_ITEM",
+				"type": "date"
+			},
+			{
+				"name": "NOTA_FISCAL",
+				"type": "varchar"
+			},
+			{
+				"name": "UF_NF",
+				"type": "varchar"
+			},
+			{
+				"name": "SERIE_NF",
+				"type": "varchar"
+			},
+			{
+				"name": "SUBSERIE_NF",
+				"type": "varchar"
+			},
+			{
+				"name": "STEP_EXECUTION_ID",
+				"type": "decimal",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "JOB_EXECUTION_ID",
+				"type": "decimal",
+				"precision": 19,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "CONVENIO",
+			"table": "CVTB_FATURA_ITEM_KENAN"
+		}
+	}
+}
