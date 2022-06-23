@@ -791,7 +791,7 @@
 					"scripts": [
 						{
 							"type": "NonQuery",
-							"text": "INSERT INTO CONVENIO.CVTB_LOTE\n(\nDT_INICIO_PROCESSAMENTO,\nTP_LOTE,\nFL_STATUS,\nID_SISTEMA,\nDT_CRIADO_EM,\nCD_CRIADO_POR\n)\nVALUES\n(\nDATEADD(HOUR, -3, sysdatetime()),\n'CONTESTACAO',\n'EM_PROCESSAMENTO',\n1,\nDATEADD(HOUR, -3, sysdatetime()),\n'Carga ADF - CargaArqAtlys'\n);"
+							"text": "INSERT INTO  CONVENIO.CVTB_LOTE\n(\nDT_INICIO_PROCESSAMENTO,\nTP_LOTE,\nFL_STATUS,\nID_SISTEMA,\nDT_CRIADO_EM,\nCD_CRIADO_POR\n)\nVALUES\n(\nDATEADD(HOUR, -3, sysdatetime()),\n'CONTESTACAO',\n'EM_PROCESSAMENTO',\n1,\nDATEADD(HOUR, -3, sysdatetime()),\n'Carga ADF - CargaArqAtlys'\n);"
 						}
 					]
 				}
