@@ -1,0 +1,827 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-convenio86-test"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/plCargaArquivosConvenio115')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dfMapeamento115Item",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dfMapeamento115Item",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"EntradaArqItem": {},
+									"SaidaArqItem": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntimeConv86",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "dfMapeamento115Cadastral",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dfMapeamento115Cadastral",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"EntradaArqCadastral": {},
+									"SaidaArqCadastral": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntimeConv86",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "dfMapeamento115Controle",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dfMapeamento115Controle",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"EntradaControleV3": {},
+									"SaidaParquetArqControle": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntimeConv86",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "dfMapeamento115Mestre",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dfMapeamento115Mestre",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"EntradaArqMestre": {},
+									"SaidaArqMestre": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntimeConv86",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "CargaArquivosConv115"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/plCtrCargaArquivosContestacaoAtlys')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "plCargaArquivosContestacaoAtlys",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "plCargaArquivosContestacaoAtlys",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"pLote": {
+									"value": "@variables('varLote')",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "BuscaNovoLoteOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoAtlys",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqAtlys';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLoteOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLoteOK').output.firstRow.ID_LOTE)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "FinalizaLoteOK",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'PROCESSADO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "FinalizaLoteErro",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteNOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'ERRO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "BuscaNovoLote_NOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoAtlys",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqAtlys';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLoteNOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLote_NOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLote_NOK').output.firstRow.ID_LOTE)",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"varLote": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "CargaArquivosAtlys"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-18T13:46:40Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/plCtrCargaArquivosContestacaoKenan')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "plCargaArquivosContestacaoKenan",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "plCargaArquivosContestacaoKenan",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FinalizaLoteOK",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'PROCESSADO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "FinalizaLoteErro",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteNOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'ERRO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "Set varNovoLoteOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLoteOK').output.firstRow.ID_LOTE)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "BuscaNovoLoteOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoKenan",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqKenan';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLoteNOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLote_NOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLote_NOK').output.firstRow.ID_LOTE)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "BuscaNovoLote_NOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoKenan",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqKenan';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"varLote": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "CargaArquivosKenan"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-18T13:46:40Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/plControleCarga')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ListaArquivosKenan",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "VerificaDiretorioKenan",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "FiltraArquivosKenan",
+						"type": "Filter",
+						"dependsOn": [
+							{
+								"activity": "ListaArquivosKenan",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('ListaArquivosKenan').output.childItems",
+								"type": "Expression"
+							},
+							"condition": {
+								"value": "@or(or(startswith(item().Name, '01'), startswith(item().Name, '02')), startswith(item().Name, '03'))",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "TestaPastaComArquivosKenan",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "FiltraArquivosKenan",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@greater(activity('FiltraArquivosKenan').output.FilteredItemsCount,0)",
+								"type": "Expression"
+							},
+							"ifTrueActivities": [
+								{
+									"name": "plCtrCargaArquivosContestacaoKenan",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "plCtrCargaArquivosContestacaoKenan",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {}
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "ListaArquivosAtlys",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "VerificaDiretorioAtlys",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "FiltraArquivosAtlys",
+						"type": "Filter",
+						"dependsOn": [
+							{
+								"activity": "ListaArquivosAtlys",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('ListaArquivosAtlys').output.childItems",
+								"type": "Expression"
+							},
+							"condition": {
+								"value": "@or(startswith(item().Name, 'adj'), startswith(item().Name, 'rcvbl'))",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "TestaPastaComArquivosAtlys",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "FiltraArquivosAtlys",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@greater(activity('FiltraArquivosAtlys').output.FilteredItemsCount,0)",
+								"type": "Expression"
+							},
+							"ifTrueActivities": [
+								{
+									"name": "plCtrCargaArquivosContestacaoAtlys",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "plCtrCargaArquivosContestacaoAtlys",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/plCtrCargaArquivosContestacaoKenan')]",
+				"[concat(variables('factoryId'), '/pipelines/plCtrCargaArquivosContestacaoAtlys')]"
+			]
+		}
+	]
+}
