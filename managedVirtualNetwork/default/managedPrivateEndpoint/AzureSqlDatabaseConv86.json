@@ -1,0 +1,10 @@
+{
+	"name": "AzureSqlDatabaseConv86",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Sql/servers/sql-convenio86-test",
+		"groupId": "sqlServer",
+		"fqdns": [
+			"sql-convenio86-test.database.windows.net"
+		]
+	}
+}
