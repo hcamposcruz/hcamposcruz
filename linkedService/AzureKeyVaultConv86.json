@@ -1,0 +1,10 @@
+{
+	"name": "AzureKeyVaultConv86",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-convenio86-test.vault.azure.net/"
+		}
+	}
+}
