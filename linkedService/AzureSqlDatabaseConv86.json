@@ -7,7 +7,7 @@
 			"connectionString": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
-					"referenceName": "AzureKeyVaultConv86",
+					"referenceName": "KeyVaultSQL",
 					"type": "LinkedServiceReference"
 				},
 				"secretName": "convenio86"
