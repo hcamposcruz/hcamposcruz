@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
 		},
+		"KeyVaultSQL_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-convenio86-test.vault.azure.net/"
+		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Storage/storageAccounts/stconvenio86dev"
@@ -48,6 +52,20 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/KeyVaultSQL')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "KeyVault para banco de dados Azure SQL",
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('KeyVaultSQL_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/default')]",
 			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
@@ -1766,37 +1784,6 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"folderPath": "atlys/validados_a_processar",
-						"container": "arq-ajustes"
-					},
-					"columnDelimiter": "|",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/blob_storage_conv86')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ListaArquivosBlobsAtlys_Originais')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_conv86",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Atlys"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "atlys",
 						"container": "arq-ajustes"
 					},
 					"columnDelimiter": "|",

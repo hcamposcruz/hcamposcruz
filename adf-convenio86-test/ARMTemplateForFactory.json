@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
 		},
+		"KeyVaultSQL_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-convenio86-test.vault.azure.net/"
+		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Storage/storageAccounts/stconvenio86dev"
@@ -864,7 +868,7 @@
 							"scripts": [
 								{
 									"type": "NonQuery",
-									"text": "INSERT INTO CONVENIO.CVTB_LOTE\n(\nDT_INICIO_PROCESSAMENTO,\nTP_LOTE,\nFL_STATUS,\nID_SISTEMA,\nDT_CRIADO_EM,\nCD_CRIADO_POR\n)\nVALUES\n(\nDATEADD(HOUR, -3, sysdatetime()),\n'CONTESTACAO',\n'EM_PROCESSAMENTO',\n1,\nDATEADD(HOUR, -3, sysdatetime()),\n'Carga ADF - CargaArqAtlys'\n);"
+									"text": "INSERT INTO  CONVENIO.CVTB_LOTE\n(\nDT_INICIO_PROCESSAMENTO,\nTP_LOTE,\nFL_STATUS,\nID_SISTEMA,\nDT_CRIADO_EM,\nCD_CRIADO_POR\n)\nVALUES\n(\nDATEADD(HOUR, -3, sysdatetime()),\n'CONTESTACAO',\n'EM_PROCESSAMENTO',\n1,\nDATEADD(HOUR, -3, sysdatetime()),\n'Carga ADF - CargaArqAtlys'\n);"
 								}
 							]
 						}
@@ -5731,6 +5735,20 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeConv86')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/KeyVaultSQL')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "KeyVault para banco de dados Azure SQL",
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('KeyVaultSQL_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/blob_storage_conv86')]",

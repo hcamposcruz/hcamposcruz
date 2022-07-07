@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
 		},
+		"KeyVaultSQL_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-convenio86-test.vault.azure.net/"
+		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Storage/storageAccounts/stconvenio86dev"
@@ -75,6 +79,9 @@
 					},
 					"blob_storage_conv86_connectionString": {
 						"value": "[parameters('blob_storage_conv86_connectionString')]"
+					},
+					"KeyVaultSQL_properties_typeProperties_baseUrl": {
+						"value": "[parameters('KeyVaultSQL_properties_typeProperties_baseUrl')]"
 					},
 					"AzureBlobStorage1_properties_privateLinkResourceId": {
 						"value": "[parameters('AzureBlobStorage1_properties_privateLinkResourceId')]"
