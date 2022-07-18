@@ -12,13 +12,7 @@
 						"referenceName": "plCargaArquivosContestacaoAtlys",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pLote": {
-							"value": "@variables('varLote')",
-							"type": "Expression"
-						}
-					}
+					"waitOnCompletion": true
 				}
 			},
 			{

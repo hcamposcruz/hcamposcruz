@@ -1,0 +1,41 @@
+{
+	"name": "arq_atis_pago",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"NomeArq": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Atis"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().NomeArq",
+					"type": "Expression"
+				},
+				"folderPath": "atis/validados_a_processar",
+				"container": "arq-ajustes"
+			},
+			"columnDelimiter": "",
+			"encodingName": "UTF-8",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

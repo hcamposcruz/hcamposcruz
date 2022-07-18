@@ -29,12 +29,6 @@
 				"scale": 3
 			},
 			{
-				"name": "CD_ANOMES_DT_EMISSAO",
-				"type": "decimal",
-				"precision": 6,
-				"scale": 0
-			},
-			{
 				"name": "VLR_ORIG_NSFT",
 				"type": "decimal",
 				"precision": 15,
@@ -165,12 +159,6 @@
 				"type": "decimal",
 				"precision": 3,
 				"scale": 0
-			},
-			{
-				"name": "TOTAL",
-				"type": "decimal",
-				"precision": 15,
-				"scale": 2
 			},
 			{
 				"name": "BC_ICMS",
@@ -537,28 +525,18 @@
 				"type": "varchar"
 			},
 			{
-				"name": "TP_INELEGIBILIDADE",
+				"name": "MES_ANO_FAT_ORIGINAL",
 				"type": "varchar"
 			},
 			{
-				"name": "MES_ANO_ORIGINAL",
+				"name": "MES_ANO_FAT_AJUSTE",
 				"type": "varchar"
 			},
 			{
-				"name": "MES_ANO_FATURA",
-				"type": "varchar"
-			},
-			{
-				"name": "VLR_PAGAMENTO_ORIGINAL",
+				"name": "VLR_PAGAMENTO_FAT_ORIGINAL",
 				"type": "decimal",
 				"precision": 15,
 				"scale": 2
-			},
-			{
-				"name": "ID_CRITICA_CONTESTACAO",
-				"type": "decimal",
-				"precision": 28,
-				"scale": 0
 			},
 			{
 				"name": "ID_ITEM_CONVENIO_115",
@@ -573,6 +551,12 @@
 			{
 				"name": "NOTA_FISCAL_ORIG_NORMALIZADO",
 				"type": "varchar"
+			},
+			{
+				"name": "COD_FAC_CD",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 0
 			}
 		],
 		"typeProperties": {
