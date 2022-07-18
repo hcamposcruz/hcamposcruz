@@ -1,0 +1,40 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-convenio86-test"
+		},
+		"AzureSqlDatabaseConv86_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabaseKyros_connectionString": {
+			"value": ""
+		},
+		"blob_storage_conv86_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage1_properties_privateLinkResourceId": {
+			"value": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Storage/storageAccounts/stconvenio86dev"
+		},
+		"AzureBlobStorage1_properties_groupId": {
+			"value": "blob"
+		},
+		"AzureBlobStorage1_properties_fqdns": {
+			"value": [
+				"stconvenio86dev.blob.core.windows.net"
+			]
+		},
+		"AzureSqlDatabaseConv86_properties_privateLinkResourceId": {
+			"value": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Sql/servers/sql-convenio86-dev"
+		},
+		"AzureSqlDatabaseConv86_properties_groupId": {
+			"value": "sqlServer"
+		},
+		"AzureSqlDatabaseConv86_properties_fqdns": {
+			"value": [
+				"sql-convenio86-dev.database.windows.net"
+			]
+		}
+	}
+}
