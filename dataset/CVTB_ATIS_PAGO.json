@@ -1,0 +1,212 @@
+{
+	"name": "CVTB_ATIS_PAGO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseConv86",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_ATIS_PAGO",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "ID_LOTE_ARQUIVO",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "COD_IDENT_CLI",
+				"type": "varchar"
+			},
+			{
+				"name": "CPF_CNPJ",
+				"type": "varchar"
+			},
+			{
+				"name": "TIPO_DOCUMENTO",
+				"type": "varchar"
+			},
+			{
+				"name": "UF_FATURA",
+				"type": "varchar"
+			},
+			{
+				"name": "NUM_FATURA_ORIGINAL",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_ABERTURA_IMPUG",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DT_VENC_FATURA_ORIGINAL",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "VLR_FATURA",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "COD_FAC_CD",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "FATURA_ATRIBUIDA",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_AJUSTE",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DESCR_OPERADORA",
+				"type": "varchar"
+			},
+			{
+				"name": "COD_OPERADORA",
+				"type": "varchar"
+			},
+			{
+				"name": "CONTACONTABIL",
+				"type": "varchar"
+			},
+			{
+				"name": "DESCRCONTACONTABIL",
+				"type": "varchar"
+			},
+			{
+				"name": "COD_MOTIVO_AJUSTE",
+				"type": "varchar"
+			},
+			{
+				"name": "NOTA_FISCAL_ORIG",
+				"type": "varchar"
+			},
+			{
+				"name": "SERIE_NF",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_EMISSAO_FATURA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "VLR_ORIG_NSFT",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "TIPO_OPERACAO",
+				"type": "varchar"
+			},
+			{
+				"name": "VLR_DEVOLUCAO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "VLR_CREDITO_AJUSTE",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "VLR_AJUSTE_ITEM",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "VLR_CREDITO_ITEM",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "FAMILIA_PRODUTOS",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_FECHAMENTO",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DT_VENCTO_FUTURA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "RECEITA_OPERADORA",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_VENCTO_BOLETO_ULT",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "SALDO_DEVEDOR",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "SALDO_POS_AJUSTE",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "VLR_CONTESTADO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "COD_CREDITO",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "VLR_FATURA_FUTURA",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "NUM_FATURA_FUTURA",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "CONVENIO",
+			"table": "CVTB_ATIS_PAGO"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
