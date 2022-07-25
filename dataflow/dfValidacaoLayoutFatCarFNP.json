@@ -69,7 +69,7 @@
 				"     input(",
 				"          Column_1 as string",
 				"     ),",
-				"     partitionFileNames:[''],",
+				"     partitionFileNames:['$pNomeArquivo'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
