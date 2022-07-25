@@ -791,7 +791,7 @@
 					"scripts": [
 						{
 							"type": "NonQuery",
-							"text": "INSERT INTO  CONVENIO.CVTB_LOTE\n(\nDT_INICIO_PROCESSAMENTO,\nTP_LOTE,\nFL_STATUS,\nID_SISTEMA,\nDT_CRIADO_EM,\nCD_CRIADO_POR\n)\nVALUES\n(\nDATEADD(HOUR, -3, sysdatetime()),\n'CONTESTACAO',\n'EM_PROCESSAMENTO',\n1,\nDATEADD(HOUR, -3, sysdatetime()),\n'Carga ADF - CargaArqAtlys'\n);"
+							"text": "INSERT INTO CONVENIO.CVTB_LOTE\n(\nDT_INICIO_PROCESSAMENTO,\nTP_LOTE,\nFL_STATUS,\nID_SISTEMA,\nDT_CRIADO_EM,\nCD_CRIADO_POR\n)\nVALUES\n(\nDATEADD(HOUR, -3, sysdatetime()),\n'CONTESTACAO',\n'EM_PROCESSAMENTO',\n1,\nDATEADD(HOUR, -3, sysdatetime()),\n'Carga ADF - CargaArqAtlys'\n);"
 						}
 					]
 				}
@@ -850,14 +850,14 @@
 									"name": "pId_Lote",
 									"type": "String",
 									"value": {
-										"value": "@pipeline().parameters.pLote",
+										"value": "@variables('varNovoLote')",
 										"type": "Expression"
 									},
 									"direction": "Input"
 								},
 								{
 									"name": "pVlr_QtdContestacoes",
-									"type": "Decimal",
+									"type": "String",
 									"value": {
 										"value": "@activity('CargaUnificadaAtlys').output.runStatus.metrics.TabelaCONTESTACAO.rowsWritten",
 										"type": "Expression"
@@ -867,7 +867,7 @@
 							],
 							"type": "NonQuery",
 							"text": {
-								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = @pId_Lote",
+								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28), @pId_Lote)",
 								"type": "Expression"
 							}
 						}
@@ -910,11 +910,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"pLote": {
-				"type": "string"
-			}
-		},
 		"variables": {
 			"varNovoLote": {
 				"type": "String"
@@ -945,7 +940,7 @@
 			"name": "CargaArquivosAtlys"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-07-15T18:12:48Z"
+		"lastPublishTime": "2022-07-18T12:55:50Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

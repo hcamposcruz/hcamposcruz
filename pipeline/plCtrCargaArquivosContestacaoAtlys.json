@@ -12,13 +12,7 @@
 						"referenceName": "plCargaArquivosContestacaoAtlys",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pLote": {
-							"value": "@variables('varLote')",
-							"type": "Expression"
-						}
-					}
+					"waitOnCompletion": true
 				}
 			},
 			{
@@ -227,7 +221,7 @@
 			"name": "CargaArquivosAtlys"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-07-15T18:12:50Z"
+		"lastPublishTime": "2022-07-18T12:55:52Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -1020,7 +1020,7 @@
 								},
 								{
 									"name": "pVlr_QtdContestacoes",
-									"type": "Decimal",
+									"type": "String",
 									"value": {
 										"value": "@activity('CargaUnificadaKenan').output.runStatus.metrics.TabelaCONTESTACAO.rowsWritten",
 										"type": "Expression"
@@ -1030,7 +1030,7 @@
 							],
 							"type": "NonQuery",
 							"text": {
-								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = @pId_Lote",
+								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote)",
 								"type": "Expression"
 							}
 						}
@@ -1074,7 +1074,7 @@
 			"name": "CargaArquivosKenan"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-07-15T18:12:48Z"
+		"lastPublishTime": "2022-07-18T12:55:50Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

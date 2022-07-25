@@ -13,8 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "convenio115ControleTeste",
-				"folderPath": "parquet/convenio115Controle",
+				"fileName": "Convenio115ControleTeste",
+				"folderPath": "parquet/Convenio115Controle",
 				"container": "arq-conv115"
 			},
 			"compressionCodec": "snappy"

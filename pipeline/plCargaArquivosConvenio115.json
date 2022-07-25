@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dfMapeamento115Item",
+				"name": "dfMapeamento115Controle",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dfMapeamento115Item",
+						"referenceName": "dfMapeamento115Controle",
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
@@ -43,15 +43,15 @@
 						"referenceName": "dfMapeamento115Cadastral",
 						"type": "DataFlowReference"
 					},
-					"integrationRuntime": {
-						"referenceName": "integrationRuntimeConv86",
-						"type": "IntegrationRuntimeReference"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					},
 					"traceLevel": "Fine"
 				}
 			},
 			{
-				"name": "dfMapeamento115Controle",
+				"name": "dfMapeamento115Item",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -64,12 +64,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dfMapeamento115Controle",
+						"referenceName": "dfMapeamento115Item",
 						"type": "DataFlowReference"
 					},
-					"integrationRuntime": {
-						"referenceName": "integrationRuntimeConv86",
-						"type": "IntegrationRuntimeReference"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					},
 					"traceLevel": "Fine"
 				}
@@ -91,9 +91,9 @@
 						"referenceName": "dfMapeamento115Mestre",
 						"type": "DataFlowReference"
 					},
-					"integrationRuntime": {
-						"referenceName": "integrationRuntimeConv86",
-						"type": "IntegrationRuntimeReference"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					},
 					"traceLevel": "Fine"
 				}
@@ -103,7 +103,7 @@
 			"name": "CargaArquivosConv115"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-07-15T18:12:47Z"
+		"lastPublishTime": "2022-07-18T12:55:50Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

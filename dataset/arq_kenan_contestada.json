@@ -22,7 +22,7 @@
 					"value": "@dataset().NomeArq",
 					"type": "Expression"
 				},
-				"folderPath": "kenan",
+				"folderPath": "kenan/validados_a_processar",
 				"container": "arq-ajustes"
 			},
 			"columnDelimiter": ";",

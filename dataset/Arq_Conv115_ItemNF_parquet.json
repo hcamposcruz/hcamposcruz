@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "convenio115ItemNFTeste",
+				"fileName": "teste",
 				"folderPath": "parquet/convenio115ItemNF",
 				"container": "arq-conv115"
 			},

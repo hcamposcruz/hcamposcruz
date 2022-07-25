@@ -22,11 +22,10 @@
 					"value": "@dataset().NomeArq",
 					"type": "Expression"
 				},
-				"folderPath": "kenan",
+				"folderPath": "kenan/validados_a_processar",
 				"container": "arq-ajustes"
 			},
 			"columnDelimiter": ";",
-			"encodingName": "WINDOWS-1252",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
