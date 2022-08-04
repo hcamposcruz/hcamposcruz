@@ -1301,12 +1301,6 @@
 						"type": "varchar"
 					},
 					{
-						"name": "DT_EMISSAO_FATURA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
 						"name": "VLR_FATURA",
 						"type": "decimal",
 						"precision": 15,
@@ -1431,7 +1425,7 @@
 						"scale": 0
 					},
 					{
-						"name": "ID_LOTE_CONVENIO",
+						"name": "ID_ENTREGA_RESSARCIMENTO",
 						"type": "decimal",
 						"precision": 28,
 						"scale": 0
@@ -1807,14 +1801,14 @@
 						"scale": 0
 					},
 					{
-						"name": "FL_MANUAL_CONCILIACAO",
-						"type": "char"
-					},
-					{
 						"name": "ID_MESTRE_CONVENIO_115",
 						"type": "decimal",
 						"precision": 28,
 						"scale": 0
+					},
+					{
+						"name": "FL_MANUAL_CONCILIACAO",
+						"type": "char"
 					},
 					{
 						"name": "DT_CONCILIACAO",
