@@ -1,0 +1,40 @@
+{
+	"name": "arq_fat_validados",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"NomeArquivoFAT": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Fat"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().NomeArquivoFAT",
+					"type": "Expression"
+				},
+				"folderPath": "fat/validados_a_processar",
+				"container": "arq-ajustes"
+			},
+			"columnDelimiter": "",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

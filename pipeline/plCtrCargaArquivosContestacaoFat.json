@@ -1,73 +1,18 @@
 {
-	"name": "plCtrCargaArquivosContestacaoAtlys",
+	"name": "plCtrCargaArquivosContestacaoFat",
 	"properties": {
 		"activities": [
 			{
-				"name": "plCargaArquivosContestacaoAtlys",
+				"name": "plCargaArquivosContestacaoFat",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "plCargaArquivosContestacaoAtlys",
+						"referenceName": "plCargaArquivosContestacaoFat",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "BuscaNovoLoteOK",
-				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "plCargaArquivosContestacaoAtlys",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": {
-							"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqAtlys';\n",
-							"type": "Expression"
-						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "connExecQry",
-						"type": "DatasetReference"
-					}
-				}
-			},
-			{
-				"name": "Set varNovoLoteOK",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "BuscaNovoLoteOK",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "varLote",
-					"value": {
-						"value": "@string(activity('BuscaNovoLoteOK').output.firstRow.ID_LOTE)",
-						"type": "Expression"
-					}
 				}
 			},
 			{
@@ -157,13 +102,33 @@
 				}
 			},
 			{
-				"name": "BuscaNovoLote_NOK",
+				"name": "Set varNovoLoteOK",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "BuscaNovoLoteOK",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "varLote",
+					"value": {
+						"value": "@string(activity('BuscaNovoLoteOK').output.firstRow.ID_LOTE)\n",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "BuscaNovoLoteOK",
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "plCargaArquivosContestacaoAtlys",
+						"activity": "plCargaArquivosContestacaoFat",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					}
 				],
@@ -179,7 +144,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqAtlys';\n",
+							"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqFat';\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -206,8 +171,43 @@
 				"typeProperties": {
 					"variableName": "varLote",
 					"value": {
-						"value": "@string(activity('BuscaNovoLote_NOK').output.firstRow.ID_LOTE)",
+						"value": "@string(activity('BuscaNovoLote_NOK').output.firstRow.ID_LOTE)\n",
 						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "BuscaNovoLote_NOK",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "plCargaArquivosContestacaoFat",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqFat';\n",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "connExecQry",
+						"type": "DatasetReference"
 					}
 				}
 			}
@@ -218,7 +218,7 @@
 			}
 		},
 		"folder": {
-			"name": "CargaArquivosAtlys"
+			"name": "CargaArquivosFat"
 		},
 		"annotations": [],
 		"lastPublishTime": "2022-07-25T16:59:57Z"

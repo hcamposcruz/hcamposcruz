@@ -221,7 +221,7 @@
 			"name": "CargaArquivosAtis"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-07-18T12:55:52Z"
+		"lastPublishTime": "2022-07-25T16:59:57Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

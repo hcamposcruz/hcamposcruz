@@ -1,0 +1,79 @@
+{
+	"name": "CVTB_FAT_CAR_FNP_VALIDA_AJUSTE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseConv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Fat"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_FAT_CAR_FNP_VALIDA_AJUSTE",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "ID_LOTE_ARQUIVO",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "CONTA_COBRANCA",
+				"type": "varchar"
+			},
+			{
+				"name": "TELEFONE",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_VENCTO",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "VLR",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "XRE",
+				"type": "varchar"
+			},
+			{
+				"name": "NRE",
+				"type": "varchar"
+			},
+			{
+				"name": "TIPO_OPERACAO",
+				"type": "varchar"
+			},
+			{
+				"name": "CONTA",
+				"type": "varchar"
+			},
+			{
+				"name": "SEQUENCIA",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_OPERACAO",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "CONVENIO",
+			"table": "CVTB_FAT_CAR_FNP_VALIDA_AJUSTE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

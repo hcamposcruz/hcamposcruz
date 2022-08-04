@@ -272,7 +272,7 @@
 													],
 													"type": "NonQuery",
 													"text": {
-														"value": "UPDATE convenio.cvtb_lote_arquivo SET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas), QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais) WHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
+														"value": "UPDATE convenio.cvtb_lote_arquivo \nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)\n, QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais) \nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
 														"type": "Expression"
 													}
 												}
@@ -477,7 +477,7 @@
 													],
 													"type": "NonQuery",
 													"text": {
-														"value": "UPDATE convenio.cvtb_lote_arquivo SET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas), QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais) WHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
+														"value": "UPDATE convenio.cvtb_lote_arquivo \nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)\n, QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais) \nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
 														"type": "Expression"
 													}
 												}
@@ -832,6 +832,42 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "sp_elegibilidadeAtis",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "AtualizaLoteQtdContestacoes",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[CONVENIO].[sp_elegibilidade_atis]",
+					"storedProcedureParameters": {
+						"id_lote_ajuste": {
+							"value": {
+								"value": "@variables('varNovoLote')",
+								"type": "Expression"
+							},
+							"type": "Decimal"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseConv86",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"variables": {
@@ -864,7 +900,7 @@
 			"name": "CargaArquivosAtis"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-07-18T12:55:50Z"
+		"lastPublishTime": "2022-07-25T16:59:56Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

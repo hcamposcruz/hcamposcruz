@@ -1,0 +1,48 @@
+{
+	"name": "dfGravaArquivoFatCarFF",
+	"properties": {
+		"folder": {
+			"name": "Fat"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "arq_fat_car_ff",
+						"type": "DatasetReference"
+					},
+					"name": "srcArqFatFF"
+				},
+				{
+					"dataset": {
+						"referenceName": "connExecQry",
+						"type": "DatasetReference"
+					},
+					"name": "BuscaLoteArqAtual"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "CVTB_FAT_CAR_FF",
+						"type": "DatasetReference"
+					},
+					"name": "GravaTabFatCarFF"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FakeKey2"
+				},
+				{
+					"name": "FakeKey1"
+				},
+				{
+					"name": "Join"
+				}
+			],
+			"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tvalue as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['fat/validados_a_processar','fat/processados']) ~> srcArqFatFF\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(28,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqFatFF derive(SyntheticKey = 1,\n\t\tCONTA_COBRANCA = trim(substring(value, 1, 11)),\n\t\tCPF_CNPJ = trim(substring(value, 13, 14)),\n\t\tCATEGORIA_CLIENTE = trim(substring(value, 27, 2)),\n\t\tNUMERO_FATURA_ORIGINAL = trim(substring(value, 31, 25)),\n\t\tUF_COBRANCA = trim(substring(value, 29, 2)),\n\t\tDT_GERACAO = toTimestamp(trim(substring(value, 56, 8)), 'yyyyMMdd'),\n\t\tDT_VENCTO_ORIGINAL = toTimestamp(trim(substring(value, 64, 8)), 'yyyyMMdd'),\n\t\tDT_VENCTO_BOLETO_ULT = toTimestamp(trim(substring(value, 72, 8)), 'yyyyMMdd'),\n\t\tVLR_FATURA_ORIGINAL_PAGA = toDecimal(trim(substring(value, 80, 17))),\n\t\tCCM_SERVICO_CONTESTATO = toDecimal(trim(substring(value, 97, 9))),\n\t\tCMM_CREDITO = trim(substring(value, 106, 9)),\n\t\tVLR_CONTESTADO = toDecimal(trim(substring(value, 115, 17))),\n\t\tNUMERO_FATURA_FUTURA = trim(substring(value, 132, 25)),\n\t\tDT_OPERACAO = toTimestamp(trim(substring(value, 157, 8)), 'yyyyMMdd'),\n\t\tDT_VENCTO_FATURA_FUTURA = toTimestamp(trim(substring(value, 165, 8)), 'yyyyMMdd'),\n\t\tVLR_FATURA_FUTURA = toDecimal(trim(substring(value, 173, 17))),\n\t\tOPERADORA = trim(substring(value, 190, 20)),\n\t\tCODIGO_OPERADORA = trim(substring(value, 210, 3)),\n\t\tMOTIVO_OPERACAO = trim(substring(value, 213, 15)),\n\t\tDONO_RECEITA = trim(substring(value, 228, 3)),\n\t\tCONTACONTABIL = trim(substring(value, 231, 11)),\n\t\tDESCRCONTACONTABIL = trim(substring(value, 242, 40)),\n\t\tVLR_POS_CONTESTACAO = toDecimal(trim(substring(value, 282, 17))),\n\t\tVLR_SALDO_ABERTO = toDecimal(trim(substring(value, 299, 17))),\n\t\tMOTIVO_CONTESTACAO = trim(substring(value, 330, 2)),\n\t\tNUMERO_NF = trim(substring(value, 332, 13)),\n\t\tSERIE_NF = trim(substring(value, 345, 2)),\n\t\tDT_EMISSAO = toTimestamp(trim(substring(value, 347, 8)), 'yyyyMMdd'),\n\t\tVLR_TOTAL_NF = toDecimal(trim(substring(value, 355, 17))),\n\t\tTIPO_OPERACAO = trim(substring(value, 372, 30)),\n\t\tVLR_CONTESTADO_FUTURO = toDecimal(trim(substring(value, 410, 17))),\n\t\tFAMILIA_PRODUTOS = trim(substring(value, 316, 14)),\n\t\tDT_FECHAMENTO_FATURA = toTimestamp(trim(substring(value, 402, 8)), 'yyyyMMdd')) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_FAT_CAR_FF as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tNUMERO_NF as string,\n\t\tDT_EMISSAO_NF as timestamp,\n\t\tVLR_TOTAL_NF as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCONTA_COBRANCA as string,\n\t\tCNPJ_CPF as string,\n\t\tVLR_CONTESTADO as decimal(15,2),\n\t\tDT_OPERACAO as timestamp,\n\t\tOPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tMOTIVO_CONTESTACAO as string,\n\t\tDT_GERACAO as timestamp,\n\t\tNUMERO_FATURA_ORIGINAL as string,\n\t\tDT_VENCTO_ORIGINAL as timestamp,\n\t\tVLR_FATURA_ORIGINAL_PAGA as decimal(15,2),\n\t\tNUMERO_FATURA_FUTURA as string,\n\t\tUF_COBRANCA as string,\n\t\tCATEGORIA_CLIENTE as string,\n\t\tCONTACONTABIL as string,\n\t\tDESCRCONTACONTABIL as string,\n\t\tTIPO_OPERACAO as string,\n\t\tDONO_RECEITA as string,\n\t\tDT_VENCTO_FATURA_FUTURA as timestamp,\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tCCM_SERVICO_CONTESTATO as string,\n\t\tDT_VENCTO_BOLETO_ULT as timestamp,\n\t\tCCM_CREDITO as string,\n\t\tMOTIVO_OPERACAO as string,\n\t\tVLR_POS_CONTESTACAO as decimal(15,2),\n\t\tVLR_SALDO_ABERTO as decimal(15,2),\n\t\tFAMILIA_PRODUTOS as string,\n\t\tDT_FECHAMENTO_FATURA as timestamp,\n\t\tREFERENCIA as string,\n\t\tVLR_CONTESTADO_FUTSUM as decimal(15,2)\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tNUMERO_NF,\n\t\tDT_EMISSAO_NF = DT_EMISSAO,\n\t\tVLR_TOTAL_NF,\n\t\tSERIE_NF,\n\t\tCONTA_COBRANCA,\n\t\tCNPJ_CPF = CPF_CNPJ,\n\t\tVLR_CONTESTADO,\n\t\tDT_OPERACAO,\n\t\tOPERADORA,\n\t\tCODIGO_OPERADORA,\n\t\tMOTIVO_CONTESTACAO,\n\t\tDT_GERACAO,\n\t\tNUMERO_FATURA_ORIGINAL,\n\t\tDT_VENCTO_ORIGINAL,\n\t\tVLR_FATURA_ORIGINAL_PAGA,\n\t\tNUMERO_FATURA_FUTURA,\n\t\tUF_COBRANCA,\n\t\tCATEGORIA_CLIENTE,\n\t\tCONTACONTABIL,\n\t\tDESCRCONTACONTABIL,\n\t\tTIPO_OPERACAO,\n\t\tDONO_RECEITA,\n\t\tDT_VENCTO_FATURA_FUTURA,\n\t\tVLR_FATURA_FUTURA,\n\t\tVLR_CONTESTADO_FUTURO,\n\t\tCCM_SERVICO_CONTESTATO,\n\t\tDT_VENCTO_BOLETO_ULT,\n\t\tCCM_CREDITO = CMM_CREDITO,\n\t\tMOTIVO_OPERACAO,\n\t\tVLR_POS_CONTESTACAO,\n\t\tVLR_SALDO_ABERTO,\n\t\tFAMILIA_PRODUTOS,\n\t\tDT_FECHAMENTO_FATURA,\n\t\tVLR_CONTESTADO_FUTSUM = VLR_CONTESTADO\n\t)) ~> GravaTabFatCarFF"
+		}
+	}
+}

@@ -557,6 +557,94 @@
 				"type": "decimal",
 				"precision": 10,
 				"scale": 0
+			},
+			{
+				"name": "CCM_SERVICO_CONTESTADO",
+				"type": "varchar"
+			},
+			{
+				"name": "COD_TIPO_RCBL_FATURA",
+				"type": "varchar"
+			},
+			{
+				"name": "DESCR_RCBL_FATURA",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_PAGAMENTO",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DEBIT_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_EMISSAO_FATURA_ORIGINAL",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "UF_NF",
+				"type": "char"
+			},
+			{
+				"name": "VLR_PGTO_ALOCADO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "VLR_TOTAL_PGTO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "CREDIT_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_REFERENCIA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DT_IMPORTACAO",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "STEP_EXECUTION_ID",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "JOB_EXECUTION_ID",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "FL_MANUAL_CONCILIACAO",
+				"type": "char"
+			},
+			{
+				"name": "ID_MESTRE_CONVENIO_115",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "DT_CONCILIACAO",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			}
 		],
 		"typeProperties": {
