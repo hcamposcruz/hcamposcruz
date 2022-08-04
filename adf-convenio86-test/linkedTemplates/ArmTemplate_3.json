@@ -13,6 +13,48 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/arq_kenan_Item_original')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArq": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Kenan"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArq",
+							"type": "Expression"
+						},
+						"folderPath": "kenan",
+						"container": "arq-ajustes"
+					},
+					"columnDelimiter": "",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/arq_kenan_contestada')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -877,202 +919,6 @@
 			"properties": {
 				"folder": {
 					"name": "Atis"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "connExecQry",
-								"type": "DatasetReference"
-							},
-							"name": "BuscaLayoutCorrigido"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "CVTB_ATLYS_ADJ",
-								"type": "DatasetReference"
-							},
-							"name": "GravaArquivoAtlysCorrigido"
-						}
-					],
-					"transformations": [
-						{
-							"name": "SeparaEmColunas"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     pIdLoteArquivo as string",
-						"}",
-						"source(output(",
-						"          ID_LOTE_ARQUIVO as decimal(28,0),",
-						"          DS_LINHA_RECUPERADA as string",
-						"     ),",
-						"     allowSchemaDrift: false,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: (\"SELECT ID_LOTE_ARQUIVO, DS_LINHA_RECUPERADA FROM CONVENIO.CVTB_CARGA_ERRO_LAYOUT WHERE FL_CORRIGIDO='S' AND DS_LINHA_RECUPERADA IS NOT NULL AND ID_LOTE_ARQUIVO=CONVERT(NUMERIC(28),{$pIdLoteArquivo})\"),",
-						"     format: 'query') ~> BuscaLayoutCorrigido",
-						"BuscaLayoutCorrigido derive(ID_CLIENTE = split(DS_LINHA_RECUPERADA, '|')[1],",
-						"          NOTA_FISCAL = split(DS_LINHA_RECUPERADA, '|')[2],",
-						"          DT_EMISSAO_NF = toDate(split(DS_LINHA_RECUPERADA, '|')[3], 'yyyyMMdd'),",
-						"          VLR_ORIG_NFST = replace((split(DS_LINHA_RECUPERADA, '|')[4]), \",\", \".\"),",
-						"          SERIE = split(DS_LINHA_RECUPERADA, '|')[5],",
-						"          CONTA_CLIENTE = split(DS_LINHA_RECUPERADA, '|')[6],",
-						"          CNPJ_CPF = split(DS_LINHA_RECUPERADA, '|')[7],",
-						"          NOM_CLIENTE = split(DS_LINHA_RECUPERADA, '|')[8],",
-						"          NUM_TERMINAL = split(DS_LINHA_RECUPERADA, '|')[9],",
-						"          VLR_CONTEST_AJUSTE = replace((split(DS_LINHA_RECUPERADA, '|')[10]), \",\", \".\"),",
-						"          VLR_ATRIBUIDO = replace((split(DS_LINHA_RECUPERADA, '|')[11]),\",\", \".\"),",
-						"          DT_ATRIBUICAO = toDate(split(DS_LINHA_RECUPERADA, '|')[12], 'yyyyMMdd'),",
-						"          HR_ATRIBUICAO = split(DS_LINHA_RECUPERADA, '|')[13],",
-						"          DT_AJUSTE = toDate(split(DS_LINHA_RECUPERADA, '|')[14], 'yyyyMMdd'),",
-						"          HR_AJUSTE = split(DS_LINHA_RECUPERADA, '|')[15],",
-						"          OPERADORA = split(DS_LINHA_RECUPERADA, '|')[16],",
-						"          CODIGO_OPERADORA = split(DS_LINHA_RECUPERADA, '|')[17],",
-						"          COD_MOTIVO_AJUSTES = split(DS_LINHA_RECUPERADA, '|')[18],",
-						"          DESC_MOTIVO_AJUSTE = split(DS_LINHA_RECUPERADA, '|')[19],",
-						"          DATA_ABERTURA_IMPU = toDate(split(DS_LINHA_RECUPERADA, '|')[20], 'yyyyMMdd'),",
-						"          DATA_FECH_IMPUG = toDate(split(DS_LINHA_RECUPERADA, '|')[21], 'yyyyMMdd'),",
-						"          DSPUT_ID = split(DS_LINHA_RECUPERADA, '|')[22],",
-						"          TP_NOTA_FISCAL = split(DS_LINHA_RECUPERADA, '|')[23],",
-						"          CLASSE_RECEBER = split(DS_LINHA_RECUPERADA, '|')[24],",
-						"          CONTA_CONTABIL = split(DS_LINHA_RECUPERADA, '|')[25],",
-						"          DESCR_CONTA_CONTABIL = split(DS_LINHA_RECUPERADA, '|')[26],",
-						"          NUMERO_FATURA = split(DS_LINHA_RECUPERADA, '|')[27],",
-						"          VALOR_DOCTO_ORIGINAL = replace((split(DS_LINHA_RECUPERADA, '|')[28]), \",\", \".\"),",
-						"          MES_ANO_REFERENTE = split(DS_LINHA_RECUPERADA, '|')[29],",
-						"          DATA_VENC_FATUR = toDate(split(DS_LINHA_RECUPERADA, '|')[30], 'yyyyMMdd'),",
-						"          VALOR_PAGAMENTO = replace((split(DS_LINHA_RECUPERADA, '|')[31]), \",\", \".\"),",
-						"          DATA_ATRIBUICAO_PGTO = toDate(split(DS_LINHA_RECUPERADA, '|')[32], 'yyyyMMdd'),",
-						"          FATU_ATRIBUIDA = split(DS_LINHA_RECUPERADA, '|')[33],",
-						"          DT_EMISSAO_FATURA = toDate(split(DS_LINHA_RECUPERADA, '|')[34], 'yyyyMMdd'),",
-						"          MES_ANO_FATURA = split(DS_LINHA_RECUPERADA, '|')[35],",
-						"          VALOR_FATURA = replace((split(DS_LINHA_RECUPERADA, '|')[36]), \",\", \".\"),",
-						"          SALDO_DEVEDOR = replace((split(DS_LINHA_RECUPERADA, '|')[37]), \",\", \".\"),",
-						"          UF = split(DS_LINHA_RECUPERADA, '|')[38],",
-						"          OPERADORA_REAL = split(DS_LINHA_RECUPERADA, '|')[39],",
-						"          SALDO_FATURA_INI = replace((split(DS_LINHA_RECUPERADA, '|')[40]), \",\", \".\"),",
-						"          SALDO_FATURA_FIM = replace((split(DS_LINHA_RECUPERADA, '|')[41]), \",\", \".\"),",
-						"          SEQ_RECEBIVEL = split(DS_LINHA_RECUPERADA, '|')[42]) ~> SeparaEmColunas",
-						"SeparaEmColunas sink(allowSchemaDrift: false,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ID_ATLYS_ADJ as decimal(28,0),",
-						"          ID_LOTE_ARQUIVO as decimal(28,0),",
-						"          ID_CLIENTE as string,",
-						"          NOTA_FISCAL as string,",
-						"          DT_EMISSAO_NF as timestamp,",
-						"          VLR_ORIG_NFST as decimal(10,2),",
-						"          SERIE as string,",
-						"          CONTA_CLIENTE as string,",
-						"          CNPJ_CPF as string,",
-						"          NOM_CLIENTE as string,",
-						"          NUM_TERMINAL as string,",
-						"          VLR_CONTEST_AJUSTE as decimal(10,2),",
-						"          VLR_ATRIBUIDO as decimal(10,2),",
-						"          DT_ATRIBUICAO as timestamp,",
-						"          HR_ATRIBUICAO as string,",
-						"          DT_AJUSTE as timestamp,",
-						"          HR_AJUSTE as string,",
-						"          OPERADORA as string,",
-						"          CODIGO_OPERADORA as string,",
-						"          COD_MOTIVO_AJUSTES as string,",
-						"          DESC_MOTIVO_AJUSTE as string,",
-						"          DATA_ABERTURA_IMPU as timestamp,",
-						"          DATA_FECH_IMPUG as timestamp,",
-						"          DSPUT_ID as string,",
-						"          TP_NOTA_FISCAL as string,",
-						"          CLASSE_RECEBER as string,",
-						"          CONTA_CONTABIL as string,",
-						"          DESCR_CONTA_CONTABIL as string,",
-						"          NUMERO_FATURA as string,",
-						"          VALOR_DOCTO_ORIGINAL as decimal(15,2),",
-						"          MES_ANO_REFERENTE as string,",
-						"          DATA_VENC_FATUR as timestamp,",
-						"          VALOR_PAGAMENTO as decimal(15,2),",
-						"          DATA_ATRIBUICAO_PGTO as timestamp,",
-						"          FATU_ATRIBUIDA as string,",
-						"          DT_EMISSAO_FATURA as timestamp,",
-						"          MES_ANO_FATURA as string,",
-						"          VALOR_FATURA as decimal(15,2),",
-						"          SALDO_DEVEDOR as decimal(15,2),",
-						"          UF as string,",
-						"          OPERADORA_REAL as string,",
-						"          SALDO_FATURA_INI as decimal(15,2),",
-						"          SALDO_FATURA_FIM as decimal(15,2),",
-						"          SEQ_RECEBIVEL as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          ID_LOTE_ARQUIVO,",
-						"          ID_CLIENTE,",
-						"          NOTA_FISCAL,",
-						"          DT_EMISSAO_NF,",
-						"          VLR_ORIG_NFST,",
-						"          SERIE,",
-						"          CONTA_CLIENTE,",
-						"          CNPJ_CPF,",
-						"          NOM_CLIENTE,",
-						"          NUM_TERMINAL,",
-						"          VLR_CONTEST_AJUSTE,",
-						"          VLR_ATRIBUIDO,",
-						"          DT_ATRIBUICAO,",
-						"          HR_ATRIBUICAO,",
-						"          DT_AJUSTE,",
-						"          HR_AJUSTE,",
-						"          OPERADORA,",
-						"          CODIGO_OPERADORA,",
-						"          COD_MOTIVO_AJUSTES,",
-						"          DESC_MOTIVO_AJUSTE,",
-						"          DATA_ABERTURA_IMPU,",
-						"          DATA_FECH_IMPUG,",
-						"          DSPUT_ID,",
-						"          TP_NOTA_FISCAL,",
-						"          CLASSE_RECEBER,",
-						"          CONTA_CONTABIL,",
-						"          DESCR_CONTA_CONTABIL,",
-						"          NUMERO_FATURA,",
-						"          VALOR_DOCTO_ORIGINAL,",
-						"          MES_ANO_REFERENTE,",
-						"          DATA_VENC_FATUR,",
-						"          VALOR_PAGAMENTO,",
-						"          DATA_ATRIBUICAO_PGTO,",
-						"          FATU_ATRIBUIDA,",
-						"          DT_EMISSAO_FATURA,",
-						"          MES_ANO_FATURA,",
-						"          VALOR_FATURA,",
-						"          SALDO_DEVEDOR,",
-						"          UF,",
-						"          OPERADORA_REAL,",
-						"          SALDO_FATURA_INI,",
-						"          SALDO_FATURA_FIM,",
-						"          SEQ_RECEBIVEL",
-						"     )) ~> GravaArquivoAtlysCorrigido"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/connExecQry')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dfLayoutAjustadoAtlys')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "Atlys"
 				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
