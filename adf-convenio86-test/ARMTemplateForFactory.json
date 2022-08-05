@@ -33,23 +33,9 @@
 				"stconvenio86dev.blob.core.windows.net"
 			]
 		},
-		"AzureBlobStorage1_pe_properties_privateLinkResourceId": {
-			"type": "string",
-			"defaultValue": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test"
-		},
-		"AzureBlobStorage1_pe_properties_groupId": {
-			"type": "string",
-			"defaultValue": "blob"
-		},
-		"AzureBlobStorage1_pe_properties_fqdns": {
-			"type": "array",
-			"defaultValue": [
-				"stconvenio86test.blob.core.windows.net"
-			]
-		},
 		"AzureSqlDatabaseConv86_properties_privateLinkResourceId": {
 			"type": "string",
-			"defaultValue": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Sql/servers/sql-convenio86-test"
+			"defaultValue": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Sql/servers/sql-convenio86-dev"
 		},
 		"AzureSqlDatabaseConv86_properties_groupId": {
 			"type": "string",
@@ -58,7 +44,7 @@
 		"AzureSqlDatabaseConv86_properties_fqdns": {
 			"type": "array",
 			"defaultValue": [
-				"sql-convenio86-test.database.windows.net"
+				"sql-convenio86-dev.database.windows.net"
 			]
 		}
 	},
@@ -991,7 +977,7 @@
 					"name": "CargaArquivosAtis"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-04T12:57:31Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ListaArquivosBlobsAtis_Originais')]",
@@ -2011,7 +1997,7 @@
 					"name": "CargaArquivosAtlys"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-04T12:57:31Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ListaArquivosBlobsAtlys_Originais')]",
@@ -2933,7 +2919,7 @@
 					"name": "CargaArquivosFat"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-04T12:57:31Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ListaArquivosBlobsFat_Originais')]",
@@ -3038,7 +3024,7 @@
 									"typeProperties": {
 										"variableName": "varPeriodoReferencia",
 										"value": {
-											"value": "@substring(variables('varNomeArquivo'), sub(length(variables('varNomeArquivo')),11), 7)",
+											"value": "@substring(variables('varNomeArquivo'), sub(length(variables('varNomeArquivo')), 11),7)",
 											"type": "Expression"
 										}
 									}
@@ -4087,7 +4073,7 @@
 					"name": "CargaArquivosKenan"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-04T12:57:31Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ListaArquivosBlobsKenan_Originais')]",
@@ -4237,8 +4223,7 @@
 				"folder": {
 					"name": "CargaArquivosConv115"
 				},
-				"annotations": [],
-				"lastPublishTime": "2022-08-04T12:57:30Z"
+				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfMapeamento115Controle')]",
@@ -4615,8 +4600,7 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": [],
-				"lastPublishTime": "2022-08-04T12:57:34Z"
+				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/VerificaDiretorioKenan')]",
@@ -4861,7 +4845,7 @@
 					"name": "CargaArquivosAtis"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-04T12:57:32Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoAtis')]",
@@ -5101,7 +5085,7 @@
 					"name": "CargaArquivosAtlys"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-04T12:57:32Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoAtlys')]",
@@ -5341,7 +5325,7 @@
 					"name": "CargaArquivosFat"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-04T12:57:32Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoFat')]",
@@ -5581,7 +5565,7 @@
 					"name": "CargaArquivosKenan"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-04T12:57:32Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoKenan')]",
@@ -10054,7 +10038,7 @@
 						"location": "Brazil South",
 						"dataFlowProperties": {
 							"computeType": "General",
-							"coreCount": 32,
+							"coreCount": 16,
 							"timeToLive": 10,
 							"cleanup": false
 						},
@@ -12833,19 +12817,6 @@
 				"privateLinkResourceId": "[parameters('AzureBlobStorage1_properties_privateLinkResourceId')]",
 				"groupId": "[parameters('AzureBlobStorage1_properties_groupId')]",
 				"fqdns": "[parameters('AzureBlobStorage1_properties_fqdns')]"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/default/AzureBlobStorage1_pe')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"privateLinkResourceId": "[parameters('AzureBlobStorage1_pe_properties_privateLinkResourceId')]",
-				"groupId": "[parameters('AzureBlobStorage1_pe_properties_groupId')]",
-				"fqdns": "[parameters('AzureBlobStorage1_pe_properties_fqdns')]"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
