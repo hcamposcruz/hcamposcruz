@@ -11,13 +11,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConv86'"
 		},
-		"AzureSqlDatabaseKyros_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseKyros'"
-		},
 		"blob_storage_conv86_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
+		},
+		"KeyVaultSQL_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-convenio86-test.vault.azure.net/"
 		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {
 			"type": "string",
@@ -33,9 +33,51 @@
 				"stconvenio86dev.blob.core.windows.net"
 			]
 		},
+		"AzureBlobStorage180_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test"
+		},
+		"AzureBlobStorage180_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"AzureBlobStorage180_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"stconvenio86test.blob.core.windows.net"
+			]
+		},
+		"AzureBlobStorage1_pe_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test"
+		},
+		"AzureBlobStorage1_pe_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"AzureBlobStorage1_pe_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"stconvenio86test.blob.core.windows.net"
+			]
+		},
+		"AzureBlobStorageConv86_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test"
+		},
+		"AzureBlobStorageConv86_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"AzureBlobStorageConv86_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"stconvenio86test.blob.core.windows.net"
+			]
+		},
 		"AzureSqlDatabaseConv86_properties_privateLinkResourceId": {
 			"type": "string",
-			"defaultValue": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Sql/servers/sql-convenio86-dev"
+			"defaultValue": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Sql/servers/sql-convenio86-test"
 		},
 		"AzureSqlDatabaseConv86_properties_groupId": {
 			"type": "string",
@@ -44,7 +86,7 @@
 		"AzureSqlDatabaseConv86_properties_fqdns": {
 			"type": "array",
 			"defaultValue": [
-				"sql-convenio86-dev.database.windows.net"
+				"sql-convenio86-test.database.windows.net"
 			]
 		},
 		"containerUri": {
@@ -77,11 +119,11 @@
 					"AzureSqlDatabaseConv86_connectionString": {
 						"value": "[parameters('AzureSqlDatabaseConv86_connectionString')]"
 					},
-					"AzureSqlDatabaseKyros_connectionString": {
-						"value": "[parameters('AzureSqlDatabaseKyros_connectionString')]"
-					},
 					"blob_storage_conv86_connectionString": {
 						"value": "[parameters('blob_storage_conv86_connectionString')]"
+					},
+					"KeyVaultSQL_properties_typeProperties_baseUrl": {
+						"value": "[parameters('KeyVaultSQL_properties_typeProperties_baseUrl')]"
 					},
 					"AzureBlobStorage1_properties_privateLinkResourceId": {
 						"value": "[parameters('AzureBlobStorage1_properties_privateLinkResourceId')]"
@@ -91,6 +133,33 @@
 					},
 					"AzureBlobStorage1_properties_fqdns": {
 						"value": "[parameters('AzureBlobStorage1_properties_fqdns')]"
+					},
+					"AzureBlobStorage180_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureBlobStorage180_properties_privateLinkResourceId')]"
+					},
+					"AzureBlobStorage180_properties_groupId": {
+						"value": "[parameters('AzureBlobStorage180_properties_groupId')]"
+					},
+					"AzureBlobStorage180_properties_fqdns": {
+						"value": "[parameters('AzureBlobStorage180_properties_fqdns')]"
+					},
+					"AzureBlobStorage1_pe_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureBlobStorage1_pe_properties_privateLinkResourceId')]"
+					},
+					"AzureBlobStorage1_pe_properties_groupId": {
+						"value": "[parameters('AzureBlobStorage1_pe_properties_groupId')]"
+					},
+					"AzureBlobStorage1_pe_properties_fqdns": {
+						"value": "[parameters('AzureBlobStorage1_pe_properties_fqdns')]"
+					},
+					"AzureBlobStorageConv86_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureBlobStorageConv86_properties_privateLinkResourceId')]"
+					},
+					"AzureBlobStorageConv86_properties_groupId": {
+						"value": "[parameters('AzureBlobStorageConv86_properties_groupId')]"
+					},
+					"AzureBlobStorageConv86_properties_fqdns": {
+						"value": "[parameters('AzureBlobStorageConv86_properties_fqdns')]"
 					},
 					"AzureSqlDatabaseConv86_properties_privateLinkResourceId": {
 						"value": "[parameters('AzureSqlDatabaseConv86_properties_privateLinkResourceId')]"
