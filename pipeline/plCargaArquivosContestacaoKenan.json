@@ -72,6 +72,26 @@
 							}
 						},
 						{
+							"name": "Set varPeriodoReferencia",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set varNomeArquivo",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "varPeriodoReferencia",
+								"value": {
+									"value": "@substring(variables('varNomeArquivo'), sub(length(variables('varNomeArquivo')), 11),7)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
 							"name": "BuscaLoteArquivo",
 							"type": "Script",
 							"dependsOn": [
@@ -161,7 +181,7 @@
 											}
 										],
 										"type": "NonQuery",
-										"text": "DELETE from CONVENIO.CVTB_CARGA_ERRO_LAYOUT where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE FROM CONVENIO.CVTB_CONTESTACAO_CRITICA  WHERE ID_CONTESTACAO >= (SELECT MIN(c.ID_CONTESTACAO) FROM CONVENIO.CVTB_CONTESTACAO c, CONVENIO.CVTB_LOTE_ARQUIVO l, CONVENIO.CVTB_LOTE ll WHERE c.ID_LOTE_AJUSTE = l.ID_LOTE AND l.ID_LOTE = ll.ID_LOTE AND l.NM_ARQUIVO = @NomeArquivo AND ll.FL_STATUS <> 'PROCESSADO') AND ID_CONTESTACAO <= (SELECT MAX(z.ID_CONTESTACAO) FROM CONVENIO.CVTB_CONTESTACAO z,  CONVENIO.CVTB_LOTE_ARQUIVO la, CONVENIO.CVTB_LOTE t WHERE z.ID_LOTE_AJUSTE = la.ID_LOTE AND la.ID_LOTE = t.ID_LOTE AND la.NM_ARQUIVO = @NomeArquivo AND t.FL_STATUS <> 'PROCESSADO');\n\nDELETE from CONVENIO.CVTB_FATURA_CON_KENAN where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FATURA_DET_KENAN where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FATURA_ITEM_KENAN where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_LOTE_ARQUIVO \n where NM_ARQUIVO = @NomeArquivo \n   and ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO');\n\nINSERT INTO CONVENIO.CVTB_LOTE_ARQUIVO \n(NM_ARQUIVO,ID_LOTE,ID_SISTEMA_ARQUIVO) \nVALUES (@NomeArquivo,CONVERT(NUMERIC(28), @NovoLote),CASE WHEN SUBSTRING(@NomeArquivo, 1, 2) = '01' THEN 4  WHEN SUBSTRING(@NomeArquivo, 1, 2) = '02'  THEN 5 ELSE 3 END);"
+										"text": "DELETE from CONVENIO.CVTB_CARGA_ERRO_LAYOUT where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FATURA_CON_KENAN where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FATURA_DET_KENAN where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FATURA_ITEM_KENAN where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_LOTE_ARQUIVO \n where NM_ARQUIVO = @NomeArquivo \n   and ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO');\n\nINSERT INTO CONVENIO.CVTB_LOTE_ARQUIVO \n(NM_ARQUIVO,ID_LOTE,ID_SISTEMA_ARQUIVO) \nVALUES (@NomeArquivo,CONVERT(NUMERIC(28), @NovoLote),CASE WHEN SUBSTRING(@NomeArquivo, 1, 2) = '01' THEN 4  WHEN SUBSTRING(@NomeArquivo, 1, 2) = '02'  THEN 5 ELSE 3 END);"
 									}
 								]
 							}
@@ -751,13 +771,13 @@
 										"type": "Script",
 										"dependsOn": [
 											{
-												"activity": "QdeLinhasValidasFatCon",
+												"activity": "QdeLinhasLidasFatCon",
 												"dependencyConditions": [
 													"Succeeded"
 												]
 											},
 											{
-												"activity": "QdeLinhasLidasFatCon",
+												"activity": "QdeLinhasValidasFatCon",
 												"dependencyConditions": [
 													"Succeeded"
 												]
@@ -809,7 +829,7 @@
 													],
 													"type": "NonQuery",
 													"text": {
-														"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)-1\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais)-1 \nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
+														"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais) \nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
 														"type": "Expression"
 													}
 												}
@@ -817,26 +837,6 @@
 										}
 									}
 								]
-							}
-						},
-						{
-							"name": "Set varPeriodoReferencia",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "Set varNomeArquivo",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "varPeriodoReferencia",
-								"value": {
-									"value": "@substring(variables('varNomeArquivo'), sub(length(variables('varNomeArquivo')), 11),7)",
-									"type": "Expression"
-								}
 							}
 						}
 					]
@@ -1110,7 +1110,7 @@
 			"name": "CargaArquivosKenan"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-04-26T17:49:09Z"
+		"lastPublishTime": "2022-08-05T11:05:25Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -152,17 +152,12 @@
 				"type": "decimal",
 				"precision": 15,
 				"scale": 2
-			},
-			{
-				"name": "CCM_CONTESTATO",
-				"type": "decimal",
-				"precision": 10,
-				"scale": 0
 			}
 		],
 		"typeProperties": {
 			"schema": "CONVENIO",
 			"table": "CVTB_FAT_CAR_FNP"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }
