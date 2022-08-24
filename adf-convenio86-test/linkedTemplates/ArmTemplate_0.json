@@ -152,7 +152,7 @@
 						"location": "Brazil South",
 						"dataFlowProperties": {
 							"computeType": "General",
-							"coreCount": 32,
+							"coreCount": 48,
 							"timeToLive": 10,
 							"cleanup": false
 						},
