@@ -119,7 +119,7 @@
 							"type": "Script",
 							"dependsOn": [
 								{
-									"activity": "Set varNomeArquivo",
+									"activity": "Set varPeriodoReferencia",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -161,7 +161,7 @@
 											}
 										],
 										"type": "NonQuery",
-										"text": "DELETE from CONVENIO.CVTB_CARGA_ERRO_LAYOUT where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FAT_CAR_FF where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FAT_CAR_FNP where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\n\nDELETE from CONVENIO.CVTB_LOTE_ARQUIVO \n where NM_ARQUIVO = @NomeArquivo \n   and ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO');\n\nINSERT INTO CONVENIO.CVTB_LOTE_ARQUIVO \n(NM_ARQUIVO,ID_LOTE,ID_SISTEMA_ARQUIVO) \nVALUES (@NomeArquivo,CONVERT(NUMERIC(28), @NovoLote),CASE WHEN SUBSTRING(@NomeArquivo, 1, 6) = 'CAR_FF' THEN 8  ELSE 9 END);"
+										"text": "DELETE from CONVENIO.CVTB_CARGA_ERRO_LAYOUT where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE FROM CONVENIO.CVTB_CONTESTACAO_CRITICA  WHERE ID_CONTESTACAO >= (SELECT MIN(c.ID_CONTESTACAO) FROM CONVENIO.CVTB_CONTESTACAO c, CONVENIO.CVTB_LOTE_ARQUIVO l, CONVENIO.CVTB_LOTE ll WHERE c.ID_LOTE_AJUSTE = l.ID_LOTE AND l.ID_LOTE = ll.ID_LOTE AND l.NM_ARQUIVO = @NomeArquivo AND ll.FL_STATUS <> 'PROCESSADO') AND ID_CONTESTACAO <= (SELECT MAX(z.ID_CONTESTACAO) FROM CONVENIO.CVTB_CONTESTACAO z,  CONVENIO.CVTB_LOTE_ARQUIVO la, CONVENIO.CVTB_LOTE t WHERE z.ID_LOTE_AJUSTE = la.ID_LOTE AND la.ID_LOTE = t.ID_LOTE AND la.NM_ARQUIVO = @NomeArquivo AND t.FL_STATUS <> 'PROCESSADO');\n\nDELETE from CONVENIO.CVTB_FAT_CAR_FF where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FAT_CAR_FNP where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\n\nDELETE from CONVENIO.CVTB_LOTE_ARQUIVO \n where NM_ARQUIVO = @NomeArquivo \n   and ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO');\n\nINSERT INTO CONVENIO.CVTB_LOTE_ARQUIVO \n(NM_ARQUIVO,ID_LOTE,ID_SISTEMA_ARQUIVO) \nVALUES (@NomeArquivo,CONVERT(NUMERIC(28), @NovoLote),CASE WHEN SUBSTRING(@NomeArquivo, 1, 6) = 'CAR_FF' THEN 8  ELSE 9 END);"
 									}
 								]
 							}
@@ -619,6 +619,26 @@
 									}
 								]
 							}
+						},
+						{
+							"name": "Set varPeriodoReferencia",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set varNomeArquivo",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "varPeriodoReferencia",
+								"value": {
+									"value": "@substring(variables('varNomeArquivo'), sub(length(variables('varNomeArquivo')), 10),6)",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
@@ -876,13 +896,16 @@
 			},
 			"varQdeLinhasLidas_FNP": {
 				"type": "String"
+			},
+			"varPeriodoReferencia": {
+				"type": "String"
 			}
 		},
 		"folder": {
 			"name": "CargaArquivosFat"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-07-25T16:59:55Z"
+		"lastPublishTime": "2022-04-26T17:49:09Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
