@@ -146,8 +146,7 @@
 				"folder": {
 					"name": "CargaArquivosConv115"
 				},
-				"annotations": [],
-				"lastPublishTime": "2022-08-05T11:05:23Z"
+				"annotations": []
 			},
 			"dependsOn": []
 		},
@@ -383,7 +382,7 @@
 					"name": "CargaArquivosAtis"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-05T11:05:26Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": []
 		},
@@ -619,7 +618,7 @@
 					"name": "CargaArquivosAtlys"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-05T11:05:26Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": []
 		},
@@ -855,7 +854,7 @@
 					"name": "CargaArquivosFat"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-05T11:05:26Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": []
 		},
@@ -1091,7 +1090,7 @@
 					"name": "CargaArquivosKenan"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-08-05T11:05:26Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": []
 		},
@@ -1462,8 +1461,7 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": [],
-				"lastPublishTime": "2022-08-05T11:05:28Z"
+				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCtrCargaArquivosContestacaoKenan')]",

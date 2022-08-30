@@ -59,14 +59,14 @@
 			]
 		},
 		"AzureSqlDatabaseConv86_properties_privateLinkResourceId": {
-			"value": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Sql/servers/sql-convenio86-test"
+			"value": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Sql/servers/sql-convenio86-dev"
 		},
 		"AzureSqlDatabaseConv86_properties_groupId": {
 			"value": "sqlServer"
 		},
 		"AzureSqlDatabaseConv86_properties_fqdns": {
 			"value": [
-				"sql-convenio86-test.database.windows.net"
+				"sql-convenio86-dev.database.windows.net"
 			]
 		}
 	}
