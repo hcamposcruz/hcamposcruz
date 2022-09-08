@@ -40,9 +40,6 @@
 				},
 				{
 					"name": "CriaColunasParaDestino"
-				},
-				{
-					"name": "TrataAsplasDuplas"
 				}
 			],
 			"scriptLines": [
@@ -57,7 +54,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     moveFiles: ['atlys','atlys/originais']) ~> BuscaLinhasArqRcblAtlys",
-				"TrataAsplasDuplas derive(qtdcampos = length(value) - length(replace(value, \"|\", \"\"))) ~> CalcQdePipes",
+				"BuscaLinhasArqRcblAtlys derive(qtdcampos = length(value) - length(replace(value, \"|\", \"\"))) ~> CalcQdePipes",
 				"CalcQdePipes split(qtdcampos== 20,",
 				"     disjoint: false) ~> ValidacaoQdeCampos@(LinhasValidas, LinhasNaoValidas)",
 				"ValidacaoQdeCampos@LinhasNaoValidas derive(ID_LOTE_ARQUIVO = toDecimal($pLoteArquivo),",
@@ -65,7 +62,6 @@
 				"          FL_CORRIGIDO_AUTOMATICO = 'N',",
 				"          DS_LINHA = value,",
 				"          DT_CRIADO_EM = add(currentTimestamp(), hours(-3))) ~> CriaColunasParaDestino",
-				"BuscaLinhasArqRcblAtlys derive(value = replace(value, '\\\"', '')) ~> TrataAsplasDuplas",
 				"ValidacaoQdeCampos@LinhasValidas sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",

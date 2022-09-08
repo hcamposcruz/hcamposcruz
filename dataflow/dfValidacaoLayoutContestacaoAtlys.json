@@ -41,9 +41,6 @@
 				},
 				{
 					"name": "CriaColunasParaDestino"
-				},
-				{
-					"name": "TrataAspasDuplas"
 				}
 			],
 			"scriptLines": [
@@ -58,7 +55,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     moveFiles: ['atlys','atlys/originais']) ~> BuscaLinhasArqAtlys",
-				"TrataAspasDuplas derive(qtdcampos = length(value) - length(replace(value, \"|\", \"\"))) ~> CalcQdePipes",
+				"BuscaLinhasArqAtlys derive(qtdcampos = length(value) - length(replace(value, \"|\", \"\"))) ~> CalcQdePipes",
 				"CalcQdePipes split(qtdcampos== 41,",
 				"     disjoint: false) ~> ValidacaoQdeCampos@(LinhasValidas, LinhasNaoValidas)",
 				"ValidacaoQdeCampos@LinhasNaoValidas derive(ID_LOTE_ARQUIVO = toDecimal($pLoteArquivo),",
@@ -66,7 +63,6 @@
 				"          FL_CORRIGIDO_AUTOMATICO = 'N',",
 				"          DS_LINHA = value,",
 				"          DT_CRIADO_EM = add(currentTimestamp(), hours(-3))) ~> CriaColunasParaDestino",
-				"BuscaLinhasArqAtlys derive(value = replace(value, '\\\"', '')) ~> TrataAspasDuplas",
 				"ValidacaoQdeCampos@LinhasValidas sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",

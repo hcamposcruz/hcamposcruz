@@ -1123,7 +1123,7 @@
 			"name": "CargaArquivosKenan"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-04-26T17:49:09Z"
+		"lastPublishTime": "2022-09-08T14:55:43Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
