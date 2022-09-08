@@ -11,9 +11,6 @@
 		"blob_storage_conv86_connectionString": {
 			"value": ""
 		},
-		"KeyVaultSQL_properties_typeProperties_baseUrl": {
-			"value": "https://kv-convenio86-test.vault.azure.net/"
-		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {
 			"value": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Storage/storageAccounts/stconvenio86dev"
 		},
@@ -25,17 +22,6 @@
 				"stconvenio86dev.blob.core.windows.net"
 			]
 		},
-		"AzureBlobStorage180_properties_privateLinkResourceId": {
-			"value": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test"
-		},
-		"AzureBlobStorage180_properties_groupId": {
-			"value": "blob"
-		},
-		"AzureBlobStorage180_properties_fqdns": {
-			"value": [
-				"stconvenio86test.blob.core.windows.net"
-			]
-		},
 		"AzureBlobStorage1_pe_properties_privateLinkResourceId": {
 			"value": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test"
 		},
@@ -43,17 +29,6 @@
 			"value": "blob"
 		},
 		"AzureBlobStorage1_pe_properties_fqdns": {
-			"value": [
-				"stconvenio86test.blob.core.windows.net"
-			]
-		},
-		"AzureBlobStorageConv86_properties_privateLinkResourceId": {
-			"value": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test"
-		},
-		"AzureBlobStorageConv86_properties_groupId": {
-			"value": "blob"
-		},
-		"AzureBlobStorageConv86_properties_fqdns": {
 			"value": [
 				"stconvenio86test.blob.core.windows.net"
 			]

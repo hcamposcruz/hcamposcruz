@@ -13,950 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/CVTB_CONTESTACAO')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseConv86",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_CONTESTACAO",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "ID_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "NOTA_FISCAL_ORIG",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_EMISSAO_NF_ORIG",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "VLR_ORIG_NSFT",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "SERIE_NF",
-						"type": "varchar"
-					},
-					{
-						"name": "COD_IDENT_CLI",
-						"type": "varchar"
-					},
-					{
-						"name": "CPF_CNPJ",
-						"type": "varchar"
-					},
-					{
-						"name": "NOME_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "TERMINAL",
-						"type": "varchar"
-					},
-					{
-						"name": "VLR_TOTAL_ATRIBUIDO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_ATRIBUIDO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "DT_ATRIBUICAO",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DT_AJUSTE",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DESCR_OPERADORA",
-						"type": "varchar"
-					},
-					{
-						"name": "COD_OPERADORA",
-						"type": "varchar"
-					},
-					{
-						"name": "COD_MOTIVO_AJUSTE",
-						"type": "varchar"
-					},
-					{
-						"name": "DESC_MOTIVO_AJUSTE",
-						"type": "varchar"
-					},
-					{
-						"name": "NUM_CONTROLE_RECLAMACAO",
-						"type": "varchar"
-					},
-					{
-						"name": "CLASSE_RECEBER",
-						"type": "varchar"
-					},
-					{
-						"name": "CONTA_FINANCEIRA",
-						"type": "varchar"
-					},
-					{
-						"name": "DESC_CONTA_FINANCEIRA",
-						"type": "varchar"
-					},
-					{
-						"name": "NUM_FATURA_ORIGINAL",
-						"type": "varchar"
-					},
-					{
-						"name": "VLR_DOC_ORIGINAL",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "FATURA_ATRIBUIDA",
-						"type": "varchar"
-					},
-					{
-						"name": "VLR_FATURA",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "UF_FATURA",
-						"type": "varchar"
-					},
-					{
-						"name": "SEQ_RECEBIVEL",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_EMISSAO",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "MODELO",
-						"type": "varchar"
-					},
-					{
-						"name": "NUMORDEMDOITEM",
-						"type": "decimal",
-						"precision": 3,
-						"scale": 0
-					},
-					{
-						"name": "BC_ICMS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "ICMS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "ALIQUOTA_ICMS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "BC_ICMS_RECALCULADA",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "ICMS_RECALCULADO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "ICMS_PARA_RESSARCIMENTO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "SITUACAO",
-						"type": "char"
-					},
-					{
-						"name": "MES_APURACAO",
-						"type": "varchar"
-					},
-					{
-						"name": "TIPO_DOC",
-						"type": "decimal",
-						"precision": 1,
-						"scale": 0
-					},
-					{
-						"name": "COD_CONSUMIDOR",
-						"type": "varchar"
-					},
-					{
-						"name": "CHAVE_AUTENTICACAO",
-						"type": "varchar"
-					},
-					{
-						"name": "TOTAL_MESTRE",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "BC_ICMS_MESTRE",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "ICMS_DESTACADO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "INSCRICAO_ESTADUAL",
-						"type": "varchar"
-					},
-					{
-						"name": "RAZAO_SOCIAL",
-						"type": "varchar"
-					},
-					{
-						"name": "FL_STATUS_GERAL",
-						"type": "char"
-					},
-					{
-						"name": "ID_LOTE_AJUSTE",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "ID_ENTREGA_RESSARCIMENTO",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "CD_ITEM",
-						"type": "varchar"
-					},
-					{
-						"name": "DS_ITEM",
-						"type": "varchar"
-					},
-					{
-						"name": "HR_AJUSTE",
-						"type": "varchar"
-					},
-					{
-						"name": "HR_ATRIBUICAO",
-						"type": "varchar"
-					},
-					{
-						"name": "NOME_BILLING",
-						"type": "varchar"
-					},
-					{
-						"name": "TIPO_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_ABERTURA_IMPUG",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DT_FECHA_IMPUG",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "SALDO_DEVEDOR",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "SALDO_FATURA_INI",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "SALDO_FATURA_FIM",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "COD_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "TIPO_DOCUMENTO",
-						"type": "varchar"
-					},
-					{
-						"name": "NOME_FANTASIA",
-						"type": "varchar"
-					},
-					{
-						"name": "COD_GRUPO",
-						"type": "varchar"
-					},
-					{
-						"name": "NOME_GRUPO_ECONOMICO",
-						"type": "varchar"
-					},
-					{
-						"name": "SEGMENTO_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "SUB_SEGMENTO_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "SEGMENTO_VALOR",
-						"type": "varchar"
-					},
-					{
-						"name": "CLASSE_ELEGIBILIDADE",
-						"type": "varchar"
-					},
-					{
-						"name": "DESCR_SERV_AJUSTE",
-						"type": "varchar"
-					},
-					{
-						"name": "DESCR_SERV",
-						"type": "varchar"
-					},
-					{
-						"name": "CONTACONTABIL_DB",
-						"type": "varchar"
-					},
-					{
-						"name": "CONTACONTABIL_CR",
-						"type": "varchar"
-					},
-					{
-						"name": "DESCR_CONTACONTABIL_DB",
-						"type": "varchar"
-					},
-					{
-						"name": "DESCR_CONTACONTABIL_CR",
-						"type": "varchar"
-					},
-					{
-						"name": "SALDO_POS_AJUSTE",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "TIPO_OPERACAO",
-						"type": "varchar"
-					},
-					{
-						"name": "TIPO_TERMINAL",
-						"type": "varchar"
-					},
-					{
-						"name": "DONO_RECEITA",
-						"type": "varchar"
-					},
-					{
-						"name": "SUBTYPE_CODE",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					},
-					{
-						"name": "TIPO_DESCR_SERV",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_VENCTO_FAT_FUTURA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "VLR_IMPOSTO_CONTESTADO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_IMPOSTO_ICMS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_BRUTO_ITEM",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_OUTROS_IMPOSTOS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_AJUSTE_ITEM",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_CREDITO_AJUSTE",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_CREDITO_ITEM",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_DEVOLUCAO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_FATURA_FUTURA",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_CONTESTADO_FUTURO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "LOGIN_ATENDIMENTO",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_VENC_FATURA_ORIGINAL",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DT_ATRIBUICAO_PGTO",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "NUM_ITEM_ESTORNADO",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "FLG_RETIFICADO",
-						"type": "varchar"
-					},
-					{
-						"name": "TERMINAL_115",
-						"type": "varchar"
-					},
-					{
-						"name": "VALOR_ITEM_115",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "DT_CRIADO_EM",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "CD_CRIADO_POR",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_ATUALIZADO_EM",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "CD_ATUALIZADO_POR",
-						"type": "varchar"
-					},
-					{
-						"name": "MES_ANO_FAT_ORIGINAL",
-						"type": "varchar"
-					},
-					{
-						"name": "MES_ANO_FAT_AJUSTE",
-						"type": "varchar"
-					},
-					{
-						"name": "VLR_PAGAMENTO_FAT_ORIGINAL",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "ID_ITEM_CONVENIO_115",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "NUM_CONTROLE_RECLAMACAO_NORMALIZADO",
-						"type": "varchar"
-					},
-					{
-						"name": "NOTA_FISCAL_ORIG_NORMALIZADO",
-						"type": "varchar"
-					},
-					{
-						"name": "COD_FAC_CD",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "CCM_SERVICO_CONTESTADO",
-						"type": "varchar"
-					},
-					{
-						"name": "COD_TIPO_RCBL_FATURA",
-						"type": "varchar"
-					},
-					{
-						"name": "DESCR_RCBL_FATURA",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_PAGAMENTO",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DEBIT_ID",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_EMISSAO_FATURA_ORIGINAL",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "UF_NF",
-						"type": "char"
-					},
-					{
-						"name": "VLR_PGTO_ALOCADO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_TOTAL_PGTO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "CREDIT_ID",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_REFERENCIA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DT_IMPORTACAO",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "STEP_EXECUTION_ID",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "JOB_EXECUTION_ID",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "ID_MESTRE_CONVENIO_115",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "FL_MANUAL_CONCILIACAO",
-						"type": "char"
-					},
-					{
-						"name": "DT_CONCILIACAO",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "CONVENIO",
-					"table": "CVTB_CONTESTACAO"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CVTB_FATURA_CON_KENAN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseConv86",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Kenan"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_FATURA_CON_KENAN",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "ID_LOTE_ARQUIVO",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "CONTA_COBRANCA",
-						"type": "varchar"
-					},
-					{
-						"name": "CPF_CNPJ",
-						"type": "varchar"
-					},
-					{
-						"name": "CATEGORIA_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "UF_COBRANCA",
-						"type": "char"
-					},
-					{
-						"name": "ID_FATURA",
-						"type": "varchar"
-					},
-					{
-						"name": "ID_FATURA_ORIGEM",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_VENCTO_ORIGINAL",
-						"type": "date"
-					},
-					{
-						"name": "DT_VENCTO_BOLETO_BAIXA",
-						"type": "date"
-					},
-					{
-						"name": "VLR_FATURA",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_CONTESTADO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_PAGAMENTO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_PGTO_CREDITO_ANT",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "DT_PAGAMENTO",
-						"type": "date"
-					},
-					{
-						"name": "DT_FECHA_FATURA",
-						"type": "date"
-					},
-					{
-						"name": "DT_EMISSAO",
-						"type": "date"
-					},
-					{
-						"name": "DT_AJUSTE",
-						"type": "date"
-					},
-					{
-						"name": "STEP_EXECUTION_ID",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					},
-					{
-						"name": "JOB_EXECUTION_ID",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					},
-					{
-						"name": "DT_REFERENCIA",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "CONVENIO",
-					"table": "CVTB_FATURA_CON_KENAN"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CVTB_FATURA_DET_KENAN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseConv86",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Kenan"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_FATURA_DET_KENAN",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "ID_LOTE_ARQUIVO",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "CONTA_COBRANCA",
-						"type": "varchar"
-					},
-					{
-						"name": "CPF_CNPJ",
-						"type": "varchar"
-					},
-					{
-						"name": "ID_FATURA",
-						"type": "varchar"
-					},
-					{
-						"name": "ID_OPEN_ITEM",
-						"type": "varchar"
-					},
-					{
-						"name": "ID_DETALHE",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "ID_OPERADORA",
-						"type": "varchar"
-					},
-					{
-						"name": "DESC_OPERADORA",
-						"type": "varchar"
-					},
-					{
-						"name": "TIPO_DETALHE",
-						"type": "varchar"
-					},
-					{
-						"name": "DESC_DETALHE",
-						"type": "varchar"
-					},
-					{
-						"name": "TIPO_INSTANCIA",
-						"type": "varchar"
-					},
-					{
-						"name": "NUM_INSTANCIA",
-						"type": "varchar"
-					},
-					{
-						"name": "VLR_BRUTO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_CONTESTADO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_IMPOSTO_ICMS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_OUTROS_IMPOSTOS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_IMPOSTO_CONSTESTADO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "CC_CR_AJUSTE",
-						"type": "varchar"
-					},
-					{
-						"name": "CC_DB_AJUSTE",
-						"type": "varchar"
-					},
-					{
-						"name": "CC_CREDITO_FAT",
-						"type": "varchar"
-					},
-					{
-						"name": "CC_DEBITO_FAT",
-						"type": "varchar"
-					},
-					{
-						"name": "CC_CREDITO_IMPOSTO",
-						"type": "varchar"
-					},
-					{
-						"name": "CC_DEBITO_IMPOSTO",
-						"type": "varchar"
-					},
-					{
-						"name": "DESC_CONTESTACAO",
-						"type": "varchar"
-					},
-					{
-						"name": "DESC_MOTIVO",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_CONTESTACAO",
-						"type": "date"
-					},
-					{
-						"name": "ACCOUNT_NO",
-						"type": "varchar"
-					},
-					{
-						"name": "SUBTYPE_CODE",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					},
-					{
-						"name": "STEP_EXECUTION_ID",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					},
-					{
-						"name": "JOB_EXECUTION_ID",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					}
-				],
-				"typeProperties": {
-					"schema": "CONVENIO",
-					"table": "CVTB_FATURA_DET_KENAN"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/CVTB_FATURA_ITEM_KENAN')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1438,87 +494,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/CVTB_FAT_CAR_FNP_VALIDA_AJUSTE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseConv86",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Fat"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_FAT_CAR_FNP_VALIDA_AJUSTE",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "ID_LOTE_ARQUIVO",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "CONTA_COBRANCA",
-						"type": "varchar"
-					},
-					{
-						"name": "TELEFONE",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_VENCTO",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "VLR",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "XRE",
-						"type": "varchar"
-					},
-					{
-						"name": "NRE",
-						"type": "varchar"
-					},
-					{
-						"name": "TIPO_OPERACAO",
-						"type": "varchar"
-					},
-					{
-						"name": "CONTA",
-						"type": "varchar"
-					},
-					{
-						"name": "SEQUENCIA",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_OPERACAO",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "CONVENIO",
-					"table": "CVTB_FAT_CAR_FNP_VALIDA_AJUSTE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ListaArquivosBlobVivoNext_Originais')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1894,6 +869,155 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"container": "arq-conv115"
+					},
+					"columnDelimiter": "#$%",
+					"encodingName": "ISO-8859-1",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_Conv115_Cadastral')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArqCadastral": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Conv115"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArqCadastral",
+							"type": "Expression"
+						},
+						"container": "arq-conv115"
+					},
+					"columnDelimiter": "#$%",
+					"encodingName": "ISO-8859-1",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_Conv115_Cadastral_parquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Conv115"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "parquet/convenio115Cadastral",
+						"container": "arq-conv115"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_Conv115_ItemNF')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArqItem": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Conv115"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArqItem",
+							"type": "Expression"
+						},
+						"container": "arq-conv115"
+					},
+					"columnDelimiter": "#$%",
+					"encodingName": "WINDOWS-1252",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_Conv115_MestreNF')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArqMestre": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Conv115"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArqMestre",
+							"type": "Expression"
+						},
 						"container": "arq-conv115"
 					},
 					"columnDelimiter": "#$%",
