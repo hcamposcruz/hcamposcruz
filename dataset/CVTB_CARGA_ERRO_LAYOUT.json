@@ -71,5 +71,6 @@
 			"schema": "CONVENIO",
 			"table": "CVTB_CARGA_ERRO_LAYOUT"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

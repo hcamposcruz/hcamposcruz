@@ -116,5 +116,6 @@
 			"schema": "CONVENIO",
 			"table": "CVTB_FATURA_CON_KENAN"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }
