@@ -1,0 +1,29 @@
+{
+	"name": "arq_Conv115",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Conv115"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "arq-conv115"
+			},
+			"columnDelimiter": "#$%",
+			"encodingName": "ISO-8859-1",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			}
+		]
+	}
+}

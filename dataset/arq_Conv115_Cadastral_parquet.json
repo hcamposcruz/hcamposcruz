@@ -1,0 +1,23 @@
+{
+	"name": "arq_Conv115_Cadastral_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Conv115"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "parquet/convenio115Cadastral",
+				"container": "arq-conv115"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

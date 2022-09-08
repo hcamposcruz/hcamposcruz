@@ -1,0 +1,106 @@
+{
+	"name": "dfValidacaoLayoutFatCarFNP",
+	"properties": {
+		"folder": {
+			"name": "Fat"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "arq_fat_car_fnp_original",
+						"type": "DatasetReference"
+					},
+					"name": "BuscaLinhasArqFatFNP"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "arq_fat_validados",
+						"type": "DatasetReference"
+					},
+					"name": "CriaArqCorrigidoFatFNP"
+				},
+				{
+					"dataset": {
+						"referenceName": "CVTB_CARGA_ERRO_LAYOUT",
+						"type": "DatasetReference"
+					},
+					"name": "InsereLinhasNaoValidas"
+				}
+			],
+			"transformations": [
+				{
+					"name": "CalcQdeSeparador"
+				},
+				{
+					"name": "ValidacaoQdeCampos"
+				},
+				{
+					"name": "CriaColunasParaDestino"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     pNomeArquivo as string,",
+				"     pLoteArquivo as string",
+				"}",
+				"source(output(",
+				"          value as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     moveFiles: ['fat','fat/originais'],",
+				"     mode: 'read') ~> BuscaLinhasArqFatFNP",
+				"BuscaLinhasArqFatFNP derive(qtdcaracteres = length(value)) ~> CalcQdeSeparador",
+				"CalcQdeSeparador split(qtdcaracteres== 356,",
+				"     disjoint: false) ~> ValidacaoQdeCampos@(LinhasValidas, LinhasNaoValidas)",
+				"ValidacaoQdeCampos@LinhasNaoValidas derive(ID_LOTE_ARQUIVO = toDecimal($pLoteArquivo),",
+				"          FL_CORRIGIDO = 'N',",
+				"          FL_CORRIGIDO_AUTOMATICO = 'N',",
+				"          DT_CRIADO_EM = add(currentTimestamp(), hours(-3)),",
+				"          DS_LINHA = value,",
+				"          CD_CRIADO_POR = 'Carga ADF - CargaArqFat') ~> CriaColunasParaDestino",
+				"ValidacaoQdeCampos@LinhasValidas sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Column_1 as string",
+				"     ),",
+				"     partitionFileNames:[($pNomeArquivo)],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Column_1 = value",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> CriaArqCorrigidoFatFNP",
+				"CriaColunasParaDestino sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_CARGA_ERRO_LAYOUT as decimal(28,0),",
+				"          ID_LOTE_ARQUIVO as decimal(28,0),",
+				"          FL_CORRIGIDO as string,",
+				"          ID_CONTESTACAO as decimal(28,0),",
+				"          FL_CORRIGIDO_AUTOMATICO as string,",
+				"          DS_LINHA as string,",
+				"          DT_CRIADO_EM as timestamp,",
+				"          CD_CRIADO_POR as string,",
+				"          DT_ATUALIZADO_EM as timestamp,",
+				"          CD_ATUALIZADO_POR as string,",
+				"          DS_TRATATIVA as string,",
+				"          DS_LINHA_RECUPERADA as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> InsereLinhasNaoValidas"
+			]
+		}
+	}
+}

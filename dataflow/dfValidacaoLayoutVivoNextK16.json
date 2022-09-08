@@ -1,0 +1,111 @@
+{
+	"name": "dfValidacaoLayoutVivoNextK16",
+	"properties": {
+		"folder": {
+			"name": "VivoNext"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "arq_vivo_next_K16_original",
+						"type": "DatasetReference"
+					},
+					"name": "BuscaLinhasArqVivoNextK16"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "arq_vivo_next_K16_corrigido",
+						"type": "DatasetReference"
+					},
+					"name": "CriaArqValidosVivoNextK16"
+				},
+				{
+					"dataset": {
+						"referenceName": "CVTB_CARGA_ERRO_LAYOUT",
+						"type": "DatasetReference"
+					},
+					"name": "InsereLinhasNaoValidasVivoNextK16"
+				}
+			],
+			"transformations": [
+				{
+					"name": "CalcQdePipes"
+				},
+				{
+					"name": "ValidacaoQdeCampos"
+				},
+				{
+					"name": "CriaColunasParaDestino"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     pNomeArquivo as string,",
+				"     pLoteArquivo as string",
+				"}",
+				"source(output(",
+				"          value as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     moveFiles: ['vivonext','vivonext/originais']) ~> BuscaLinhasArqVivoNextK16",
+				"BuscaLinhasArqVivoNextK16 derive(qtdcampos = length(value) - length(replace(value, \"|\", \"\"))) ~> CalcQdePipes",
+				"CalcQdePipes split(qtdcampos== 34,",
+				"     disjoint: false) ~> ValidacaoQdeCampos@(LinhasValidas, LinhasNaoValidas)",
+				"ValidacaoQdeCampos@LinhasNaoValidas derive(ID_LOTE_ARQUIVO = toDecimal($pLoteArquivo),",
+				"          FL_CORRIGIDO = 'N',",
+				"          FL_CORRIGIDO_AUTOMATICO = 'N',",
+				"          DS_LINHA = value,",
+				"          DT_CRIADO_EM = add(currentTimestamp(), hours(-3))) ~> CriaColunasParaDestino",
+				"ValidacaoQdeCampos@LinhasValidas sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Prop_0|Prop_1|Prop_2|Prop_3|Prop_4|Prop_5|Prop_6|Prop_7|Prop_8|Prop_9|Prop_10|Prop_11|Prop_12|Prop_13|Prop_14|Prop_15|Prop_16|Prop_17|Prop_18|Prop_19|Prop_20|Prop_21|Prop_22|Prop_23|Prop_24|Prop_25|Prop_26|Prop_27|Prop_28|Prop_29|Prop_30|Prop_31|Prop_32|Prop_33} as string",
+				"     ),",
+				"     partitionFileNames:[($pNomeArquivo)],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          {Prop_0|Prop_1|Prop_2|Prop_3|Prop_4|Prop_5|Prop_6|Prop_7|Prop_8|Prop_9|Prop_10|Prop_11|Prop_12|Prop_13|Prop_14|Prop_15|Prop_16|Prop_17|Prop_18|Prop_19|Prop_20|Prop_21|Prop_22|Prop_23|Prop_24|Prop_25|Prop_26|Prop_27|Prop_28|Prop_29|Prop_30|Prop_31|Prop_32|Prop_33} = value",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> CriaArqValidosVivoNextK16",
+				"CriaColunasParaDestino sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_CARGA_ERRO_LAYOUT as decimal(28,0),",
+				"          ID_LOTE_ARQUIVO as decimal(28,0),",
+				"          FL_CORRIGIDO as string,",
+				"          ID_CONTESTACAO as decimal(28,0),",
+				"          FL_CORRIGIDO_AUTOMATICO as string,",
+				"          DS_LINHA as string,",
+				"          DT_CRIADO_EM as timestamp,",
+				"          CD_CRIADO_POR as string,",
+				"          DT_ATUALIZADO_EM as timestamp,",
+				"          CD_ATUALIZADO_POR as string,",
+				"          DS_TRATATIVA as string,",
+				"          DS_LINHA_RECUPERADA as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ID_LOTE_ARQUIVO,",
+				"          FL_CORRIGIDO,",
+				"          FL_CORRIGIDO_AUTOMATICO,",
+				"          DS_LINHA,",
+				"          DT_CRIADO_EM",
+				"     )) ~> InsereLinhasNaoValidasVivoNextK16"
+			]
+		}
+	}
+}

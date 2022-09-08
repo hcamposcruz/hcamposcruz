@@ -1,0 +1,112 @@
+{
+	"name": "dfValidacaoLayoutContestacaoAtlys",
+	"properties": {
+		"folder": {
+			"name": "Atlys"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "arq_atlys_adj_original",
+						"type": "DatasetReference"
+					},
+					"name": "BuscaLinhasArqAtlys"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "arq_atlys_adj_validados",
+						"type": "DatasetReference"
+					},
+					"name": "CriaArqCorrigidoAtlys"
+				},
+				{
+					"dataset": {
+						"referenceName": "CVTB_CARGA_ERRO_LAYOUT",
+						"type": "DatasetReference"
+					},
+					"name": "InsereLinhasNaoValidas",
+					"description": "Insere linhas não válidas na tabela CVTB_CARGA_ERRO_LAYOUT, ainda sem correção."
+				}
+			],
+			"transformations": [
+				{
+					"name": "CalcQdePipes"
+				},
+				{
+					"name": "ValidacaoQdeCampos"
+				},
+				{
+					"name": "CriaColunasParaDestino"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     pNomeArquivo as string,",
+				"     pLoteArquivo as string",
+				"}",
+				"source(output(",
+				"          value as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     moveFiles: ['atlys','atlys/originais']) ~> BuscaLinhasArqAtlys",
+				"BuscaLinhasArqAtlys derive(qtdcampos = length(value) - length(replace(value, \"|\", \"\"))) ~> CalcQdePipes",
+				"CalcQdePipes split(qtdcampos== 41,",
+				"     disjoint: false) ~> ValidacaoQdeCampos@(LinhasValidas, LinhasNaoValidas)",
+				"ValidacaoQdeCampos@LinhasNaoValidas derive(ID_LOTE_ARQUIVO = toDecimal($pLoteArquivo),",
+				"          FL_CORRIGIDO = 'N',",
+				"          FL_CORRIGIDO_AUTOMATICO = 'N',",
+				"          DS_LINHA = value,",
+				"          DT_CRIADO_EM = add(currentTimestamp(), hours(-3))) ~> CriaColunasParaDestino",
+				"ValidacaoQdeCampos@LinhasValidas sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Linha as string",
+				"     ),",
+				"     partitionFileNames:[($pNomeArquivo)],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Linha = value",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> CriaArqCorrigidoAtlys",
+				"CriaColunasParaDestino sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_CARGA_ERRO_LAYOUT as decimal(28,0),",
+				"          ID_LOTE_ARQUIVO as decimal(28,0),",
+				"          FL_CORRIGIDO as string,",
+				"          ID_CONTESTACAO as decimal(28,0),",
+				"          FL_CORRIGIDO_AUTOMATICO as string,",
+				"          DS_LINHA as string,",
+				"          DT_CRIADO_EM as timestamp,",
+				"          CD_CRIADO_POR as string,",
+				"          DT_ATUALIZADO_EM as timestamp,",
+				"          CD_ATUALIZADO_POR as string,",
+				"          DS_TRATATIVA as string,",
+				"          DS_LINHA_RECUPERADA as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ID_LOTE_ARQUIVO,",
+				"          FL_CORRIGIDO,",
+				"          FL_CORRIGIDO_AUTOMATICO,",
+				"          DS_LINHA,",
+				"          DT_CRIADO_EM",
+				"     )) ~> InsereLinhasNaoValidas"
+			]
+		}
+	}
+}

@@ -1,0 +1,36 @@
+{
+	"name": "arq_atlys_adj_original",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"NomeArq": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Atlys"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().NomeArq",
+					"type": "Expression"
+				},
+				"folderPath": "atlys",
+				"container": "arq-ajustes"
+			},
+			"columnDelimiter": "",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

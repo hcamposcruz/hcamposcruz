@@ -1,0 +1,25 @@
+{
+	"name": "VerificaDiretorioAtis",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Atis"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "atis",
+				"container": "arq-ajustes"
+			},
+			"columnDelimiter": "|#&",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

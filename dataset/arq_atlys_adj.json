@@ -1,0 +1,205 @@
+{
+	"name": "arq_atlys_adj",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"NomeArq": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Atlys"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().NomeArq",
+					"type": "Expression"
+				},
+				"folderPath": "atlys/validados_a_processar",
+				"container": "arq-ajustes"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CLIENTE_ID",
+				"type": "String"
+			},
+			{
+				"name": "NOTA_FISCAL",
+				"type": "String"
+			},
+			{
+				"name": "DTEMISSAONF",
+				"type": "String"
+			},
+			{
+				"name": "VALOR_ORIG_NFST",
+				"type": "String"
+			},
+			{
+				"name": "SERIE",
+				"type": "String"
+			},
+			{
+				"name": "CONTA_CLIENTE",
+				"type": "String"
+			},
+			{
+				"name": "CNPJ_CPF",
+				"type": "String"
+			},
+			{
+				"name": "NOMECLIENTE",
+				"type": "String"
+			},
+			{
+				"name": "TERMINAL",
+				"type": "String"
+			},
+			{
+				"name": "VALOR_CONTEST_AJUSTE",
+				"type": "String"
+			},
+			{
+				"name": "VALOR_ATRIBUIDO",
+				"type": "String"
+			},
+			{
+				"name": "DATA_ATRIBUICAO",
+				"type": "String"
+			},
+			{
+				"name": "HORA_ATRIBUICAO",
+				"type": "String"
+			},
+			{
+				"name": "DATA_AJUSTE",
+				"type": "String"
+			},
+			{
+				"name": "HORA_AJUSTE",
+				"type": "String"
+			},
+			{
+				"name": "OPERADORA",
+				"type": "String"
+			},
+			{
+				"name": "CODIGO OPERADORA",
+				"type": "String"
+			},
+			{
+				"name": "CODMOTIVOAJUSTES",
+				"type": "String"
+			},
+			{
+				"name": "DESCMOTIVOAJUSTE",
+				"type": "String"
+			},
+			{
+				"name": "DATAABERTURAIMPU",
+				"type": "String"
+			},
+			{
+				"name": "DATAFECHIMPUG",
+				"type": "String"
+			},
+			{
+				"name": "DSPUT_ID",
+				"type": "String"
+			},
+			{
+				"name": "TP_NOTA_FISCAL",
+				"type": "String"
+			},
+			{
+				"name": "CLASSE_RECEBER",
+				"type": "String"
+			},
+			{
+				"name": "CONTACONTABIL",
+				"type": "String"
+			},
+			{
+				"name": "DESCRCONTACONTABIL",
+				"type": "String"
+			},
+			{
+				"name": "NUMERO_FATURA",
+				"type": "String"
+			},
+			{
+				"name": "VALOR_DOCTO_ORIGINAL",
+				"type": "String"
+			},
+			{
+				"name": "MES_ANO_REFERENTE",
+				"type": "String"
+			},
+			{
+				"name": "DATAVENCFATUR",
+				"type": "String"
+			},
+			{
+				"name": "VALOR_PAGAMENTO",
+				"type": "String"
+			},
+			{
+				"name": "DATA_ATRIBUICAO_PGTO",
+				"type": "String"
+			},
+			{
+				"name": "FATU_ATRIBUIDA",
+				"type": "String"
+			},
+			{
+				"name": "DTEMISSAOFATURA",
+				"type": "String"
+			},
+			{
+				"name": "MESANOFATURA",
+				"type": "String"
+			},
+			{
+				"name": "VALOR_FATURA",
+				"type": "String"
+			},
+			{
+				"name": "SALDO_DEVEDOR",
+				"type": "String"
+			},
+			{
+				"name": "UF",
+				"type": "String"
+			},
+			{
+				"name": "OPERADORA_REAL",
+				"type": "String"
+			},
+			{
+				"name": "SALDO_FATURA_INI",
+				"type": "String"
+			},
+			{
+				"name": "SALDO_FATURA_FIM",
+				"type": "String"
+			},
+			{
+				"name": "SEQ_RECEBIVEL",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

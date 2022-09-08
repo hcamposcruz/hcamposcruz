@@ -1,0 +1,24 @@
+{
+	"name": "Arq_Conv115_ItemNF_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Conv115"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "teste",
+				"folderPath": "parquet/convenio115ItemNF",
+				"container": "arq-conv115"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

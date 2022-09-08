@@ -1,0 +1,122 @@
+{
+	"name": "arq_atlys_rcbl",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"NomeArq": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Atlys"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().NomeArq",
+					"type": "Expression"
+				},
+				"folderPath": "atlys/validados_a_processar",
+				"container": "arq-ajustes"
+			},
+			"columnDelimiter": "|",
+			"encodingName": "WINDOWS-1252",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CLIENTE_ID",
+				"type": "String"
+			},
+			{
+				"name": "NOMECLIENTE",
+				"type": "String"
+			},
+			{
+				"name": "CNPJ_CPF",
+				"type": "String"
+			},
+			{
+				"name": "CONTA_CLIENTE",
+				"type": "String"
+			},
+			{
+				"name": "CLASSE_RECEBER",
+				"type": "String"
+			},
+			{
+				"name": "OPERADORA",
+				"type": "String"
+			},
+			{
+				"name": "CODIGO_OPERADORA",
+				"type": "String"
+			},
+			{
+				"name": "NUMERO_FATURA",
+				"type": "String"
+			},
+			{
+				"name": "MES_ANO_REFERENTE",
+				"type": "String"
+			},
+			{
+				"name": "VALOR_DOCTO_ORIGINAL",
+				"type": "String"
+			},
+			{
+				"name": "FATURA_ATRIBUIDA",
+				"type": "String"
+			},
+			{
+				"name": "MESANOFATURA",
+				"type": "String"
+			},
+			{
+				"name": "VALOR_FATURA",
+				"type": "String"
+			},
+			{
+				"name": "SALDO_DEVIDO_ORIG",
+				"type": "String"
+			},
+			{
+				"name": "DATA_EMISSAO_FATURA",
+				"type": "String"
+			},
+			{
+				"name": "VALOR_TOTAL_PAGAMENTO",
+				"type": "String"
+			},
+			{
+				"name": "DATA_FEBRABAN",
+				"type": "String"
+			},
+			{
+				"name": "VALOR_ATRIBUICAO",
+				"type": "String"
+			},
+			{
+				"name": "UF",
+				"type": "String"
+			},
+			{
+				"name": "DATA_ATRIBUICAO_PGTO",
+				"type": "String"
+			},
+			{
+				"name": "HORA_ATRIBUICAO_PGTO",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

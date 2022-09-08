@@ -1,0 +1,41 @@
+{
+	"name": "arq_atlys_rcbl_corrigido",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"NomeArq": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Atlys"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().NomeArq",
+					"type": "Expression"
+				},
+				"folderPath": "atlys/validados_a_processar",
+				"container": "arq-ajustes"
+			},
+			"columnDelimiter": "",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Linha",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
