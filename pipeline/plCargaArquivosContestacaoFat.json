@@ -918,7 +918,7 @@
 			"name": "CargaArquivosFat"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-09-08T13:09:53Z"
+		"lastPublishTime": "2022-04-26T17:49:09Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

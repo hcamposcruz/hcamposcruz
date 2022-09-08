@@ -164,6 +164,5 @@
 			"schema": "CONVENIO",
 			"table": "CVTB_FAT_CAR_FNP"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }
