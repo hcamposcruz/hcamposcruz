@@ -349,10 +349,95 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "ListaArquivosVivonext",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "VerificaDiretorioVivoNext",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "FiltraArquivosVivonext",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "ListaArquivosVivonext",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('ListaArquivosVivonext').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@or(startswith(item().Name, 'Vivonext_K16'), startswith(item().Name, 'Vivonext_K17'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "TestaPastaComArquivosVivonext",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "FiltraArquivosVivonext",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@greater(activity('FiltraArquivosVivonext').output.FilteredItemsCount,0)",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "plCtrCargaArquivosContestacaoVivoNext",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "plCtrCargaArquivosContestacaoVivoNext",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
+					]
+				}
 			}
 		],
-		"annotations": [],
-		"lastPublishTime": "2022-08-30T20:20:21Z"
-	},
-	"type": "Microsoft.DataFactory/factories/pipelines"
+		"annotations": []
+	}
 }
