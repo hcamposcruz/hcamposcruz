@@ -13,175 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/CVTB_FATURA_DET_KENAN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseConv86",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Kenan"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_FATURA_DET_KENAN",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "ID_LOTE_ARQUIVO",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "CONTA_COBRANCA",
-						"type": "varchar"
-					},
-					{
-						"name": "CPF_CNPJ",
-						"type": "varchar"
-					},
-					{
-						"name": "ID_FATURA",
-						"type": "varchar"
-					},
-					{
-						"name": "ID_OPEN_ITEM",
-						"type": "varchar"
-					},
-					{
-						"name": "ID_DETALHE",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "ID_OPERADORA",
-						"type": "varchar"
-					},
-					{
-						"name": "DESC_OPERADORA",
-						"type": "varchar"
-					},
-					{
-						"name": "TIPO_DETALHE",
-						"type": "varchar"
-					},
-					{
-						"name": "DESC_DETALHE",
-						"type": "varchar"
-					},
-					{
-						"name": "TIPO_INSTANCIA",
-						"type": "varchar"
-					},
-					{
-						"name": "NUM_INSTANCIA",
-						"type": "varchar"
-					},
-					{
-						"name": "VLR_BRUTO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_CONTESTADO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_IMPOSTO_ICMS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_OUTROS_IMPOSTOS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_IMPOSTO_CONSTESTADO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "CC_CR_AJUSTE",
-						"type": "varchar"
-					},
-					{
-						"name": "CC_DB_AJUSTE",
-						"type": "varchar"
-					},
-					{
-						"name": "CC_CREDITO_FAT",
-						"type": "varchar"
-					},
-					{
-						"name": "CC_DEBITO_FAT",
-						"type": "varchar"
-					},
-					{
-						"name": "CC_CREDITO_IMPOSTO",
-						"type": "varchar"
-					},
-					{
-						"name": "CC_DEBITO_IMPOSTO",
-						"type": "varchar"
-					},
-					{
-						"name": "DESC_CONTESTACAO",
-						"type": "varchar"
-					},
-					{
-						"name": "DESC_MOTIVO",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_CONTESTACAO",
-						"type": "date"
-					},
-					{
-						"name": "ACCOUNT_NO",
-						"type": "varchar"
-					},
-					{
-						"name": "SUBTYPE_CODE",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					},
-					{
-						"name": "STEP_EXECUTION_ID",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					},
-					{
-						"name": "JOB_EXECUTION_ID",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					}
-				],
-				"typeProperties": {
-					"schema": "CONVENIO",
-					"table": "CVTB_FATURA_DET_KENAN"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/CVTB_FATURA_ITEM_KENAN')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1150,6 +981,47 @@
 					},
 					"columnDelimiter": "#$%",
 					"encodingName": "WINDOWS-1252",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_Conv115_MestreNF')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArqMestre": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Conv115"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArqMestre",
+							"type": "Expression"
+						},
+						"container": "arq-conv115"
+					},
+					"columnDelimiter": "#$%",
+					"encodingName": "ISO-8859-1",
 					"escapeChar": "\\",
 					"quoteChar": "\""
 				},

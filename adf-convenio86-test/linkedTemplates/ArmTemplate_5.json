@@ -13,121 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/dfValidacaoLayoutAtisPago')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "Atis"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "arq_atis_pago_original",
-								"type": "DatasetReference"
-							},
-							"name": "BuscaLinhasArqAtis"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "arq_atis_pago_validados",
-								"type": "DatasetReference"
-							},
-							"name": "CriaArqCorrigidoAtisPago"
-						},
-						{
-							"dataset": {
-								"referenceName": "CVTB_CARGA_ERRO_LAYOUT",
-								"type": "DatasetReference"
-							},
-							"name": "InsereLinhasNaoValidas",
-							"description": "Insere linhas não válidas na tabela CVTB_CARGA_ERRO_LAYOUT, ainda sem correção."
-						}
-					],
-					"transformations": [
-						{
-							"name": "CalcQdeCaracteres"
-						},
-						{
-							"name": "ValidacaoQdeCampos"
-						},
-						{
-							"name": "CriaColunasParaDestino"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     pNomeArquivo as string,",
-						"     pLoteArquivo as string",
-						"}",
-						"source(output(",
-						"          value as string",
-						"     ),",
-						"     allowSchemaDrift: false,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     moveFiles: ['atis','atis/originais']) ~> BuscaLinhasArqAtis",
-						"BuscaLinhasArqAtis derive(qtdcaracteres = length(value)) ~> CalcQdeCaracteres",
-						"CalcQdeCaracteres split(qtdcaracteres== 477,",
-						"     disjoint: false) ~> ValidacaoQdeCampos@(LinhasValidas, LinhasNaoValidas)",
-						"ValidacaoQdeCampos@LinhasNaoValidas derive(ID_LOTE_ARQUIVO = toDecimal($pLoteArquivo),",
-						"          FL_CORRIGIDO = 'N',",
-						"          FL_CORRIGIDO_AUTOMATICO = 'N',",
-						"          DS_LINHA = value,",
-						"          DT_CRIADO_EM = add(currentTimestamp(), hours(-3))) ~> CriaColunasParaDestino",
-						"ValidacaoQdeCampos@LinhasValidas sink(allowSchemaDrift: false,",
-						"     validateSchema: false,",
-						"     input(",
-						"          Linha as string",
-						"     ),",
-						"     partitionFileNames:[($pNomeArquivo)],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     mapColumn(",
-						"          Linha = value",
-						"     ),",
-						"     partitionBy('hash', 1)) ~> CriaArqCorrigidoAtisPago",
-						"CriaColunasParaDestino sink(allowSchemaDrift: false,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ID_CARGA_ERRO_LAYOUT as decimal(28,0),",
-						"          ID_LOTE_ARQUIVO as decimal(28,0),",
-						"          FL_CORRIGIDO as string,",
-						"          ID_CONTESTACAO as decimal(28,0),",
-						"          FL_CORRIGIDO_AUTOMATICO as string,",
-						"          DS_LINHA as string,",
-						"          DT_CRIADO_EM as timestamp,",
-						"          CD_CRIADO_POR as string,",
-						"          DT_ATUALIZADO_EM as timestamp,",
-						"          CD_ATUALIZADO_POR as string,",
-						"          DS_TRATATIVA as string,",
-						"          DS_LINHA_RECUPERADA as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          ID_LOTE_ARQUIVO,",
-						"          FL_CORRIGIDO,",
-						"          FL_CORRIGIDO_AUTOMATICO,",
-						"          DS_LINHA,",
-						"          DT_CRIADO_EM",
-						"     )) ~> InsereLinhasNaoValidas"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/dfValidacaoLayoutContestacaoAtlys')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -172,6 +57,9 @@
 						},
 						{
 							"name": "CriaColunasParaDestino"
+						},
+						{
+							"name": "TrataAspasDuplas"
 						}
 					],
 					"scriptLines": [
@@ -186,7 +74,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     moveFiles: ['atlys','atlys/originais']) ~> BuscaLinhasArqAtlys",
-						"BuscaLinhasArqAtlys derive(qtdcampos = length(value) - length(replace(value, \"|\", \"\"))) ~> CalcQdePipes",
+						"TrataAspasDuplas derive(qtdcampos = length(value) - length(replace(value, \"|\", \"\"))) ~> CalcQdePipes",
 						"CalcQdePipes split(qtdcampos== 41,",
 						"     disjoint: false) ~> ValidacaoQdeCampos@(LinhasValidas, LinhasNaoValidas)",
 						"ValidacaoQdeCampos@LinhasNaoValidas derive(ID_LOTE_ARQUIVO = toDecimal($pLoteArquivo),",
@@ -194,6 +82,7 @@
 						"          FL_CORRIGIDO_AUTOMATICO = 'N',",
 						"          DS_LINHA = value,",
 						"          DT_CRIADO_EM = add(currentTimestamp(), hours(-3))) ~> CriaColunasParaDestino",
+						"BuscaLinhasArqAtlys derive(value = replace(value, '\\\"', '')) ~> TrataAspasDuplas",
 						"ValidacaoQdeCampos@LinhasValidas sink(allowSchemaDrift: false,",
 						"     validateSchema: false,",
 						"     input(",
@@ -845,6 +734,9 @@
 						},
 						{
 							"name": "CriaColunasParaDestino"
+						},
+						{
+							"name": "TrataAsplasDuplas"
 						}
 					],
 					"scriptLines": [
@@ -859,7 +751,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     moveFiles: ['atlys','atlys/originais']) ~> BuscaLinhasArqRcblAtlys",
-						"BuscaLinhasArqRcblAtlys derive(qtdcampos = length(value) - length(replace(value, \"|\", \"\"))) ~> CalcQdePipes",
+						"TrataAsplasDuplas derive(qtdcampos = length(value) - length(replace(value, \"|\", \"\"))) ~> CalcQdePipes",
 						"CalcQdePipes split(qtdcampos== 20,",
 						"     disjoint: false) ~> ValidacaoQdeCampos@(LinhasValidas, LinhasNaoValidas)",
 						"ValidacaoQdeCampos@LinhasNaoValidas derive(ID_LOTE_ARQUIVO = toDecimal($pLoteArquivo),",
@@ -867,6 +759,7 @@
 						"          FL_CORRIGIDO_AUTOMATICO = 'N',",
 						"          DS_LINHA = value,",
 						"          DT_CRIADO_EM = add(currentTimestamp(), hours(-3))) ~> CriaColunasParaDestino",
+						"BuscaLinhasArqRcblAtlys derive(value = replace(value, '\\\"', '')) ~> TrataAsplasDuplas",
 						"ValidacaoQdeCampos@LinhasValidas sink(allowSchemaDrift: false,",
 						"     validateSchema: false,",
 						"     input(",
@@ -2082,11 +1975,9 @@
 					"name": "CargaArquivosAtis"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-09-08T14:55:43Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutAtisPago')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/plCargaArquivosContestacaoAtlys')]",
@@ -3107,7 +2998,7 @@
 					"name": "CargaArquivosAtlys"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-09-08T14:55:44Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutRecebiveisAtlys')]",
@@ -4057,7 +3948,7 @@
 					"name": "CargaArquivosFat"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-09-08T14:55:43Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutFatCarFF')]",
@@ -5217,7 +5108,7 @@
 					"name": "CargaArquivosKenan"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-09-08T14:55:43Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutFatContestadaKenan')]",
@@ -6167,8 +6058,7 @@
 				"folder": {
 					"name": "CargaArquivoVivoNext"
 				},
-				"annotations": [],
-				"lastPublishTime": "2022-09-08T14:55:45Z"
+				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutVivoNextK16')]",
@@ -6697,8 +6587,7 @@
 				"folder": {
 					"name": "CargaArquivosConv115"
 				},
-				"annotations": [],
-				"lastPublishTime": "2022-09-08T14:55:43Z"
+				"annotations": []
 			},
 			"dependsOn": []
 		},
@@ -6934,7 +6823,7 @@
 					"name": "CargaArquivosAtis"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-09-08T14:55:44Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoAtis')]"
@@ -7172,7 +7061,7 @@
 					"name": "CargaArquivosAtlys"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-09-08T14:55:45Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoAtlys')]"
@@ -7410,7 +7299,7 @@
 					"name": "CargaArquivosFat"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-09-08T14:55:45Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoFat')]"
@@ -7648,10 +7537,247 @@
 					"name": "CargaArquivosKenan"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-09-08T14:55:44Z"
+				"lastPublishTime": "2022-04-18T13:46:40Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoKenan')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/plCtrCargaArquivosContestacaoVivoNext')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "FinalizaLoteOK",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'PROCESSADO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "FinalizaLoteErro",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteNOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'ERRO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "Set varNovoLoteOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLoteOK').output.firstRow.ID_LOTE)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "BuscaNovoLoteOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosVivoNext",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqVivoNext';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLoteNOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLote_NOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLote_NOK').output.firstRow.ID_LOTE)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "BuscaNovoLote_NOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosVivoNext",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqVivoNext';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "plCargaArquivosVivoNext",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "plCargaArquivosContestacaoVivoNext",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"varLote": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "CargaArquivoVivoNext"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoVivoNext')]"
 			]
 		}
 	]
