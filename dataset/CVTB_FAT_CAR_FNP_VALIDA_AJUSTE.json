@@ -1,15 +1,18 @@
 {
-	"name": "CVTB_CARGA_ERRO_LAYOUT",
+	"name": "CVTB_FAT_CAR_FNP_VALIDA_AJUSTE",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabaseConv86",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Fat"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "ID_CARGA_ERRO_LAYOUT",
+				"name": "ID_FAT_CAR_FNP_VALIDA_AJUSTE",
 				"type": "decimal",
 				"precision": 28,
 				"scale": 0
@@ -21,55 +24,55 @@
 				"scale": 0
 			},
 			{
-				"name": "FL_CORRIGIDO",
-				"type": "char"
+				"name": "CONTA_COBRANCA",
+				"type": "varchar"
 			},
 			{
-				"name": "ID_CONTESTACAO",
+				"name": "TELEFONE",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_VENCTO",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "VLR",
 				"type": "decimal",
-				"precision": 28,
-				"scale": 0
+				"precision": 15,
+				"scale": 2
 			},
 			{
-				"name": "FL_CORRIGIDO_AUTOMATICO",
-				"type": "char"
-			},
-			{
-				"name": "DS_LINHA",
+				"name": "XRE",
 				"type": "varchar"
 			},
 			{
-				"name": "DT_CRIADO_EM",
+				"name": "NRE",
+				"type": "varchar"
+			},
+			{
+				"name": "TIPO_OPERACAO",
+				"type": "varchar"
+			},
+			{
+				"name": "CONTA",
+				"type": "varchar"
+			},
+			{
+				"name": "SEQUENCIA",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_OPERACAO",
 				"type": "datetime",
 				"precision": 23,
 				"scale": 3
-			},
-			{
-				"name": "CD_CRIADO_POR",
-				"type": "varchar"
-			},
-			{
-				"name": "DT_ATUALIZADO_EM",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
-			},
-			{
-				"name": "CD_ATUALIZADO_POR",
-				"type": "varchar"
-			},
-			{
-				"name": "DS_TRATATIVA",
-				"type": "varchar"
-			},
-			{
-				"name": "DS_LINHA_RECUPERADA",
-				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "CONVENIO",
-			"table": "CVTB_CARGA_ERRO_LAYOUT"
+			"table": "CVTB_FAT_CAR_FNP_VALIDA_AJUSTE"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
