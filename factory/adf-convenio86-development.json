@@ -1,9 +1,0 @@
-{
-	"name": "adf-convenio86-development",
-	"location": "brazilsouth",
-	"identity": {
-		"type": "SystemAssigned",
-		"principalId": "22ffc5c6-7aee-4229-91b3-9f2a10936710",
-		"tenantId": "78879b00-f0e9-486c-836f-56f314e47e7f"
-	}
-}
