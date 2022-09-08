@@ -13,11 +13,13 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "Convenio115ControleTeste",
 				"folderPath": "parquet/Convenio115Controle",
 				"container": "arq-conv115"
 			},
 			"compressionCodec": "snappy"
 		},
 		"schema": []
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

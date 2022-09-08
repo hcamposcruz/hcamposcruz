@@ -639,16 +639,6 @@
 				"type": "datetime",
 				"precision": 23,
 				"scale": 3
-			},
-			{
-				"name": "DT_EMISSAO_115",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
-			},
-			{
-				"name": "MES_ANO_REF_ARQ",
-				"type": "varchar"
 			}
 		],
 		"typeProperties": {
