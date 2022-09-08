@@ -1,0 +1,184 @@
+{
+	"name": "cvtb_vivo_next_k16",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseConv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "VivoNext"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_VIVO_NEXT_K16",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "ID_LOTE_ARQUIVO",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "CLIENTE_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "NOTA_FISCAL",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_EMISSAO_NFST",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "VL_ORIG_NFST",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "SERIE",
+				"type": "varchar"
+			},
+			{
+				"name": "CONTA_CLIENTE",
+				"type": "varchar"
+			},
+			{
+				"name": "CNPJ_CPF",
+				"type": "varchar"
+			},
+			{
+				"name": "NOME_CLIENTE",
+				"type": "varchar"
+			},
+			{
+				"name": "TERMINAL",
+				"type": "varchar"
+			},
+			{
+				"name": "VL_CONTEST_AJUSTE",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "VL_ALOCADO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "DT_ALOCACAO",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "HR_ALOCACAO",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_AJUSTE",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "HR_AJUSTE",
+				"type": "varchar"
+			},
+			{
+				"name": "OPERADORA",
+				"type": "varchar"
+			},
+			{
+				"name": "CD_OPERADORA",
+				"type": "varchar"
+			},
+			{
+				"name": "CD_MOTIVO_AJUSTE",
+				"type": "varchar"
+			},
+			{
+				"name": "DS_MOTIVO_AJUSTE",
+				"type": "varchar"
+			},
+			{
+				"name": "NUMERO_FATURA",
+				"type": "varchar"
+			},
+			{
+				"name": "FATU_ALOCADA",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_EMISSAO_FATURA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "MESANOFATURA",
+				"type": "varchar"
+			},
+			{
+				"name": "VL_DOCTO_ORIGINAL",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "SALDO_DEVEDOR",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "CONTA_CONTABIL",
+				"type": "varchar"
+			},
+			{
+				"name": "DS_CONTA_CONTABIL",
+				"type": "varchar"
+			},
+			{
+				"name": "VL_FATURA",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "CD_TIPO_RECEBIVEIS",
+				"type": "varchar"
+			},
+			{
+				"name": "DS_TIPO_RECEBIVEIS",
+				"type": "varchar"
+			},
+			{
+				"name": "DEBIT_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "CREDIT_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "UF",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "CONVENIO",
+			"table": "CVTB_VIVO_NEXT_K16"
+		}
+	}
+}

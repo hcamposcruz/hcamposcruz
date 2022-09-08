@@ -5,6 +5,11 @@
 			"referenceName": "blob_storage_conv86",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"NomeArqMestre": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Conv115"
 		},
@@ -13,7 +18,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "SP0255815700016222C  1910S01M.006",
+				"fileName": {
+					"value": "@dataset().NomeArqMestre",
+					"type": "Expression"
+				},
 				"container": "arq-conv115"
 			},
 			"columnDelimiter": "#$%",

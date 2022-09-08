@@ -1,17 +1,17 @@
 {
-	"name": "arq_Conv115_ItemNF",
+	"name": "arq_vivo_next_K17_corrigido",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "blob_storage_conv86",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"NomeArqItem": {
+			"NomeArq": {
 				"type": "string"
 			}
 		},
 		"folder": {
-			"name": "Conv115"
+			"name": "VivoNext"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
@@ -19,20 +19,24 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@dataset().NomeArqItem",
+					"value": "@dataset().NomeArq",
 					"type": "Expression"
 				},
-				"container": "arq-conv115"
+				"folderPath": "vivonext/validados_a_processar",
+				"container": "arq-ajustes"
 			},
-			"columnDelimiter": "#$%",
+			"columnDelimiter": "#|$",
 			"encodingName": "WINDOWS-1252",
 			"escapeChar": "\\",
+			"firstRowAsHeader": false,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
+				"name": "Linha",
 				"type": "String"
 			}
 		]
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

@@ -1,5 +1,5 @@
 {
-	"name": "Arq_Conv115_Controle_parquet",
+	"name": "arq_Conv115",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "blob_storage_conv86",
@@ -9,15 +9,21 @@
 			"name": "Conv115"
 		},
 		"annotations": [],
-		"type": "Parquet",
+		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "parquet/Convenio115Controle",
 				"container": "arq-conv115"
 			},
-			"compressionCodec": "snappy"
+			"columnDelimiter": "#$%",
+			"encodingName": "ISO-8859-1",
+			"escapeChar": "\\",
+			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"type": "String"
+			}
+		]
 	}
 }

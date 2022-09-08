@@ -1,0 +1,116 @@
+{
+	"name": "cvtb_vivo_next_k17",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseConv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "VivoNext"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_VIVO_NEXT_K17",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "ID_LOTE_ARQUIVO",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 0
+			},
+			{
+				"name": "CLIENTE_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "CONTA_CLIENTE",
+				"type": "varchar"
+			},
+			{
+				"name": "CNPJ_CPF",
+				"type": "varchar"
+			},
+			{
+				"name": "NOME_CLIENTE",
+				"type": "varchar"
+			},
+			{
+				"name": "OPERADORA",
+				"type": "varchar"
+			},
+			{
+				"name": "CD_OPERADORA",
+				"type": "varchar"
+			},
+			{
+				"name": "FATU_ALOCADA",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_EMISSAO_FATURA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "MESANOFATURA",
+				"type": "varchar"
+			},
+			{
+				"name": "SALDO_DEVIDO_ORIG",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "VL_FATURA",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "CD_TIPO_RECEBIVEIS",
+				"type": "varchar"
+			},
+			{
+				"name": "DS_TIPO_RECEBIVEIS",
+				"type": "varchar"
+			},
+			{
+				"name": "DEBIT_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "CREDIT_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_PAGAMENTO",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "VL_PGTO_ALOCADO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "VL_TOTAL_PAGAMENTO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "CONVENIO",
+			"table": "CVTB_VIVO_NEXT_K17"
+		}
+	}
+}

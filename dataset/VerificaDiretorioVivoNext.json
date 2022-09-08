@@ -1,22 +1,25 @@
 {
-	"name": "Arq_Conv115_Controle_parquet",
+	"name": "VerificaDiretorioVivoNext",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "blob_storage_conv86",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Conv115"
+			"name": "VivoNext"
 		},
 		"annotations": [],
-		"type": "Parquet",
+		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "parquet/Convenio115Controle",
-				"container": "arq-conv115"
+				"folderPath": "vivonext",
+				"container": "arq-ajustes"
 			},
-			"compressionCodec": "snappy"
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
 		},
 		"schema": []
 	}
