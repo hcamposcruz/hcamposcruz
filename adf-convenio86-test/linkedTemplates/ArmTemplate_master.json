@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConv86'"
 		},
+		"AzureSqlDatabaseKyros_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseKyros'"
+		},
 		"blob_storage_conv86_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
@@ -86,6 +90,9 @@
 					},
 					"AzureSqlDatabaseConv86_connectionString": {
 						"value": "[parameters('AzureSqlDatabaseConv86_connectionString')]"
+					},
+					"AzureSqlDatabaseKyros_connectionString": {
+						"value": "[parameters('AzureSqlDatabaseKyros_connectionString')]"
 					},
 					"blob_storage_conv86_connectionString": {
 						"value": "[parameters('blob_storage_conv86_connectionString')]"
