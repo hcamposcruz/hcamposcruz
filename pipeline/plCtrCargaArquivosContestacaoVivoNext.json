@@ -220,6 +220,8 @@
 		"folder": {
 			"name": "CargaArquivoVivoNext"
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2022-09-08T17:23:14Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }
