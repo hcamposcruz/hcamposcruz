@@ -190,7 +190,7 @@
 				"name": "COD_CREDITO",
 				"type": "decimal",
 				"precision": 10,
-				"scale": 2
+				"scale": 0
 			},
 			{
 				"name": "VLR_FATURA_FUTURA",
@@ -200,6 +200,10 @@
 			},
 			{
 				"name": "NUM_FATURA_FUTURA",
+				"type": "varchar"
+			},
+			{
+				"name": "MOTIVO_OPERACAO",
 				"type": "varchar"
 			}
 		],
