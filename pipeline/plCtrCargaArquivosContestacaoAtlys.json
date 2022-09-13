@@ -221,7 +221,7 @@
 			"name": "CargaArquivosAtlys"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-04-18T13:46:40Z"
+		"lastPublishTime": "2022-09-13T19:22:35Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

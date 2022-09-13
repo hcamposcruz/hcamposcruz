@@ -190,7 +190,7 @@
 				"name": "COD_CREDITO",
 				"type": "decimal",
 				"precision": 10,
-				"scale": 0
+				"scale": 2
 			},
 			{
 				"name": "VLR_FATURA_FUTURA",
@@ -201,15 +201,12 @@
 			{
 				"name": "NUM_FATURA_FUTURA",
 				"type": "varchar"
-			},
-			{
-				"name": "MOTIVO_OPERACAO",
-				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "CONVENIO",
 			"table": "CVTB_ATIS_PAGO"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }
