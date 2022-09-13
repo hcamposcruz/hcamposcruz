@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConv86'"
 		},
-		"AzureSqlDatabaseKyros_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseKyros'"
-		},
 		"blob_storage_conv86_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
@@ -67,11 +63,79 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntimeConv86')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "Brazil South",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 48,
+							"timeToLive": 10,
+							"cleanup": false
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 60
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/default')]",
 			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseConv86')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabaseConv86_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntimeConv86",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeConv86')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/blob_storage_conv86')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "AzureBlobStorage",
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('blob_storage_conv86_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntimeConv86",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeConv86')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AutoResolveIntegrationRuntime')]",
@@ -87,35 +151,6 @@
 							"coreCount": 8,
 							"timeToLive": 0,
 							"cleanup": true
-						}
-					}
-				},
-				"managedVirtualNetwork": {
-					"type": "ManagedVirtualNetworkReference",
-					"referenceName": "default"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/integrationRuntimeConv86')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "Managed",
-				"typeProperties": {
-					"computeProperties": {
-						"location": "Brazil South",
-						"dataFlowProperties": {
-							"computeType": "General",
-							"coreCount": 16,
-							"timeToLive": 10,
-							"cleanup": false
-						},
-						"pipelineExternalComputeScaleProperties": {
-							"timeToLive": 60
 						}
 					}
 				},
@@ -165,65 +200,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseConv86')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlDatabaseConv86_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntimeConv86",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeConv86')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseKyros')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Apontamento provisório para o Banco de dados da Kyros ",
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlDatabaseKyros_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AutoResolveIntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/blob_storage_conv86')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "AzureBlobStorage",
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('blob_storage_conv86_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntimeConv86",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeConv86')]"
 			]
 		},
 		{
@@ -728,7 +704,7 @@
 						"name": "COD_CREDITO",
 						"type": "decimal",
 						"precision": 10,
-						"scale": 2
+						"scale": 0
 					},
 					{
 						"name": "VLR_FATURA_FUTURA",
@@ -738,6 +714,10 @@
 					},
 					{
 						"name": "NUM_FATURA_FUTURA",
+						"type": "varchar"
+					},
+					{
+						"name": "MOTIVO_OPERACAO",
 						"type": "varchar"
 					}
 				],
@@ -1989,6 +1969,177 @@
 				"typeProperties": {
 					"schema": "CONVENIO",
 					"table": "CVTB_FATURA_CON_KENAN"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseConv86')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CVTB_FATURA_DET_KENAN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseConv86",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Kenan"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_FATURA_DET_KENAN",
+						"type": "decimal",
+						"precision": 28,
+						"scale": 0
+					},
+					{
+						"name": "ID_LOTE_ARQUIVO",
+						"type": "decimal",
+						"precision": 28,
+						"scale": 0
+					},
+					{
+						"name": "CONTA_COBRANCA",
+						"type": "varchar"
+					},
+					{
+						"name": "CPF_CNPJ",
+						"type": "varchar"
+					},
+					{
+						"name": "ID_FATURA",
+						"type": "varchar"
+					},
+					{
+						"name": "ID_OPEN_ITEM",
+						"type": "varchar"
+					},
+					{
+						"name": "ID_DETALHE",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 0
+					},
+					{
+						"name": "ID_OPERADORA",
+						"type": "varchar"
+					},
+					{
+						"name": "DESC_OPERADORA",
+						"type": "varchar"
+					},
+					{
+						"name": "TIPO_DETALHE",
+						"type": "varchar"
+					},
+					{
+						"name": "DESC_DETALHE",
+						"type": "varchar"
+					},
+					{
+						"name": "TIPO_INSTANCIA",
+						"type": "varchar"
+					},
+					{
+						"name": "NUM_INSTANCIA",
+						"type": "varchar"
+					},
+					{
+						"name": "VLR_BRUTO",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "VLR_CONTESTADO",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "VLR_IMPOSTO_ICMS",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "VLR_OUTROS_IMPOSTOS",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "VLR_IMPOSTO_CONSTESTADO",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "CC_CR_AJUSTE",
+						"type": "varchar"
+					},
+					{
+						"name": "CC_DB_AJUSTE",
+						"type": "varchar"
+					},
+					{
+						"name": "CC_CREDITO_FAT",
+						"type": "varchar"
+					},
+					{
+						"name": "CC_DEBITO_FAT",
+						"type": "varchar"
+					},
+					{
+						"name": "CC_CREDITO_IMPOSTO",
+						"type": "varchar"
+					},
+					{
+						"name": "CC_DEBITO_IMPOSTO",
+						"type": "varchar"
+					},
+					{
+						"name": "DESC_CONTESTACAO",
+						"type": "varchar"
+					},
+					{
+						"name": "DESC_MOTIVO",
+						"type": "varchar"
+					},
+					{
+						"name": "DT_CONTESTACAO",
+						"type": "date"
+					},
+					{
+						"name": "ACCOUNT_NO",
+						"type": "varchar"
+					},
+					{
+						"name": "SUBTYPE_CODE",
+						"type": "decimal",
+						"precision": 19,
+						"scale": 0
+					},
+					{
+						"name": "STEP_EXECUTION_ID",
+						"type": "decimal",
+						"precision": 19,
+						"scale": 0
+					},
+					{
+						"name": "JOB_EXECUTION_ID",
+						"type": "decimal",
+						"precision": 19,
+						"scale": 0
+					}
+				],
+				"typeProperties": {
+					"schema": "CONVENIO",
+					"table": "CVTB_FATURA_DET_KENAN"
 				}
 			},
 			"dependsOn": [
