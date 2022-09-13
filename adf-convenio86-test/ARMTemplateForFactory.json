@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConv86'"
 		},
+		"AzureSqlDatabaseKyros_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseKyros'"
+		},
 		"blob_storage_conv86_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
@@ -62,13 +66,6 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/default')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
-			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/plCargaArquivosContestacaoAtis')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -1007,7 +1004,7 @@
 					"name": "CargaArquivosAtis"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-26T17:49:09Z"
+				"lastPublishTime": "2022-09-08T17:23:12Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ListaArquivosBlobsAtis_Originais')]",
@@ -2040,7 +2037,7 @@
 					"name": "CargaArquivosAtlys"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-26T17:49:09Z"
+				"lastPublishTime": "2022-09-08T17:23:14Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ListaArquivosBlobsAtlys_Originais')]",
@@ -2998,7 +2995,7 @@
 					"name": "CargaArquivosFat"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-26T17:49:09Z"
+				"lastPublishTime": "2022-09-08T17:23:14Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ListaArquivosBlobsFat_Originais')]",
@@ -4165,7 +4162,7 @@
 					"name": "CargaArquivosKenan"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-26T17:49:09Z"
+				"lastPublishTime": "2022-09-08T17:23:13Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ListaArquivosBlobsKenan_Originais')]",
@@ -5123,7 +5120,8 @@
 				"folder": {
 					"name": "CargaArquivoVivoNext"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-09-08T17:23:13Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ListaArquivosBlobVivoNext_Originais')]",
@@ -5659,7 +5657,8 @@
 				"folder": {
 					"name": "CargaArquivosConv115"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-09-08T17:23:12Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/arq_Conv115')]",
@@ -6126,7 +6125,8 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-09-08T17:23:17Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/VerificaDiretorioKenan')]",
@@ -6373,7 +6373,7 @@
 					"name": "CargaArquivosAtis"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-18T13:46:40Z"
+				"lastPublishTime": "2022-09-08T17:23:14Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoAtis')]",
@@ -6613,7 +6613,7 @@
 					"name": "CargaArquivosAtlys"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-18T13:46:40Z"
+				"lastPublishTime": "2022-09-08T17:23:15Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoAtlys')]",
@@ -6853,7 +6853,7 @@
 					"name": "CargaArquivosFat"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-18T13:46:40Z"
+				"lastPublishTime": "2022-09-08T17:23:16Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoFat')]",
@@ -7093,7 +7093,7 @@
 					"name": "CargaArquivosKenan"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-18T13:46:40Z"
+				"lastPublishTime": "2022-09-08T17:23:14Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoKenan')]",
@@ -7332,7 +7332,8 @@
 				"folder": {
 					"name": "CargaArquivoVivoNext"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-09-08T17:23:14Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseConv86')]",
@@ -12395,6 +12396,26 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseKyros')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Apontamento provisório para o Banco de dados da Kyros ",
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabaseKyros_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/blob_storage_conv86')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -15642,6 +15663,13 @@
 				"[concat(variables('factoryId'), '/datasets/arq_vivo_next_K17_corrigido')]",
 				"[concat(variables('factoryId'), '/datasets/CVTB_CARGA_ERRO_LAYOUT')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/default/AzureBlobStorage1')]",

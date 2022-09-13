@@ -8,6 +8,9 @@
 		"AzureSqlDatabaseConv86_connectionString": {
 			"value": ""
 		},
+		"AzureSqlDatabaseKyros_connectionString": {
+			"value": ""
+		},
 		"blob_storage_conv86_connectionString": {
 			"value": ""
 		},
