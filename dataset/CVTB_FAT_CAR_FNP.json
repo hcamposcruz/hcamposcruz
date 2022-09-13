@@ -158,12 +158,15 @@
 				"type": "decimal",
 				"precision": 10,
 				"scale": 0
+			},
+			{
+				"name": "CONTA",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "CONVENIO",
 			"table": "CVTB_FAT_CAR_FNP"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }
