@@ -6,7 +6,7 @@
 			"computeProperties": {
 				"location": "Brazil South",
 				"dataFlowProperties": {
-					"computeType": "General",
+					"computeType": "MemoryOptimized",
 					"coreCount": 48,
 					"timeToLive": 10,
 					"cleanup": false
