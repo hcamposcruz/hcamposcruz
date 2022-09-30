@@ -85,11 +85,15 @@
 			},
 			{
 				"name": "DT_FECHA_FATURA",
-				"type": "date"
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			},
 			{
 				"name": "DT_EMISSAO",
-				"type": "date"
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			},
 			{
 				"name": "DT_AJUSTE",
