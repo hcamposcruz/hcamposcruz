@@ -1,6 +1,10 @@
 {
 	"name": "arq_kenan_Detalhe_original",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageConv86",
+			"type": "LinkedServiceReference"
+		},
 		"parameters": {
 			"NomeArq": {
 				"type": "string"

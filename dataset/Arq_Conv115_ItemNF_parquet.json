@@ -1,6 +1,10 @@
 {
 	"name": "Arq_Conv115_ItemNF_parquet",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageConv86",
+			"type": "LinkedServiceReference"
+		},
 		"folder": {
 			"name": "Conv115"
 		},
