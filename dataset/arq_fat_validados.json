@@ -1,10 +1,6 @@
 {
 	"name": "arq_fat_validados",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "blob_storage_conv86",
-			"type": "LinkedServiceReference"
-		},
 		"parameters": {
 			"NomeArquivoFAT": {
 				"type": "string"

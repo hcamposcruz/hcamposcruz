@@ -1,10 +1,6 @@
 {
 	"name": "arq_kenan_validados",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "blob_storage_conv86",
-			"type": "LinkedServiceReference"
-		},
 		"parameters": {
 			"NomeArquivoKenan": {
 				"type": "string"
