@@ -1,6 +1,10 @@
 {
 	"name": "ListaArquivosBlobsAtlys_Limpos",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageConv86",
+			"type": "LinkedServiceReference"
+		},
 		"folder": {
 			"name": "Atlys"
 		},
