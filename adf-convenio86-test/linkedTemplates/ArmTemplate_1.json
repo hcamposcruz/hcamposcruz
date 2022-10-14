@@ -667,6 +667,158 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/CVTB_REL_ESTOQUE_CONTESTACOES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseConv86",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Relatorios"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "FL_STATUS_GERAL",
+						"type": "char"
+					},
+					{
+						"name": "UF_FATURA",
+						"type": "varchar"
+					},
+					{
+						"name": "DS_SISTEMA",
+						"type": "varchar"
+					},
+					{
+						"name": "DT_EMISSAO_NF_ORIG",
+						"type": "date"
+					},
+					{
+						"name": "DT_AJUSTE",
+						"type": "date"
+					},
+					{
+						"name": "DT_CRIADO_EM",
+						"type": "date"
+					},
+					{
+						"name": "DESC_MOTIVO_AJUSTE",
+						"type": "varchar"
+					},
+					{
+						"name": "CONTA_CONTABIL",
+						"type": "varchar"
+					},
+					{
+						"name": "QTD",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "VLR_ATRIBUIDO",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "ICMS_PARA_RESSARCIMENTO",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "CONVENIO",
+					"table": "CVTB_REL_ESTOQUE_CONTESTACOES"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CVTB_REL_INCONSISTENCIAS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseConv86",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Relatorios"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "FL_STATUS_GERAL",
+						"type": "char"
+					},
+					{
+						"name": "UF_FATURA",
+						"type": "varchar"
+					},
+					{
+						"name": "DS_SISTEMA",
+						"type": "varchar"
+					},
+					{
+						"name": "DT_EMISSAO_NF_ORIG",
+						"type": "date"
+					},
+					{
+						"name": "DT_AJUSTE",
+						"type": "date"
+					},
+					{
+						"name": "DT_CRIADO_EM",
+						"type": "date"
+					},
+					{
+						"name": "DESC_MOTIVO_AJUSTE",
+						"type": "varchar"
+					},
+					{
+						"name": "CONTA_CONTABIL",
+						"type": "varchar"
+					},
+					{
+						"name": "CD_CRITICA",
+						"type": "varchar"
+					},
+					{
+						"name": "DS_CRITICA",
+						"type": "varchar"
+					},
+					{
+						"name": "QTD",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "VLR_ATRIBUIDO",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "ICMS_PARA_RESSARCIMENTO",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "CONVENIO",
+					"table": "CVTB_REL_INCONSISTENCIAS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ListaArquivosBlobVivoNext_Originais')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -883,6 +1035,44 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/QryEstoqueContestacao')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseConv86",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Relatorios"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/QryInconsistencias')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseConv86",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Relatorios"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/VerificaDiretorioAtis')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1022,146 +1212,6 @@
 					"quoteChar": "\""
 				},
 				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/arq_Conv115')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_conv86",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Conv115"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "arq-conv115"
-					},
-					"columnDelimiter": "#$%",
-					"encodingName": "ISO-8859-1",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/arq_Conv115_Cadastral')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_conv86",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"NomeArqCadastral": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Conv115"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().NomeArqCadastral",
-							"type": "Expression"
-						},
-						"container": "arq-conv115"
-					},
-					"columnDelimiter": "#$%",
-					"encodingName": "ISO-8859-1",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/arq_Conv115_Cadastral_parquet')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_conv86",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Conv115"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "parquet/convenio115Cadastral",
-						"container": "arq-conv115"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/arq_Conv115_ItemNF')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_conv86",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"NomeArqItem": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Conv115"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().NomeArqItem",
-							"type": "Expression"
-						},
-						"container": "arq-conv115"
-					},
-					"columnDelimiter": "#$%",
-					"encodingName": "WINDOWS-1252",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		}

@@ -13,6 +13,146 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/arq_Conv115')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Conv115"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "arq-conv115"
+					},
+					"columnDelimiter": "#$%",
+					"encodingName": "ISO-8859-1",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_Conv115_Cadastral')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArqCadastral": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Conv115"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArqCadastral",
+							"type": "Expression"
+						},
+						"container": "arq-conv115"
+					},
+					"columnDelimiter": "#$%",
+					"encodingName": "ISO-8859-1",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_Conv115_Cadastral_parquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Conv115"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "parquet/convenio115Cadastral",
+						"container": "arq-conv115"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_Conv115_ItemNF')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArqItem": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Conv115"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArqItem",
+							"type": "Expression"
+						},
+						"container": "arq-conv115"
+					},
+					"columnDelimiter": "#$%",
+					"encodingName": "WINDOWS-1252",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/arq_Conv115_MestreNF')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -905,174 +1045,6 @@
 					"columnDelimiter": "",
 					"escapeChar": "\\",
 					"firstRowAsHeader": false,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/arq_fat_car_ff_original')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_conv86",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"NomeArq": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Fat"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().NomeArq",
-							"type": "Expression"
-						},
-						"folderPath": "fat",
-						"container": "arq-ajustes"
-					},
-					"columnDelimiter": "",
-					"escapeChar": "\\",
-					"firstRowAsHeader": false,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/arq_fat_car_fnp')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_conv86",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"NomeArq": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Fat"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().NomeArq",
-							"type": "Expression"
-						},
-						"folderPath": "fat/validados_a_processar",
-						"container": "arq-ajustes"
-					},
-					"columnDelimiter": "",
-					"escapeChar": "\\",
-					"firstRowAsHeader": false,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/arq_fat_car_fnp_original')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_conv86",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"NomeArq": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Fat"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().NomeArq",
-							"type": "Expression"
-						},
-						"folderPath": "fat",
-						"container": "arq-ajustes"
-					},
-					"columnDelimiter": "",
-					"escapeChar": "\\",
-					"firstRowAsHeader": false,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/arq_fat_validados')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_conv86",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"NomeArquivoFAT": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Fat"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().NomeArquivoFAT",
-							"type": "Expression"
-						},
-						"folderPath": "fat/validados_a_processar",
-						"container": "arq-ajustes"
-					},
-					"columnDelimiter": "",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": [

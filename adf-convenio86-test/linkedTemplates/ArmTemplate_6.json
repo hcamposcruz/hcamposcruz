@@ -13,6 +13,2500 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/plCargaArquivosContestacaoVivoNext')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ListaArquivos",
+						"type": "GetMetadata",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLote",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "ListaArquivosBlobVivoNext_Originais",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLote",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLote",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varNovoLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLote').output.firstRow.ID_LOTE)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "qryGeraNovoLote",
+						"type": "Script",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "NonQuery",
+									"text": "INSERT INTO CONVENIO.CVTB_LOTE\n(\nDT_INICIO_PROCESSAMENTO,\nTP_LOTE,\nFL_STATUS,\nID_SISTEMA,\nDT_CRIADO_EM,\nCD_CRIADO_POR\n)\nVALUES\n(\nDATEADD(HOUR, -3, sysdatetime()),\n'CONTESTACAO',\n'EM_PROCESSAMENTO',\n5,\nDATEADD(HOUR, -3, sysdatetime()),\n'Carga ADF - CargaArqVivoNext'\n);"
+								}
+							]
+						}
+					},
+					{
+						"name": "FiltraArquivosVivoNext",
+						"type": "Filter",
+						"dependsOn": [
+							{
+								"activity": "ListaArquivos",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('ListaArquivos').output.childItems",
+								"type": "Expression"
+							},
+							"condition": {
+								"value": "@or(startswith(item().Name, 'Vivonext_K16_'), startswith(item().Name, 'Vivonext_K17_'))",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "BuscaNovoLote",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "qryGeraNovoLote",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqVivoNext' AND FL_STATUS = 'EM_PROCESSAMENTO';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "FiltraArquivosVivoNext",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('FiltraArquivosVivoNext').output.Value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Set varNomeArquivo",
+									"type": "SetVariable",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "varNomeArquivo",
+										"value": {
+											"value": "@item().Name",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "BuscaLoteArquivo",
+									"type": "Script",
+									"dependsOn": [
+										{
+											"activity": "GravaLoteArquivo",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"linkedServiceName": {
+										"referenceName": "AzureSqlDatabaseConv86",
+										"type": "LinkedServiceReference"
+									},
+									"typeProperties": {
+										"scripts": [
+											{
+												"parameters": [
+													{
+														"name": "psNomeArquivo",
+														"type": "String",
+														"value": {
+															"value": "@variables('varNomeArquivo')",
+															"type": "Expression"
+														},
+														"direction": "Input"
+													}
+												],
+												"type": "Query",
+												"text": "SELECT CONVERT(VARCHAR(38), ID_LOTE_ARQUIVO) as ID_LA \nFROM CONVENIO.CVTB_LOTE_ARQUIVO \nWHERE NM_ARQUIVO = @psNomeArquivo;"
+											}
+										]
+									}
+								},
+								{
+									"name": "GravaLoteArquivo",
+									"type": "Script",
+									"dependsOn": [
+										{
+											"activity": "Set varPeriodoReferencia",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"linkedServiceName": {
+										"referenceName": "AzureSqlDatabaseConv86",
+										"type": "LinkedServiceReference"
+									},
+									"typeProperties": {
+										"scripts": [
+											{
+												"parameters": [
+													{
+														"name": "NomeArquivo",
+														"type": "String",
+														"value": {
+															"value": "@variables('varNomeArquivo')",
+															"type": "Expression"
+														},
+														"direction": "Input"
+													},
+													{
+														"name": "NovoLote",
+														"type": "String",
+														"value": {
+															"value": "@variables('varNovoLote')",
+															"type": "Expression"
+														},
+														"direction": "Input"
+													},
+													{
+														"name": "varPeriodoReferencia",
+														"type": "String",
+														"value": {
+															"value": "@variables('varPeriodoReferencia')",
+															"type": "Expression"
+														},
+														"direction": "Input"
+													}
+												],
+												"type": "NonQuery",
+												"text": "DELETE from CONVENIO.CVTB_CARGA_ERRO_LAYOUT WITH (ROWLOCK) where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA WITH (NOLOCK)\nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \nAND LA.NM_ARQUIVO = @NomeArquivo\nAND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_VIVO_NEXT_K16 WITH (ROWLOCK) where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA WITH (NOLOCK)\nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WITH (NOLOCK) WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_VIVO_NEXT_K17 WITH (ROWLOCK) where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA WITH (NOLOCK)\nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \n  AND LA.NM_ARQUIVO = @NomeArquivo\n  AND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WITH (NOLOCK) WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\n\nDELETE from CONVENIO.CVTB_LOTE_ARQUIVO WITH (ROWLOCK)\n where NM_ARQUIVO = @NomeArquivo \n   and ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WITH (NOLOCK) WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO');\n\nINSERT INTO CONVENIO.CVTB_LOTE_ARQUIVO (NM_ARQUIVO,ID_LOTE,ID_SISTEMA_ARQUIVO, DATA_REF_ARQUIVO) \nVALUES (@NomeArquivo, CONVERT(NUMERIC(28), @NovoLote),CASE WHEN SUBSTRING(@NomeArquivo, 10, 3) = 'K16' THEN 11   ELSE 12 END, @varPeriodoReferencia);"
+											}
+										]
+									}
+								},
+								{
+									"name": "Set varNovoLoteArquivo",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "BuscaLoteArquivo",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "varNovoLoteArquivo",
+										"value": {
+											"value": "@activity('BuscaLoteArquivo').output.resultSets[0].rows[0].ID_LA",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "Switch1",
+									"type": "Switch",
+									"dependsOn": [
+										{
+											"activity": "Set varNovoLoteArquivo",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"on": {
+											"value": "@substring(variables('varNomeArquivo'),0,12)",
+											"type": "Expression"
+										},
+										"cases": [
+											{
+												"value": "Vivonext_K17",
+												"activities": [
+													{
+														"name": "TrataArquivoVivoNextK17",
+														"type": "ExecuteDataFlow",
+														"dependsOn": [
+															{
+																"activity": "IncluiEstatisticaTabLoteArquivoVivoNextK17",
+																"dependencyConditions": [
+																	"Succeeded"
+																]
+															}
+														],
+														"policy": {
+															"timeout": "1.00:00:00",
+															"retry": 0,
+															"retryIntervalInSeconds": 30,
+															"secureOutput": false,
+															"secureInput": false
+														},
+														"userProperties": [],
+														"typeProperties": {
+															"dataflow": {
+																"referenceName": "dfGravaArquivoVivoNextK17",
+																"type": "DataFlowReference",
+																"parameters": {
+																	"pNomeArquivo": {
+																		"value": "'@{variables('varNomeArquivo')}'",
+																		"type": "Expression"
+																	}
+																},
+																"datasetParameters": {
+																	"srcArqVivoNextK17": {
+																		"NomeArq": {
+																			"value": "@variables('varNomeArquivo')",
+																			"type": "Expression"
+																		}
+																	},
+																	"BuscaLoteArqAtual": {},
+																	"GravaTabVivoNextK17": {}
+																}
+															},
+															"staging": {},
+															"integrationRuntime": {
+																"referenceName": "integrationRuntimeConv86",
+																"type": "IntegrationRuntimeReference"
+															},
+															"traceLevel": "Fine"
+														}
+													},
+													{
+														"name": "ValidacaoLayoutVivoNextK17",
+														"type": "ExecuteDataFlow",
+														"dependsOn": [],
+														"policy": {
+															"timeout": "1.00:00:00",
+															"retry": 0,
+															"retryIntervalInSeconds": 30,
+															"secureOutput": false,
+															"secureInput": false
+														},
+														"userProperties": [],
+														"typeProperties": {
+															"dataflow": {
+																"referenceName": "dfValidacaoLayoutVivoNextK17",
+																"type": "DataFlowReference",
+																"parameters": {
+																	"pNomeArquivo": {
+																		"value": "'@{variables('varNomeArquivo')}'",
+																		"type": "Expression"
+																	},
+																	"pLoteArquivo": {
+																		"value": "'@{variables('varNovoLoteArquivo')}'",
+																		"type": "Expression"
+																	}
+																},
+																"datasetParameters": {
+																	"BuscaLinhasArqVivoNext17": {
+																		"NomeArq": {
+																			"value": "@variables('varNomeArquivo')",
+																			"type": "Expression"
+																		}
+																	},
+																	"CriaArqCorrigidoVivoNextK17": {
+																		"NomeArq": {
+																			"value": "@variables('varNomeArquivo')",
+																			"type": "Expression"
+																		}
+																	},
+																	"InsereLinhasNaoValidas": {}
+																}
+															},
+															"staging": {},
+															"integrationRuntime": {
+																"referenceName": "integrationRuntimeConv86",
+																"type": "IntegrationRuntimeReference"
+															},
+															"traceLevel": "Fine"
+														}
+													},
+													{
+														"name": "QdeLinhasValidasVivoNextK17",
+														"type": "SetVariable",
+														"dependsOn": [
+															{
+																"activity": "ValidacaoLayoutVivoNextK17",
+																"dependencyConditions": [
+																	"Succeeded"
+																]
+															}
+														],
+														"userProperties": [],
+														"typeProperties": {
+															"variableName": "varQdeLinhasValidas_VivoK17",
+															"value": {
+																"value": "@string(activity('ValidacaoLayoutVivoNextK17').output.runStatus.metrics.CriaArqCorrigidoVivoNextK17.stages[0].recordsWritten)\n",
+																"type": "Expression"
+															}
+														}
+													},
+													{
+														"name": "QdeLinhasLidasVivoNextK17",
+														"type": "SetVariable",
+														"dependsOn": [
+															{
+																"activity": "ValidacaoLayoutVivoNextK17",
+																"dependencyConditions": [
+																	"Succeeded"
+																]
+															}
+														],
+														"userProperties": [],
+														"typeProperties": {
+															"variableName": "varQdeLinhasLidas_VivoK17",
+															"value": {
+																"value": "@string(activity('ValidacaoLayoutVivoNextK17').output.runStatus.metrics.InsereLinhasNaoValidas.stages[0].streams.CalcQdePipes.count)",
+																"type": "Expression"
+															}
+														}
+													},
+													{
+														"name": "IncluiEstatisticaTabLoteArquivoVivoNextK17",
+														"type": "Script",
+														"dependsOn": [
+															{
+																"activity": "QdeLinhasValidasVivoNextK17",
+																"dependencyConditions": [
+																	"Succeeded"
+																]
+															},
+															{
+																"activity": "QdeLinhasLidasVivoNextK17",
+																"dependencyConditions": [
+																	"Succeeded"
+																]
+															}
+														],
+														"policy": {
+															"timeout": "7.00:00:00",
+															"retry": 0,
+															"retryIntervalInSeconds": 30,
+															"secureOutput": false,
+															"secureInput": false
+														},
+														"userProperties": [],
+														"linkedServiceName": {
+															"referenceName": "AzureSqlDatabaseConv86",
+															"type": "LinkedServiceReference"
+														},
+														"typeProperties": {
+															"scripts": [
+																{
+																	"parameters": [
+																		{
+																			"name": "LinhasTotais",
+																			"type": "String",
+																			"value": {
+																				"value": "@variables('varQdeLinhasLidas_VivoK17')",
+																				"type": "Expression"
+																			},
+																			"direction": "Input"
+																		},
+																		{
+																			"name": "LinhasValidas",
+																			"type": "String",
+																			"value": {
+																				"value": "@variables('varQdeLinhasValidas_VivoK17')",
+																				"type": "Expression"
+																			},
+																			"direction": "Input"
+																		},
+																		{
+																			"name": "ID_LOTE_ARQUIVO",
+																			"type": "String",
+																			"value": {
+																				"value": "@variables('varNovoLoteArquivo')",
+																				"type": "Expression"
+																			},
+																			"direction": "Input"
+																		}
+																	],
+																	"type": "NonQuery",
+																	"text": {
+																		"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais)\nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
+																		"type": "Expression"
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										],
+										"defaultActivities": [
+											{
+												"name": "TrataArquivoVivoNextK16",
+												"type": "ExecuteDataFlow",
+												"dependsOn": [
+													{
+														"activity": "IncluiEstatisticaTabLoteArquivo_VivoNextK16",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "1.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"dataflow": {
+														"referenceName": "dfGravaArquivoVivoNextK16",
+														"type": "DataFlowReference",
+														"parameters": {
+															"pNomeArquivo": {
+																"value": "'@{variables('varNomeArquivo')}'",
+																"type": "Expression"
+															}
+														},
+														"datasetParameters": {
+															"srcArqVivoNextK16": {
+																"NomeArq": {
+																	"value": "@variables('varNomeArquivo')",
+																	"type": "Expression"
+																}
+															},
+															"BuscaLoteArqAtual": {},
+															"GravaTabVivoNextK16": {}
+														}
+													},
+													"staging": {},
+													"integrationRuntime": {
+														"referenceName": "integrationRuntimeConv86",
+														"type": "IntegrationRuntimeReference"
+													},
+													"traceLevel": "Fine"
+												}
+											},
+											{
+												"name": "dfValidacaoLayoutVivoNextK16",
+												"type": "ExecuteDataFlow",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "1.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"dataflow": {
+														"referenceName": "dfValidacaoLayoutVivoNextK16",
+														"type": "DataFlowReference",
+														"parameters": {
+															"pNomeArquivo": {
+																"value": "'@{variables('varNomeArquivo')}'",
+																"type": "Expression"
+															},
+															"pLoteArquivo": {
+																"value": "'@{variables('varNovoLoteArquivo')}'",
+																"type": "Expression"
+															}
+														},
+														"datasetParameters": {
+															"BuscaLinhasArqVivoNextK16": {
+																"NomeArq": {
+																	"value": "@variables('varNomeArquivo')",
+																	"type": "Expression"
+																}
+															},
+															"CriaArqValidosVivoNextK16": {
+																"NomeArq": {
+																	"value": "@variables('varNomeArquivo')",
+																	"type": "Expression"
+																}
+															},
+															"InsereLinhasNaoValidasVivoNextK16": {}
+														}
+													},
+													"staging": {},
+													"integrationRuntime": {
+														"referenceName": "integrationRuntimeConv86",
+														"type": "IntegrationRuntimeReference"
+													},
+													"traceLevel": "Fine"
+												}
+											},
+											{
+												"name": "QdeLinhasValidasVivoNextK16",
+												"type": "SetVariable",
+												"dependsOn": [
+													{
+														"activity": "dfValidacaoLayoutVivoNextK16",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "varQdeLinhasValidas_VivoK16",
+													"value": {
+														"value": "@string(activity('dfValidacaoLayoutVivoNextK16').output.runStatus.metrics.CriaArqValidosVivoNextK16.stages[0].recordsWritten)",
+														"type": "Expression"
+													}
+												}
+											},
+											{
+												"name": "QdeLinhasLidasVivoNextK16",
+												"type": "SetVariable",
+												"dependsOn": [
+													{
+														"activity": "dfValidacaoLayoutVivoNextK16",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "varQdeLinhasLidas_VivoK16",
+													"value": {
+														"value": "@string(activity('dfValidacaoLayoutVivoNextK16').output.runStatus.metrics.InsereLinhasNaoValidasVivoNextK16.stages[0].streams.CalcQdePipes.count)",
+														"type": "Expression"
+													}
+												}
+											},
+											{
+												"name": "IncluiEstatisticaTabLoteArquivo_VivoNextK16",
+												"type": "Script",
+												"dependsOn": [
+													{
+														"activity": "QdeLinhasLidasVivoNextK16",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													},
+													{
+														"activity": "QdeLinhasValidasVivoNextK16",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"linkedServiceName": {
+													"referenceName": "AzureSqlDatabaseConv86",
+													"type": "LinkedServiceReference"
+												},
+												"typeProperties": {
+													"scripts": [
+														{
+															"parameters": [
+																{
+																	"name": "LinhasTotais",
+																	"type": "String",
+																	"value": {
+																		"value": "@variables('varQdeLinhasLidas_VivoK16')",
+																		"type": "Expression"
+																	},
+																	"direction": "Input"
+																},
+																{
+																	"name": "LinhasValidas",
+																	"type": "String",
+																	"value": {
+																		"value": "@variables('varQdeLinhasValidas_VivoK16')",
+																		"type": "Expression"
+																	},
+																	"direction": "Input"
+																},
+																{
+																	"name": "ID_LOTE_ARQUIVO",
+																	"type": "String",
+																	"value": {
+																		"value": "@variables('varNovoLoteArquivo')",
+																		"type": "Expression"
+																	},
+																	"direction": "Input"
+																}
+															],
+															"type": "NonQuery",
+															"text": {
+																"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais)\nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
+																"type": "Expression"
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								},
+								{
+									"name": "Set varPeriodoReferencia",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Set varNomeArquivo",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "varPeriodoReferencia",
+										"value": {
+											"value": "@replace(substring(variables('varNomeArquivo'), 13, 7), '_', '')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "CargaUnificadaVivonext",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "ForEach1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dfCargaUnificadaVivoNext",
+								"type": "DataFlowReference",
+								"parameters": {
+									"pLote": {
+										"value": "'@{variables('varNovoLote')}'",
+										"type": "Expression"
+									},
+									"pMesAnoRef": {
+										"value": "'@{variables('varPeriodoReferencia')}'",
+										"type": "Expression"
+									}
+								},
+								"datasetParameters": {
+									"TabelasVivoNext": {},
+									"TabelaCONTESTACAO": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntimeConv86",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "AtualizaLoteQtdContestacoes",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "CargaUnificadaVivonext",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_Lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varNovoLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										},
+										{
+											"name": "pVlr_QtdContestacoes",
+											"type": "String",
+											"value": {
+												"value": "@activity('CargaUnificadaVivonext').output.runStatus.metrics.TabelaCONTESTACAO.rowsWritten",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": {
+										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote)",
+										"type": "Expression"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "stp_elegibilidadeVivonext",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "AtualizaLoteQtdContestacoes",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[CONVENIO].[stp_elegibilidade_Vivonext]",
+							"storedProcedureParameters": {
+								"pid_lote_ajuste": {
+									"value": {
+										"value": "@variables('varNovoLote')",
+										"type": "Expression"
+									},
+									"type": "Decimal"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"varNovoLote": {
+						"type": "String"
+					},
+					"varNomeArquivo": {
+						"type": "String"
+					},
+					"varNovoLoteArquivo": {
+						"type": "String"
+					},
+					"varPeriodoReferencia": {
+						"type": "String"
+					},
+					"varQdeLinhasValidas_VivoK16": {
+						"type": "String"
+					},
+					"varQdeLinhasLidas_VivoK16": {
+						"type": "String"
+					},
+					"varQdeLinhasValidas_VivoK17": {
+						"type": "String"
+					},
+					"varQdeLinhasLidas_VivoK17": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "CargaArquivoVivoNext"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/plCargaArquivosConvenio115')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ListaArquivos",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "arq_Conv115",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "FiltraArquivos",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('FiltraArquivos').output.Value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "NomeArquivo",
+									"type": "SetVariable",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "varNomeArquivo",
+										"value": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "Switch1",
+									"type": "Switch",
+									"dependsOn": [
+										{
+											"activity": "NomeArquivo",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"on": {
+											"value": "@substring(variables('varNomeArquivo'), 28, 1)",
+											"type": "Expression"
+										},
+										"cases": [
+											{
+												"value": "C",
+												"activities": [
+													{
+														"name": "dfMapeamento115Controle",
+														"type": "ExecuteDataFlow",
+														"dependsOn": [],
+														"policy": {
+															"timeout": "1.12:00:00",
+															"retry": 0,
+															"retryIntervalInSeconds": 30,
+															"secureOutput": false,
+															"secureInput": false
+														},
+														"userProperties": [],
+														"typeProperties": {
+															"dataflow": {
+																"referenceName": "dfMapeamento115Controle",
+																"type": "DataFlowReference",
+																"parameters": {
+																	"pNomeArq": {
+																		"value": "'@{variables('varNomeArquivo')}'",
+																		"type": "Expression"
+																	}
+																},
+																"datasetParameters": {
+																	"EntradaControleV3": {
+																		"NomeArqControle": {
+																			"value": "@variables('varNomeArquivo')",
+																			"type": "Expression"
+																		}
+																	},
+																	"SaidaParquetArqControle": {}
+																}
+															},
+															"staging": {},
+															"compute": {
+																"coreCount": 8,
+																"computeType": "General"
+															},
+															"traceLevel": "Fine"
+														}
+													}
+												]
+											},
+											{
+												"value": "D",
+												"activities": [
+													{
+														"name": "dfMapeamento115Cadastral",
+														"type": "ExecuteDataFlow",
+														"dependsOn": [],
+														"policy": {
+															"timeout": "1.12:00:00",
+															"retry": 0,
+															"retryIntervalInSeconds": 30,
+															"secureOutput": false,
+															"secureInput": false
+														},
+														"userProperties": [],
+														"typeProperties": {
+															"dataflow": {
+																"referenceName": "dfMapeamento115Cadastral",
+																"type": "DataFlowReference",
+																"parameters": {
+																	"pNomeArq": {
+																		"value": "'@{variables('varNomeArquivo')}'",
+																		"type": "Expression"
+																	}
+																},
+																"datasetParameters": {
+																	"EntradaArqCadastral": {
+																		"NomeArqCadastral": {
+																			"value": "@variables('varNomeArquivo')",
+																			"type": "Expression"
+																		}
+																	},
+																	"SaidaArqCadastral": {}
+																}
+															},
+															"staging": {},
+															"compute": {
+																"coreCount": 8,
+																"computeType": "General"
+															},
+															"traceLevel": "Fine"
+														}
+													}
+												]
+											},
+											{
+												"value": "I",
+												"activities": [
+													{
+														"name": "dfMapeamento115Item",
+														"type": "ExecuteDataFlow",
+														"dependsOn": [],
+														"policy": {
+															"timeout": "1.12:00:00",
+															"retry": 0,
+															"retryIntervalInSeconds": 30,
+															"secureOutput": false,
+															"secureInput": false
+														},
+														"userProperties": [],
+														"typeProperties": {
+															"dataflow": {
+																"referenceName": "dfMapeamento115Item",
+																"type": "DataFlowReference",
+																"parameters": {
+																	"pNomeArq": {
+																		"value": "'@{variables('varNomeArquivo')}'",
+																		"type": "Expression"
+																	}
+																},
+																"datasetParameters": {
+																	"EntradaArqItem": {
+																		"NomeArqItem": {
+																			"value": "@variables('varNomeArquivo')",
+																			"type": "Expression"
+																		}
+																	},
+																	"SaidaArqItem": {}
+																}
+															},
+															"staging": {},
+															"compute": {
+																"coreCount": 8,
+																"computeType": "General"
+															},
+															"traceLevel": "Fine"
+														}
+													}
+												]
+											},
+											{
+												"value": "M",
+												"activities": [
+													{
+														"name": "dfMapeamento115Mestre",
+														"type": "ExecuteDataFlow",
+														"dependsOn": [],
+														"policy": {
+															"timeout": "1.12:00:00",
+															"retry": 0,
+															"retryIntervalInSeconds": 30,
+															"secureOutput": false,
+															"secureInput": false
+														},
+														"userProperties": [],
+														"typeProperties": {
+															"dataflow": {
+																"referenceName": "dfMapeamento115Mestre",
+																"type": "DataFlowReference",
+																"parameters": {
+																	"pNomeArq": {
+																		"value": "'@{variables('varNomeArquivo')}'",
+																		"type": "Expression"
+																	}
+																},
+																"datasetParameters": {
+																	"EntradaArqMestre": {
+																		"NomeArqMestre": {
+																			"value": "@variables('varNomeArquivo')",
+																			"type": "Expression"
+																		}
+																	},
+																	"SaidaArqMestre": {}
+																}
+															},
+															"staging": {},
+															"compute": {
+																"coreCount": 8,
+																"computeType": "General"
+															},
+															"traceLevel": "Fine"
+														}
+													}
+												]
+											}
+										]
+									}
+								},
+								{
+									"name": "If Condition",
+									"type": "IfCondition",
+									"dependsOn": [
+										{
+											"activity": "NomeArquivo",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"expression": {
+											"value": "@endswith(variables('varNomeArquivo'), 'C.001')",
+											"type": "Expression"
+										},
+										"ifTrueActivities": [
+											{
+												"name": "SERIE",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "varCD_SERIE",
+													"value": {
+														"value": "@substring(variables('varNomeArquivo'), 18, 3)",
+														"type": "Expression"
+													}
+												}
+											},
+											{
+												"name": "UF",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "varCD_UF",
+													"value": {
+														"value": "@substring(variables('varNomeArquivo'), 0, 2)",
+														"type": "Expression"
+													}
+												}
+											},
+											{
+												"name": "ANOMES",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "varCD_ANOMES",
+													"value": {
+														"value": "@concat('20',substring(variables('varNomeArquivo'), 21, 4))",
+														"type": "Expression"
+													}
+												}
+											},
+											{
+												"name": "CNPJ_EMPRESA",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "varCD_CNPJ_EMPRESA",
+													"value": {
+														"value": "@substring(variables('varNomeArquivo'), 2, 14)",
+														"type": "Expression"
+													}
+												}
+											},
+											{
+												"name": "MODELO",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "varCD_MODELO",
+													"value": {
+														"value": "@substring(variables('varNomeArquivo'), 16, 2)",
+														"type": "Expression"
+													}
+												}
+											},
+											{
+												"name": "RegistroTabConv115",
+												"type": "Script",
+												"dependsOn": [
+													{
+														"activity": "SERIE",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													},
+													{
+														"activity": "UF",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													},
+													{
+														"activity": "ANOMES",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													},
+													{
+														"activity": "CNPJ_EMPRESA",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													},
+													{
+														"activity": "MODELO",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "1.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"linkedServiceName": {
+													"referenceName": "AzureSqlDatabaseConv86",
+													"type": "LinkedServiceReference"
+												},
+												"typeProperties": {
+													"scripts": [
+														{
+															"parameters": [
+																{
+																	"name": "SERIE",
+																	"type": "String",
+																	"value": {
+																		"value": "@variables('varCD_SERIE')",
+																		"type": "Expression"
+																	},
+																	"direction": "Input"
+																},
+																{
+																	"name": "UF",
+																	"type": "String",
+																	"value": {
+																		"value": "@variables('varCD_UF')",
+																		"type": "Expression"
+																	},
+																	"direction": "Input"
+																},
+																{
+																	"name": "ANOMES",
+																	"type": "String",
+																	"value": {
+																		"value": "@variables('varCD_ANOMES')",
+																		"type": "Expression"
+																	},
+																	"direction": "Input"
+																},
+																{
+																	"name": "CNPJ_EMPRESA",
+																	"type": "String",
+																	"value": {
+																		"value": "@variables('varCD_CNPJ_EMPRESA')",
+																		"type": "Expression"
+																	},
+																	"direction": "Input"
+																},
+																{
+																	"name": "NOME_ARQUIVO",
+																	"type": "String",
+																	"value": {
+																		"value": "@variables('varNomeArquivo')",
+																		"type": "Expression"
+																	},
+																	"direction": "Input"
+																},
+																{
+																	"name": "MODELO",
+																	"type": "String",
+																	"value": {
+																		"value": "@variables('varCD_MODELO')",
+																		"type": "Expression"
+																	},
+																	"direction": "Input"
+																}
+															],
+															"type": "NonQuery",
+															"text": "INSERT INTO convenio.cvtb_convenio_115 \n(\nCD_SERIE, \nCD_UF, \nCD_ANO_MES, \nCD_CNPJ_EMPRESA,\nDT_INICIO_VIGENCIA,\nDT_CRIADO_EM, \nCD_CRIADO_POR, \nDT_ATUALIZADO_EM, \nCD_ATUALIZADO_POR, \nDS_FILE, \nCD_MODELO\n)\nVALUES \n(\n@SERIE,\n@UF,\n@ANOMES,\n@CNPJ_EMPRESA, \nDATEADD(HOUR, -3, sysdatetime()),\nDATEADD(HOUR, -3, sysdatetime()),\n'SYSTEM',\nDATEADD(HOUR, -3, sysdatetime()),\n'SYSTEM',\n@NOME_ARQUIVO,\n@MODELO\n)"
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "FiltraArquivos",
+						"type": "Filter",
+						"dependsOn": [
+							{
+								"activity": "ListaArquivos",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('ListaArquivos').output.childItems",
+								"type": "Expression"
+							},
+							"condition": {
+								"value": "@equals(length(item().Name), 33)",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"varNomeArquivo": {
+						"type": "String"
+					},
+					"varCD_SERIE": {
+						"type": "String"
+					},
+					"varCD_UF": {
+						"type": "String"
+					},
+					"varCD_ANOMES": {
+						"type": "String"
+					},
+					"varCD_CNPJ_EMPRESA": {
+						"type": "String"
+					},
+					"varCD_MODELO": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "CargaArquivosConv115"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/plCargaRelatoriosOnline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dfGeraRelEstoqueContestacao",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dfGeraRelEstoqueContestacao",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"QryContestacoes": {},
+									"RelEstoqueContestacoes": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntimeConv86",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "dfGeraRelInconsistencia",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dfGeraRelInconsistencia",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"QryInconsistencia": {},
+									"RelInconsistencia": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntimeConv86",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Relatorios"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/plCtrCargaArquivosContestacaoAtis')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "plCargaArquivosContestacaoAtis",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "plCargaArquivosContestacaoAtis",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "BuscaNovoLoteOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoAtis",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqAtis';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLoteOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLoteOK').output.firstRow.ID_LOTE)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "FinalizaLoteOK",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'PROCESSADO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "FinalizaLoteErro",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteNOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'ERRO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "BuscaNovoLote_NOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoAtis",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqAtis';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLoteNOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLote_NOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLote_NOK').output.firstRow.ID_LOTE)",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"varLote": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "CargaArquivosAtis"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-18T13:46:40Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/plCtrCargaArquivosContestacaoAtlys')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "plCargaArquivosContestacaoAtlys",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "plCargaArquivosContestacaoAtlys",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "BuscaNovoLoteOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoAtlys",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqAtlys';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLoteOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLoteOK').output.firstRow.ID_LOTE)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "FinalizaLoteOK",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'PROCESSADO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "FinalizaLoteErro",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteNOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'ERRO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "BuscaNovoLote_NOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoAtlys",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqAtlys';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLoteNOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLote_NOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLote_NOK').output.firstRow.ID_LOTE)",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"varLote": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "CargaArquivosAtlys"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-18T13:46:40Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/plCtrCargaArquivosContestacaoFat')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "plCargaArquivosContestacaoFat",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "plCargaArquivosContestacaoFat",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FinalizaLoteOK",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'PROCESSADO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "FinalizaLoteErro",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteNOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'ERRO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "Set varNovoLoteOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLoteOK').output.firstRow.ID_LOTE)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "BuscaNovoLoteOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoFat",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqFat';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLoteNOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLote_NOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLote_NOK').output.firstRow.ID_LOTE)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "BuscaNovoLote_NOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoFat",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqFat';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"varLote": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "CargaArquivosFat"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-18T13:46:40Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/plCtrCargaArquivosContestacaoKenan')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "plCargaArquivosContestacaoKenan",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "plCargaArquivosContestacaoKenan",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FinalizaLoteOK",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'PROCESSADO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "FinalizaLoteErro",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Set varNovoLoteNOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabaseConv86",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"parameters": [
+										{
+											"name": "pId_lote",
+											"type": "String",
+											"value": {
+												"value": "@variables('varLote')",
+												"type": "Expression"
+											},
+											"direction": "Input"
+										}
+									],
+									"type": "NonQuery",
+									"text": "UPDATE [CONVENIO].[CVTB_LOTE]\n    SET DT_FIM_PROCESSAMENTO = DATEADD(HOUR, -3, sysdatetime()),\n        FL_STATUS = 'ERRO'\n    WHERE ID_LOTE = CAST(@pId_lote AS numeric(38));"
+								}
+							]
+						}
+					},
+					{
+						"name": "Set varNovoLoteOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLoteOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLoteOK').output.firstRow.ID_LOTE)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "BuscaNovoLoteOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoKenan",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqKenan';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set varNovoLoteNOK",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "BuscaNovoLote_NOK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "varLote",
+							"value": {
+								"value": "@string(activity('BuscaNovoLote_NOK').output.firstRow.ID_LOTE)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "BuscaNovoLote_NOK",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "plCargaArquivosContestacaoKenan",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqKenan';\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"varLote": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "CargaArquivosKenan"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-18T13:46:40Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/plCtrCargaArquivosContestacaoVivoNext')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -245,7 +2739,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoVivoNext')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/plControleCarga')]",
@@ -706,6 +3202,10 @@
 				"annotations": []
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/plCtrCargaArquivosContestacaoKenan')]",
+				"[concat(variables('factoryId'), '/pipelines/plCtrCargaArquivosContestacaoAtlys')]",
+				"[concat(variables('factoryId'), '/pipelines/plCtrCargaArquivosContestacaoAtis')]",
+				"[concat(variables('factoryId'), '/pipelines/plCtrCargaArquivosContestacaoFat')]",
 				"[concat(variables('factoryId'), '/pipelines/plCtrCargaArquivosContestacaoVivoNext')]"
 			]
 		}

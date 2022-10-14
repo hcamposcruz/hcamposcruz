@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConv86'"
 		},
-		"blob_storage_conv86_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
-		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Storage/storageAccounts/stconvenio86dev"
@@ -56,6 +52,10 @@
 			"defaultValue": [
 				"sql-convenio86-test.database.windows.net"
 			]
+		},
+		"blob_storage_conv86_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://stconvenio86test.blob.core.windows.net/"
 		}
 	},
 	"variables": {
@@ -212,7 +212,8 @@
 				"annotations": [],
 				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"connectionString": "[parameters('blob_storage_conv86_connectionString')]"
+					"serviceEndpoint": "[parameters('blob_storage_conv86_properties_typeProperties_serviceEndpoint')]",
+					"accountKind": "StorageV2"
 				},
 				"connectVia": {
 					"referenceName": "integrationRuntimeConv86",
