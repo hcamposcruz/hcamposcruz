@@ -1,6 +1,10 @@
 {
 	"name": "ListaArquivosBlobsAtis_Originais",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageConv86",
+			"type": "LinkedServiceReference"
+		},
 		"folder": {
 			"name": "Atis"
 		},
