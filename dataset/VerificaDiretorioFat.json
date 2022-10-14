@@ -1,6 +1,10 @@
 {
 	"name": "VerificaDiretorioFat",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageConv86",
+			"type": "LinkedServiceReference"
+		},
 		"folder": {
 			"name": "Fat"
 		},
