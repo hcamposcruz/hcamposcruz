@@ -1051,7 +1051,7 @@
 				}
 			},
 			{
-				"name": "sp_elegibilidadeKenan",
+				"name": "stp_elegibilidadeKenan",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -1070,9 +1070,9 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[CONVENIO].[sp_elegibilidade_kenan]",
+					"storedProcedureName": "[CONVENIO].[stp_elegibilidade_Kenan]",
 					"storedProcedureParameters": {
-						"id_lote_ajuste": {
+						"pid_lote_ajuste": {
 							"value": {
 								"value": "@variables('varNovoLote')",
 								"type": "Expression"

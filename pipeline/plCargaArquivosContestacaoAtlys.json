@@ -269,7 +269,7 @@
 													],
 													"type": "NonQuery",
 													"text": {
-														"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais) \nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
+														"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)-1\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais)-1 \nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
 														"type": "Expression"
 													}
 												}
@@ -474,7 +474,7 @@
 													],
 													"type": "NonQuery",
 													"text": {
-														"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais) \nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
+														"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)-1\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais) -1\nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
 														"type": "Expression"
 													}
 												}
@@ -923,7 +923,7 @@
 				}
 			},
 			{
-				"name": "ps_elegibilidadeAtlys",
+				"name": "stp_elegibilidadeAtlys",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -942,9 +942,9 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[CONVENIO].[sp_elegibilidade_atlys]",
+					"storedProcedureName": "[CONVENIO].[stp_elegibilidade_Atlys]",
 					"storedProcedureParameters": {
-						"id_lote_ajuste": {
+						"pid_lote_ajuste": {
 							"value": {
 								"value": "@variables('varNovoLote')",
 								"type": "Expression"

@@ -1,0 +1,102 @@
+{
+	"name": "dfGeraRelEstoqueContestacao",
+	"properties": {
+		"folder": {
+			"name": "Relatorios"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "QryEstoqueContestacao",
+						"type": "DatasetReference"
+					},
+					"name": "QryContestacoes"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "CVTB_REL_ESTOQUE_CONTESTACOES",
+						"type": "DatasetReference"
+					},
+					"name": "RelEstoqueContestacoes"
+				}
+			],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          FL_STATUS_GERAL as string,",
+				"          UF_FATURA as string,",
+				"          DS_SISTEMA as string,",
+				"          DT_EMISSAO_NF_ORIG as date,",
+				"          DT_AJUSTE as date,",
+				"          DT_CRIADO_EM as date,",
+				"          DESC_MOTIVO_AJUSTE as string,",
+				"          CONTA_CONTABIL as string,",
+				"          QTD as integer,",
+				"          VLR_ATRIBUIDO as decimal(15,2),",
+				"          ICMS_PARA_RESSARCIMENTO as decimal(15,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT \\n     C.FL_STATUS_GERAL,\\n     C.UF_FATURA,\\n     S.DS_SISTEMA,\\n     CAST(C.DT_EMISSAO_NF_ORIG As Date) AS DT_EMISSAO_NF_ORIG,\\n     CAST(C.DT_AJUSTE As Date) AS DT_AJUSTE,\\n     CAST(DATEADD(dd,-(DAY(C.DT_CRIADO_EM)-1),C.DT_CRIADO_EM) As Date) AS DT_CRIADO_EM,\\n     CASE\\n          WHEN S.CD_SISTEMA = \\'ATLYS\\' THEN coalesce(C.COD_MOTIVO_AJUSTE + \\'-\\' + C.DESC_MOTIVO_AJUSTE, \\'Não Informado\\')\\n          WHEN S.CD_SISTEMA = \\'KENAN\\' THEN coalesce(C.DESC_MOTIVO_AJUSTE, \\'Não Informado\\')\\n          WHEN S.CD_SISTEMA = \\'ATIS\\' THEN coalesce(C.COD_MOTIVO_AJUSTE, \\'Não Informado\\')\\n          WHEN S.CD_SISTEMA = \\'FAT\\' THEN coalesce(C.COD_MOTIVO_AJUSTE, \\'Não Informado\\')\\n          WHEN S.CD_SISTEMA = \\'VIVO_NEXT\\' THEN coalesce(C.COD_MOTIVO_AJUSTE + \\' \\' + C.DESC_MOTIVO_AJUSTE, \\'Não Informado\\')\\n          WHEN S.CD_SISTEMA = \\'FENIX\\' THEN coalesce(C.COD_MOTIVO_AJUSTE + \\' \\' + C.DESC_MOTIVO_AJUSTE, \\'Não Informado\\')\\n          ELSE \\'Não Indentificado\\'\\n     END as DESC_MOTIVO_AJUSTE,\\n     CASE\\n          WHEN S.CD_SISTEMA = \\'ATLYS\\' THEN coalesce(C.CONTA_FINANCEIRA, \\'Não Informado\\')\\n          WHEN S.CD_SISTEMA = \\'KENAN\\' THEN coalesce(C.CONTACONTABIL_DB, \\'Não Informado\\')\\n          WHEN S.CD_SISTEMA = \\'ATIS\\' THEN \\'Não analisa conta\\'\\n          WHEN S.CD_SISTEMA = \\'FAT\\' THEN \\'Não analisa conta\\'\\n          WHEN S.CD_SISTEMA = \\'VIVO_NEXT\\' THEN coalesce(C.CONTACONTABIL_DB, \\'Não Informado\\')\\n          WHEN S.CD_SISTEMA = \\'FENIX\\' THEN coalesce(C.CONTA_FINANCEIRA, \\'Não Informado\\')\\n          ELSE \\'Não Indentificado\\'\\n     END as  CONTA_CONTABIL,\\n     1 AS QTD,\\n     coalesce(C.VLR_ATRIBUIDO,0) as VLR_ATRIBUIDO,\\n     coalesce(c.ICMS_PARA_RESSARCIMENTO,0) as ICMS_PARA_RESSARCIMENTO\\n from convenio.cvtb_contestacao C WITH(NOLOCK), CONVENIO.CVTB_LOTE L WITH(NOLOCK), CONVENIO.CVTB_SISTEMA S WITH(NOLOCK)\\nWHERE C.ID_LOTE_AJUSTE = L.ID_LOTE\\n  AND L.ID_SISTEMA = S.ID_SISTEMA\\n  AND L.FL_STATUS = \\'PROCESSADO\\'',",
+				"     format: 'query') ~> QryContestacoes",
+				"QryContestacoes aggregate(groupBy(FL_STATUS_GERAL,",
+				"          UF_FATURA,",
+				"          DS_SISTEMA,",
+				"          DT_EMISSAO_NF_ORIG,",
+				"          DT_AJUSTE,",
+				"          DT_CRIADO_EM,",
+				"          DESC_MOTIVO_AJUSTE,",
+				"          CONTA_CONTABIL),",
+				"     SUM_QTD = sum(QTD),",
+				"          SUM_VALOR = sum(VLR_ATRIBUIDO),",
+				"          SUM_ICMS_RESSARCIMENTO = sum(ICMS_PARA_RESSARCIMENTO)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          FL_STATUS_GERAL as string,",
+				"          UF_FATURA as string,",
+				"          DS_SISTEMA as string,",
+				"          DT_EMISSAO_NF_ORIG as date,",
+				"          DT_AJUSTE as date,",
+				"          DT_CRIADO_EM as date,",
+				"          DESC_MOTIVO_AJUSTE as string,",
+				"          CONTA_CONTABIL as string,",
+				"          QTD as integer,",
+				"          VLR_ATRIBUIDO as decimal(15,2),",
+				"          ICMS_PARA_RESSARCIMENTO as decimal(15,2)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          FL_STATUS_GERAL,",
+				"          UF_FATURA,",
+				"          DS_SISTEMA,",
+				"          DT_EMISSAO_NF_ORIG,",
+				"          DT_AJUSTE,",
+				"          DT_CRIADO_EM,",
+				"          DESC_MOTIVO_AJUSTE,",
+				"          CONTA_CONTABIL,",
+				"          QTD = SUM_QTD,",
+				"          VLR_ATRIBUIDO = SUM_VALOR,",
+				"          ICMS_PARA_RESSARCIMENTO = SUM_ICMS_RESSARCIMENTO",
+				"     )) ~> RelEstoqueContestacoes"
+			]
+		}
+	}
+}

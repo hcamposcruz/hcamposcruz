@@ -1,0 +1,15 @@
+{
+	"name": "QryInconsistencias",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseConv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Relatorios"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}

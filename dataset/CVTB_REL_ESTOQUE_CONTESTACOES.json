@@ -1,0 +1,69 @@
+{
+	"name": "CVTB_REL_ESTOQUE_CONTESTACOES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseConv86",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Relatorios"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "FL_STATUS_GERAL",
+				"type": "char"
+			},
+			{
+				"name": "UF_FATURA",
+				"type": "varchar"
+			},
+			{
+				"name": "DS_SISTEMA",
+				"type": "varchar"
+			},
+			{
+				"name": "DT_EMISSAO_NF_ORIG",
+				"type": "date"
+			},
+			{
+				"name": "DT_AJUSTE",
+				"type": "date"
+			},
+			{
+				"name": "DT_CRIADO_EM",
+				"type": "date"
+			},
+			{
+				"name": "DESC_MOTIVO_AJUSTE",
+				"type": "varchar"
+			},
+			{
+				"name": "CONTA_CONTABIL",
+				"type": "varchar"
+			},
+			{
+				"name": "QTD",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "VLR_ATRIBUIDO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "ICMS_PARA_RESSARCIMENTO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "CONVENIO",
+			"table": "CVTB_REL_ESTOQUE_CONTESTACOES"
+		}
+	}
+}

@@ -847,7 +847,7 @@
 				}
 			},
 			{
-				"name": "sp_elegibilidadeAtis",
+				"name": "stp_elegibilidadeAtis",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -866,9 +866,9 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[CONVENIO].[sp_elegibilidade_atis]",
+					"storedProcedureName": "[CONVENIO].[stp_elegibilidade_Atis]",
 					"storedProcedureParameters": {
-						"id_lote_ajuste": {
+						"pid_lote_ajuste": {
 							"value": {
 								"value": "@variables('varNovoLote')",
 								"type": "Expression"
