@@ -1,7 +1,7 @@
 {
-	"name": "trExecutaPipelineRelatorios",
+	"name": "adf_carga_conv86",
 	"properties": {
-		"description": "Este gatilho aciona a pipeline dos relatórios uma vez por dia.",
+		"description": "Carga diária dos arquivos de contestações",
 		"annotations": [],
 		"runtimeState": "Stopped",
 		"pipelines": [],
@@ -10,7 +10,7 @@
 			"recurrence": {
 				"frequency": "Day",
 				"interval": 1,
-				"startTime": "2022-10-21T12:53:00",
+				"startTime": "2022-09-14T22:00:00",
 				"timeZone": "E. South America Standard Time"
 			}
 		}

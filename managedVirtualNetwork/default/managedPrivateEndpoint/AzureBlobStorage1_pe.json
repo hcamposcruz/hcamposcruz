@@ -1,0 +1,10 @@
+{
+	"name": "AzureBlobStorage1_pe",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test",
+		"groupId": "blob",
+		"fqdns": [
+			"stconvenio86test.blob.core.windows.net"
+		]
+	}
+}
