@@ -954,7 +954,8 @@
 				"folder": {
 					"name": "CargaArquivoVivoNext"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-10-14T12:59:20Z"
 			},
 			"dependsOn": []
 		},
@@ -1081,9 +1082,9 @@
 																}
 															},
 															"staging": {},
-															"compute": {
-																"coreCount": 8,
-																"computeType": "General"
+															"integrationRuntime": {
+																"referenceName": "integrationRuntimeConv86",
+																"type": "IntegrationRuntimeReference"
 															},
 															"traceLevel": "Fine"
 														}
@@ -1126,9 +1127,9 @@
 																}
 															},
 															"staging": {},
-															"compute": {
-																"coreCount": 8,
-																"computeType": "General"
+															"integrationRuntime": {
+																"referenceName": "integrationRuntimeConv86",
+																"type": "IntegrationRuntimeReference"
 															},
 															"traceLevel": "Fine"
 														}
@@ -1171,9 +1172,9 @@
 																}
 															},
 															"staging": {},
-															"compute": {
-																"coreCount": 8,
-																"computeType": "General"
+															"integrationRuntime": {
+																"referenceName": "integrationRuntimeConv86",
+																"type": "IntegrationRuntimeReference"
 															},
 															"traceLevel": "Fine"
 														}
@@ -1216,9 +1217,9 @@
 																}
 															},
 															"staging": {},
-															"compute": {
-																"coreCount": 8,
-																"computeType": "General"
+															"integrationRuntime": {
+																"referenceName": "integrationRuntimeConv86",
+																"type": "IntegrationRuntimeReference"
 															},
 															"traceLevel": "Fine"
 														}
@@ -1480,7 +1481,8 @@
 				"folder": {
 					"name": "CargaArquivosConv115"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-10-21T14:51:08Z"
 			},
 			"dependsOn": []
 		},
@@ -1558,7 +1560,8 @@
 				"folder": {
 					"name": "Relatorios"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-10-14T12:59:19Z"
 			},
 			"dependsOn": []
 		},
@@ -1794,7 +1797,7 @@
 					"name": "CargaArquivosAtis"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-18T13:46:40Z"
+				"lastPublishTime": "2022-10-14T12:59:22Z"
 			},
 			"dependsOn": []
 		},
@@ -2030,7 +2033,7 @@
 					"name": "CargaArquivosAtlys"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-18T13:46:40Z"
+				"lastPublishTime": "2022-10-14T12:59:22Z"
 			},
 			"dependsOn": []
 		},
@@ -2266,7 +2269,7 @@
 					"name": "CargaArquivosFat"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-18T13:46:40Z"
+				"lastPublishTime": "2022-10-14T12:59:23Z"
 			},
 			"dependsOn": []
 		},
@@ -2502,7 +2505,7 @@
 					"name": "CargaArquivosKenan"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-18T13:46:40Z"
+				"lastPublishTime": "2022-10-14T12:59:23Z"
 			},
 			"dependsOn": []
 		},
@@ -2737,10 +2740,42 @@
 				"folder": {
 					"name": "CargaArquivoVivoNext"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-10-14T12:59:22Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCargaArquivosContestacaoVivoNext')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trExecutaPipelineRelatorios')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Este gatilho aciona a pipeline dos relatórios uma vez por dia.",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "plCargaRelatoriosOnline",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-10-21T12:53:00",
+						"timeZone": "E. South America Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/plCargaRelatoriosOnline')]"
 			]
 		},
 		{
@@ -3199,7 +3234,8 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-10-14T12:59:24Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/plCtrCargaArquivosContestacaoKenan')]",

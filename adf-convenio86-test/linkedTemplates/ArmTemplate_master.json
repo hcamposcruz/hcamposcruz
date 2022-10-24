@@ -11,9 +11,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConv86'"
 		},
-		"blob_storage_conv86_properties_typeProperties_serviceEndpoint": {
-			"type": "string",
-			"defaultValue": "https://stconvenio86test.blob.core.windows.net/"
+		"blob_storage_conv86_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
 		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {
 			"type": "string",
@@ -87,6 +87,9 @@
 					"AzureSqlDatabaseConv86_connectionString": {
 						"value": "[parameters('AzureSqlDatabaseConv86_connectionString')]"
 					},
+					"blob_storage_conv86_connectionString": {
+						"value": "[parameters('blob_storage_conv86_connectionString')]"
+					},
 					"AzureBlobStorage1_properties_privateLinkResourceId": {
 						"value": "[parameters('AzureBlobStorage1_properties_privateLinkResourceId')]"
 					},
@@ -113,9 +116,6 @@
 					},
 					"AzureSqlDatabaseConv86_properties_fqdns": {
 						"value": "[parameters('AzureSqlDatabaseConv86_properties_fqdns')]"
-					},
-					"blob_storage_conv86_properties_typeProperties_serviceEndpoint": {
-						"value": "[parameters('blob_storage_conv86_properties_typeProperties_serviceEndpoint')]"
 					}
 				}
 			},

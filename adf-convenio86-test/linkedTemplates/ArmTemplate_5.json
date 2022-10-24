@@ -3052,7 +3052,7 @@
 					"name": "CargaArquivosAtis"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-26T17:49:09Z"
+				"lastPublishTime": "2022-10-14T12:59:20Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutAtisNaoPago')]",
@@ -4078,7 +4078,7 @@
 					"name": "CargaArquivosAtlys"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-26T17:49:09Z"
+				"lastPublishTime": "2022-10-14T12:59:20Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutRecebiveisAtlys')]",
@@ -5029,7 +5029,7 @@
 					"name": "CargaArquivosFat"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-26T17:49:09Z"
+				"lastPublishTime": "2022-10-14T12:59:21Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutFatCarFF')]",
@@ -6189,7 +6189,7 @@
 					"name": "CargaArquivosKenan"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-04-26T17:49:09Z"
+				"lastPublishTime": "2022-10-14T12:59:21Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutFatContestadaKenan')]",

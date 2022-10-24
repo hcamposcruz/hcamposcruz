@@ -8,8 +8,8 @@
 		"AzureSqlDatabaseConv86_connectionString": {
 			"value": ""
 		},
-		"blob_storage_conv86_properties_typeProperties_serviceEndpoint": {
-			"value": "https://stconvenio86test.blob.core.windows.net/"
+		"blob_storage_conv86_connectionString": {
+			"value": ""
 		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {
 			"value": "/subscriptions/76461b8e-edbd-464c-ad30-b13ba994709c/resourceGroups/rg-convenio86-development/providers/Microsoft.Storage/storageAccounts/stconvenio86dev"
