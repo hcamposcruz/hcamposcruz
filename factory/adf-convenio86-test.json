@@ -1,0 +1,9 @@
+{
+	"name": "adf-convenio86-test",
+	"location": "brazilsouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5b895dd7-b763-45ae-8853-e24e75ae6bd0",
+		"tenantId": "78879b00-f0e9-486c-836f-56f314e47e7f"
+	}
+}

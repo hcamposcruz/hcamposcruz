@@ -1043,7 +1043,7 @@
 							],
 							"type": "NonQuery",
 							"text": {
-								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote);\n\nTRUNCATE[CONVENIO].[CVTB_FATURA_CON_KENAN];\n\nTRUNCATE[CONVENIO].[CVTB_FATURA_DET_KENAN];\n\nTRUNCATE[CONVENIO].[CVTB_FATURA_ITEM_KENAN];",
+								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote)",
 								"type": "Expression"
 							}
 						}
@@ -1123,7 +1123,7 @@
 			"name": "CargaArquivosKenan"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-04-26T17:49:09Z"
+		"lastPublishTime": "2022-10-14T12:59:21Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

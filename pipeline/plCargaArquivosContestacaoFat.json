@@ -844,7 +844,7 @@
 							],
 							"type": "NonQuery",
 							"text": {
-								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote);\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FAT_CAR_FF];\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FAT_CAR_FNF];",
+								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote)",
 								"type": "Expression"
 							}
 						}
@@ -918,7 +918,7 @@
 			"name": "CargaArquivosFat"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-04-26T17:49:09Z"
+		"lastPublishTime": "2022-10-14T12:59:21Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

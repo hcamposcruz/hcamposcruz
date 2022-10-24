@@ -211,5 +211,6 @@
 			"schema": "CONVENIO",
 			"table": "CVTB_ATIS_PAGO"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

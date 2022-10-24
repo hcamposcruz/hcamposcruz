@@ -1,0 +1,18 @@
+{
+	"name": "adf_carga_conv86",
+	"properties": {
+		"description": "Carga diária dos arquivos de contestações",
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2022-09-14T22:00:00",
+				"timeZone": "E. South America Standard Time"
+			}
+		}
+	}
+}
