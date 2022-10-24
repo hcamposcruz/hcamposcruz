@@ -84,6 +84,27 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/trExecutaPipelineRelatorios')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Este gatilho aciona a pipeline dos relatórios uma vez por dia.",
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-10-21T12:53:00",
+						"timeZone": "E. South America Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/default')]",
 			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
 			"apiVersion": "2018-06-01",
@@ -1865,135 +1886,6 @@
 				"typeProperties": {
 					"schema": "CONVENIO",
 					"table": "CVTB_CONTESTACAO"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseConv86')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CVTB_FATURA_CON_KENAN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseConv86",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Kenan"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_FATURA_CON_KENAN",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "ID_LOTE_ARQUIVO",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "CONTA_COBRANCA",
-						"type": "varchar"
-					},
-					{
-						"name": "CPF_CNPJ",
-						"type": "varchar"
-					},
-					{
-						"name": "CATEGORIA_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "UF_COBRANCA",
-						"type": "char"
-					},
-					{
-						"name": "ID_FATURA",
-						"type": "varchar"
-					},
-					{
-						"name": "ID_FATURA_ORIGEM",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_VENCTO_ORIGINAL",
-						"type": "date"
-					},
-					{
-						"name": "DT_VENCTO_BOLETO_BAIXA",
-						"type": "date"
-					},
-					{
-						"name": "VLR_FATURA",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_CONTESTADO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_PAGAMENTO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "VLR_PGTO_CREDITO_ANT",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "DT_PAGAMENTO",
-						"type": "date"
-					},
-					{
-						"name": "DT_FECHA_FATURA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DT_EMISSAO",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DT_AJUSTE",
-						"type": "date"
-					},
-					{
-						"name": "STEP_EXECUTION_ID",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					},
-					{
-						"name": "JOB_EXECUTION_ID",
-						"type": "decimal",
-						"precision": 19,
-						"scale": 0
-					},
-					{
-						"name": "DT_REFERENCIA",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "CONVENIO",
-					"table": "CVTB_FATURA_CON_KENAN"
 				}
 			},
 			"dependsOn": [

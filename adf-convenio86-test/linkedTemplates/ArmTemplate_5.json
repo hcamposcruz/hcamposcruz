@@ -13,6 +13,200 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/dfLayoutAjustadoAtis')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "Atis"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "connExecQry",
+								"type": "DatasetReference"
+							},
+							"name": "BuscaLayoutCorrigido"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "CVTB_ATLYS_ADJ",
+								"type": "DatasetReference"
+							},
+							"name": "GravaArquivoAtlysCorrigido"
+						}
+					],
+					"transformations": [
+						{
+							"name": "SeparaEmColunas"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     pIdLoteArquivo as string",
+						"}",
+						"source(output(",
+						"          ID_LOTE_ARQUIVO as decimal(28,0),",
+						"          DS_LINHA_RECUPERADA as string",
+						"     ),",
+						"     allowSchemaDrift: false,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: (\"SELECT ID_LOTE_ARQUIVO, DS_LINHA_RECUPERADA FROM CONVENIO.CVTB_CARGA_ERRO_LAYOUT WHERE FL_CORRIGIDO='S' AND DS_LINHA_RECUPERADA IS NOT NULL AND ID_LOTE_ARQUIVO=CONVERT(NUMERIC(28),{$pIdLoteArquivo})\"),",
+						"     format: 'query') ~> BuscaLayoutCorrigido",
+						"BuscaLayoutCorrigido derive(ID_CLIENTE = split(DS_LINHA_RECUPERADA, '|')[1],",
+						"          NOTA_FISCAL = split(DS_LINHA_RECUPERADA, '|')[2],",
+						"          DT_EMISSAO_NF = toDate(split(DS_LINHA_RECUPERADA, '|')[3], 'yyyyMMdd'),",
+						"          VLR_ORIG_NFST = replace((split(DS_LINHA_RECUPERADA, '|')[4]), \",\", \".\"),",
+						"          SERIE = split(DS_LINHA_RECUPERADA, '|')[5],",
+						"          CONTA_CLIENTE = split(DS_LINHA_RECUPERADA, '|')[6],",
+						"          CNPJ_CPF = split(DS_LINHA_RECUPERADA, '|')[7],",
+						"          NOM_CLIENTE = split(DS_LINHA_RECUPERADA, '|')[8],",
+						"          NUM_TERMINAL = split(DS_LINHA_RECUPERADA, '|')[9],",
+						"          VLR_CONTEST_AJUSTE = replace((split(DS_LINHA_RECUPERADA, '|')[10]), \",\", \".\"),",
+						"          VLR_ATRIBUIDO = replace((split(DS_LINHA_RECUPERADA, '|')[11]),\",\", \".\"),",
+						"          DT_ATRIBUICAO = toDate(split(DS_LINHA_RECUPERADA, '|')[12], 'yyyyMMdd'),",
+						"          HR_ATRIBUICAO = split(DS_LINHA_RECUPERADA, '|')[13],",
+						"          DT_AJUSTE = toDate(split(DS_LINHA_RECUPERADA, '|')[14], 'yyyyMMdd'),",
+						"          HR_AJUSTE = split(DS_LINHA_RECUPERADA, '|')[15],",
+						"          OPERADORA = split(DS_LINHA_RECUPERADA, '|')[16],",
+						"          CODIGO_OPERADORA = split(DS_LINHA_RECUPERADA, '|')[17],",
+						"          COD_MOTIVO_AJUSTES = split(DS_LINHA_RECUPERADA, '|')[18],",
+						"          DESC_MOTIVO_AJUSTE = split(DS_LINHA_RECUPERADA, '|')[19],",
+						"          DATA_ABERTURA_IMPU = toDate(split(DS_LINHA_RECUPERADA, '|')[20], 'yyyyMMdd'),",
+						"          DATA_FECH_IMPUG = toDate(split(DS_LINHA_RECUPERADA, '|')[21], 'yyyyMMdd'),",
+						"          DSPUT_ID = split(DS_LINHA_RECUPERADA, '|')[22],",
+						"          TP_NOTA_FISCAL = split(DS_LINHA_RECUPERADA, '|')[23],",
+						"          CLASSE_RECEBER = split(DS_LINHA_RECUPERADA, '|')[24],",
+						"          CONTA_CONTABIL = split(DS_LINHA_RECUPERADA, '|')[25],",
+						"          DESCR_CONTA_CONTABIL = split(DS_LINHA_RECUPERADA, '|')[26],",
+						"          NUMERO_FATURA = split(DS_LINHA_RECUPERADA, '|')[27],",
+						"          VALOR_DOCTO_ORIGINAL = replace((split(DS_LINHA_RECUPERADA, '|')[28]), \",\", \".\"),",
+						"          MES_ANO_REFERENTE = split(DS_LINHA_RECUPERADA, '|')[29],",
+						"          DATA_VENC_FATUR = toDate(split(DS_LINHA_RECUPERADA, '|')[30], 'yyyyMMdd'),",
+						"          VALOR_PAGAMENTO = replace((split(DS_LINHA_RECUPERADA, '|')[31]), \",\", \".\"),",
+						"          DATA_ATRIBUICAO_PGTO = toDate(split(DS_LINHA_RECUPERADA, '|')[32], 'yyyyMMdd'),",
+						"          FATU_ATRIBUIDA = split(DS_LINHA_RECUPERADA, '|')[33],",
+						"          DT_EMISSAO_FATURA = toDate(split(DS_LINHA_RECUPERADA, '|')[34], 'yyyyMMdd'),",
+						"          MES_ANO_FATURA = split(DS_LINHA_RECUPERADA, '|')[35],",
+						"          VALOR_FATURA = replace((split(DS_LINHA_RECUPERADA, '|')[36]), \",\", \".\"),",
+						"          SALDO_DEVEDOR = replace((split(DS_LINHA_RECUPERADA, '|')[37]), \",\", \".\"),",
+						"          UF = split(DS_LINHA_RECUPERADA, '|')[38],",
+						"          OPERADORA_REAL = split(DS_LINHA_RECUPERADA, '|')[39],",
+						"          SALDO_FATURA_INI = replace((split(DS_LINHA_RECUPERADA, '|')[40]), \",\", \".\"),",
+						"          SALDO_FATURA_FIM = replace((split(DS_LINHA_RECUPERADA, '|')[41]), \",\", \".\"),",
+						"          SEQ_RECEBIVEL = split(DS_LINHA_RECUPERADA, '|')[42]) ~> SeparaEmColunas",
+						"SeparaEmColunas sink(allowSchemaDrift: false,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_ATLYS_ADJ as decimal(28,0),",
+						"          ID_LOTE_ARQUIVO as decimal(28,0),",
+						"          ID_CLIENTE as string,",
+						"          NOTA_FISCAL as string,",
+						"          DT_EMISSAO_NF as timestamp,",
+						"          VLR_ORIG_NFST as decimal(10,2),",
+						"          SERIE as string,",
+						"          CONTA_CLIENTE as string,",
+						"          CNPJ_CPF as string,",
+						"          NOM_CLIENTE as string,",
+						"          NUM_TERMINAL as string,",
+						"          VLR_CONTEST_AJUSTE as decimal(10,2),",
+						"          VLR_ATRIBUIDO as decimal(10,2),",
+						"          DT_ATRIBUICAO as timestamp,",
+						"          HR_ATRIBUICAO as string,",
+						"          DT_AJUSTE as timestamp,",
+						"          HR_AJUSTE as string,",
+						"          OPERADORA as string,",
+						"          CODIGO_OPERADORA as string,",
+						"          COD_MOTIVO_AJUSTES as string,",
+						"          DESC_MOTIVO_AJUSTE as string,",
+						"          DATA_ABERTURA_IMPU as timestamp,",
+						"          DATA_FECH_IMPUG as timestamp,",
+						"          DSPUT_ID as string,",
+						"          TP_NOTA_FISCAL as string,",
+						"          CLASSE_RECEBER as string,",
+						"          CONTA_CONTABIL as string,",
+						"          DESCR_CONTA_CONTABIL as string,",
+						"          NUMERO_FATURA as string,",
+						"          VALOR_DOCTO_ORIGINAL as decimal(15,2),",
+						"          MES_ANO_REFERENTE as string,",
+						"          DATA_VENC_FATUR as timestamp,",
+						"          VALOR_PAGAMENTO as decimal(15,2),",
+						"          DATA_ATRIBUICAO_PGTO as timestamp,",
+						"          FATU_ATRIBUIDA as string,",
+						"          DT_EMISSAO_FATURA as timestamp,",
+						"          MES_ANO_FATURA as string,",
+						"          VALOR_FATURA as decimal(15,2),",
+						"          SALDO_DEVEDOR as decimal(15,2),",
+						"          UF as string,",
+						"          OPERADORA_REAL as string,",
+						"          SALDO_FATURA_INI as decimal(15,2),",
+						"          SALDO_FATURA_FIM as decimal(15,2),",
+						"          SEQ_RECEBIVEL as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          ID_LOTE_ARQUIVO,",
+						"          ID_CLIENTE,",
+						"          NOTA_FISCAL,",
+						"          DT_EMISSAO_NF,",
+						"          VLR_ORIG_NFST,",
+						"          SERIE,",
+						"          CONTA_CLIENTE,",
+						"          CNPJ_CPF,",
+						"          NOM_CLIENTE,",
+						"          NUM_TERMINAL,",
+						"          VLR_CONTEST_AJUSTE,",
+						"          VLR_ATRIBUIDO,",
+						"          DT_ATRIBUICAO,",
+						"          HR_ATRIBUICAO,",
+						"          DT_AJUSTE,",
+						"          HR_AJUSTE,",
+						"          OPERADORA,",
+						"          CODIGO_OPERADORA,",
+						"          COD_MOTIVO_AJUSTES,",
+						"          DESC_MOTIVO_AJUSTE,",
+						"          DATA_ABERTURA_IMPU,",
+						"          DATA_FECH_IMPUG,",
+						"          DSPUT_ID,",
+						"          TP_NOTA_FISCAL,",
+						"          CLASSE_RECEBER,",
+						"          CONTA_CONTABIL,",
+						"          DESCR_CONTA_CONTABIL,",
+						"          NUMERO_FATURA,",
+						"          VALOR_DOCTO_ORIGINAL,",
+						"          MES_ANO_REFERENTE,",
+						"          DATA_VENC_FATUR,",
+						"          VALOR_PAGAMENTO,",
+						"          DATA_ATRIBUICAO_PGTO,",
+						"          FATU_ATRIBUIDA,",
+						"          DT_EMISSAO_FATURA,",
+						"          MES_ANO_FATURA,",
+						"          VALOR_FATURA,",
+						"          SALDO_DEVEDOR,",
+						"          UF,",
+						"          OPERADORA_REAL,",
+						"          SALDO_FATURA_INI,",
+						"          SALDO_FATURA_FIM,",
+						"          SEQ_RECEBIVEL",
+						"     )) ~> GravaArquivoAtlysCorrigido"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dfLayoutAjustadoAtlys')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -2938,7 +3132,7 @@
 									],
 									"type": "NonQuery",
 									"text": {
-										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28), @pId_Lote)",
+										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28), @pId_Lote);\n\nTRUNCATE TABLE [CONVENIO].[CVTB_ATIS_NAO_PAGO];\n\nTRUNCATE TABLE [CONVENIO].[CVTB_ATIS_PAGO];",
 										"type": "Expression"
 									}
 								}
@@ -3052,7 +3246,7 @@
 					"name": "CargaArquivosAtis"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-10-14T12:59:20Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutAtisNaoPago')]",
@@ -3964,7 +4158,7 @@
 									],
 									"type": "NonQuery",
 									"text": {
-										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28), @pId_Lote)",
+										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28), @pId_Lote);\n\nTRUNCATE TABLE [CONVENIO].[CVTB_ATLYS_ADJ];\n\nTRUNCATE TABLE [CONVENIO].[CVTB_ATLYS_RCBL];",
 										"type": "Expression"
 									}
 								}
@@ -4078,7 +4272,7 @@
 					"name": "CargaArquivosAtlys"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-10-14T12:59:20Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutRecebiveisAtlys')]",
@@ -4951,7 +5145,7 @@
 									],
 									"type": "NonQuery",
 									"text": {
-										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote)",
+										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote);\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FAT_CAR_FF];\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FAT_CAR_FNF];",
 										"type": "Expression"
 									}
 								}
@@ -5029,1172 +5223,11 @@
 					"name": "CargaArquivosFat"
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-10-14T12:59:21Z"
+				"lastPublishTime": "2022-04-26T17:49:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutFatCarFF')]",
 				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutFatCarFNP')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/plCargaArquivosContestacaoKenan')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ListaArquivos",
-						"type": "GetMetadata",
-						"dependsOn": [
-							{
-								"activity": "Set varNovoLote",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "ListaArquivosBlobsKenan_Originais",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"childItems"
-							],
-							"storeSettings": {
-								"type": "AzureBlobStorageReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
-						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "FiltraArquivosKenan",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('FiltraArquivosKenan').output.Value",
-								"type": "Expression"
-							},
-							"isSequential": true,
-							"activities": [
-								{
-									"name": "Set varNomeArquivo",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "varNomeArquivo",
-										"value": {
-											"value": "@item().Name",
-											"type": "Expression"
-										}
-									}
-								},
-								{
-									"name": "BuscaLoteArquivo",
-									"type": "Script",
-									"dependsOn": [
-										{
-											"activity": "GravaLoteArquivo",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"linkedServiceName": {
-										"referenceName": "AzureSqlDatabaseConv86",
-										"type": "LinkedServiceReference"
-									},
-									"typeProperties": {
-										"scripts": [
-											{
-												"parameters": [
-													{
-														"name": "psNomeArquivo",
-														"type": "String",
-														"value": {
-															"value": "@variables('varNomeArquivo')",
-															"type": "Expression"
-														},
-														"direction": "Input"
-													}
-												],
-												"type": "Query",
-												"text": "SELECT CONVERT(VARCHAR(38), ID_LOTE_ARQUIVO) as ID_LA \nFROM CONVENIO.CVTB_LOTE_ARQUIVO WITH (NOLOCK) \nWHERE NM_ARQUIVO = @psNomeArquivo;"
-											}
-										]
-									}
-								},
-								{
-									"name": "GravaLoteArquivo",
-									"type": "Script",
-									"dependsOn": [
-										{
-											"activity": "Set varPeriodoReferencia",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"linkedServiceName": {
-										"referenceName": "AzureSqlDatabaseConv86",
-										"type": "LinkedServiceReference"
-									},
-									"typeProperties": {
-										"scripts": [
-											{
-												"parameters": [
-													{
-														"name": "NomeArquivo",
-														"type": "String",
-														"value": {
-															"value": "@variables('varNomeArquivo')",
-															"type": "Expression"
-														},
-														"direction": "Input"
-													},
-													{
-														"name": "NovoLote",
-														"type": "String",
-														"value": {
-															"value": "@variables('varNovoLote')",
-															"type": "Expression"
-														},
-														"direction": "Input"
-													},
-													{
-														"name": "varPeriodoReferencia",
-														"type": "String",
-														"value": {
-															"value": "@variables('varPeriodoReferencia')",
-															"type": "Expression"
-														},
-														"direction": "Input"
-													}
-												],
-												"type": "NonQuery",
-												"text": "DELETE from CONVENIO.CVTB_CARGA_ERRO_LAYOUT where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA WITH (NOLOCK) \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \nAND LA.NM_ARQUIVO = @NomeArquivo\nAND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WITH (NOLOCK) WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FATURA_CON_KENAN where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA WITH (NOLOCK) \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \nAND LA.NM_ARQUIVO = @NomeArquivo\nAND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WITH (NOLOCK) WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FATURA_DET_KENAN where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA WITH (NOLOCK) \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \nAND LA.NM_ARQUIVO = @NomeArquivo\nAND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WITH (NOLOCK) WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_FATURA_ITEM_KENAN where ID_LOTE_ARQUIVO IN (SELECT LA.ID_LOTE_ARQUIVO \nFROM [CONVENIO].[CVTB_LOTE_ARQUIVO] LA WITH (NOLOCK) \nWHERE LA.ID_LOTE_ARQUIVO = ID_LOTE_ARQUIVO \nAND LA.NM_ARQUIVO = @NomeArquivo\nAND LA.ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WITH (NOLOCK) WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO'));\n\nDELETE from CONVENIO.CVTB_LOTE_ARQUIVO \nwhere NM_ARQUIVO = @NomeArquivo \nand ID_LOTE IN (SELECT L.ID_LOTE FROM [CONVENIO].[CVTB_LOTE] L WITH (NOLOCK) WHERE L.ID_LOTE = ID_LOTE AND L.FL_STATUS <> 'PROCESSADO');\n\nINSERT INTO CONVENIO.CVTB_LOTE_ARQUIVO (NM_ARQUIVO,ID_LOTE,ID_SISTEMA_ARQUIVO, DATA_REF_ARQUIVO) \nVALUES (@NomeArquivo, CONVERT(NUMERIC(28), @NovoLote),CASE WHEN SUBSTRING(@NomeArquivo, 1, 2) = '01' THEN 4  WHEN SUBSTRING(@NomeArquivo, 1, 2) = '02'  THEN 5 ELSE 3 END, @varPeriodoReferencia);\n"
-											}
-										]
-									}
-								},
-								{
-									"name": "Set varNovoLoteArquivo",
-									"type": "SetVariable",
-									"dependsOn": [
-										{
-											"activity": "BuscaLoteArquivo",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "varNovoLoteArquivo",
-										"value": {
-											"value": "@activity('BuscaLoteArquivo').output.resultSets[0].rows[0].ID_LA",
-											"type": "Expression"
-										}
-									}
-								},
-								{
-									"name": "Switch1",
-									"type": "Switch",
-									"dependsOn": [
-										{
-											"activity": "Set varNovoLoteArquivo",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"on": {
-											"value": "@substring(variables('varNomeArquivo'),0,2)",
-											"type": "Expression"
-										},
-										"cases": [
-											{
-												"value": "02",
-												"activities": [
-													{
-														"name": "TrataArquivoFatItemKenan",
-														"type": "ExecuteDataFlow",
-														"dependsOn": [
-															{
-																"activity": "IncluiEstatisticaTabLoteArquivo_FatItem",
-																"dependencyConditions": [
-																	"Succeeded"
-																]
-															}
-														],
-														"policy": {
-															"timeout": "1.00:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"dataflow": {
-																"referenceName": "dfGravaArquivoKenanItem",
-																"type": "DataFlowReference",
-																"parameters": {
-																	"pNomeArquivo": {
-																		"value": "'@{variables('varNomeArquivo')}'",
-																		"type": "Expression"
-																	}
-																},
-																"datasetParameters": {
-																	"srcArqKenanItem": {
-																		"NomeArq": {
-																			"value": "@variables('varNomeArquivo')",
-																			"type": "Expression"
-																		}
-																	},
-																	"BuscaLoteArqAtual": {},
-																	"GravaTabContestacoesAtlysRcbl": {}
-																}
-															},
-															"staging": {},
-															"integrationRuntime": {
-																"referenceName": "integrationRuntimeConv86",
-																"type": "IntegrationRuntimeReference"
-															},
-															"traceLevel": "Fine"
-														}
-													},
-													{
-														"name": "ValidacaoLayoutFatItemKenan",
-														"type": "ExecuteDataFlow",
-														"dependsOn": [],
-														"policy": {
-															"timeout": "1.00:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"dataflow": {
-																"referenceName": "dfValidacaoLayoutFatItemKenan",
-																"type": "DataFlowReference",
-																"parameters": {
-																	"pNomeArquivo": {
-																		"value": "'@{variables('varNomeArquivo')}'",
-																		"type": "Expression"
-																	},
-																	"pLoteArquivo": {
-																		"value": "'@{variables('varNovoLoteArquivo')}'",
-																		"type": "Expression"
-																	}
-																},
-																"datasetParameters": {
-																	"BuscaLinhasArqKenanFatItem": {
-																		"NomeArq": {
-																			"value": "@variables('varNomeArquivo')",
-																			"type": "Expression"
-																		}
-																	},
-																	"CriaArqCorrigidoKenanFatItem": {
-																		"NomeArquivoKenan": {
-																			"value": "@variables('varNomeArquivo')",
-																			"type": "Expression"
-																		}
-																	},
-																	"InsereLinhasNaoValidas": {}
-																}
-															},
-															"staging": {},
-															"integrationRuntime": {
-																"referenceName": "integrationRuntimeConv86",
-																"type": "IntegrationRuntimeReference"
-															},
-															"traceLevel": "Fine"
-														}
-													},
-													{
-														"name": "QdeLinhasValidasFatItem",
-														"type": "SetVariable",
-														"dependsOn": [
-															{
-																"activity": "ValidacaoLayoutFatItemKenan",
-																"dependencyConditions": [
-																	"Succeeded"
-																]
-															}
-														],
-														"userProperties": [],
-														"typeProperties": {
-															"variableName": "varQdeLinhasValidas_FatIte",
-															"value": {
-																"value": "@string(activity('ValidacaoLayoutFatItemKenan').output.runStatus.metrics.CriaArqCorrigidoKenanFatItem.stages[0].recordsWritten)",
-																"type": "Expression"
-															}
-														}
-													},
-													{
-														"name": "QdeLinhasLidasFatItem",
-														"type": "SetVariable",
-														"dependsOn": [
-															{
-																"activity": "ValidacaoLayoutFatItemKenan",
-																"dependencyConditions": [
-																	"Succeeded"
-																]
-															}
-														],
-														"userProperties": [],
-														"typeProperties": {
-															"variableName": "varQdeLinhasLidas_FatIte",
-															"value": {
-																"value": "@string(activity('ValidacaoLayoutFatItemKenan').output.runStatus.metrics.InsereLinhasNaoValidas.stages[0].streams.CalcQdeSeparador.count)",
-																"type": "Expression"
-															}
-														}
-													},
-													{
-														"name": "IncluiEstatisticaTabLoteArquivo_FatItem",
-														"type": "Script",
-														"dependsOn": [
-															{
-																"activity": "QdeLinhasValidasFatItem",
-																"dependencyConditions": [
-																	"Succeeded"
-																]
-															},
-															{
-																"activity": "QdeLinhasLidasFatItem",
-																"dependencyConditions": [
-																	"Succeeded"
-																]
-															}
-														],
-														"policy": {
-															"timeout": "7.00:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"linkedServiceName": {
-															"referenceName": "AzureSqlDatabaseConv86",
-															"type": "LinkedServiceReference"
-														},
-														"typeProperties": {
-															"scripts": [
-																{
-																	"parameters": [
-																		{
-																			"name": "LinhasTotais",
-																			"type": "String",
-																			"value": {
-																				"value": "@variables('varQdeLinhasLidas_FatIte')",
-																				"type": "Expression"
-																			},
-																			"direction": "Input"
-																		},
-																		{
-																			"name": "LinhasValidas",
-																			"type": "String",
-																			"value": {
-																				"value": "@variables('varQdeLinhasValidas_FatIte')",
-																				"type": "Expression"
-																			},
-																			"direction": "Input"
-																		},
-																		{
-																			"name": "ID_LOTE_ARQUIVO",
-																			"type": "String",
-																			"value": {
-																				"value": "@variables('varNovoLoteArquivo')",
-																				"type": "Expression"
-																			},
-																			"direction": "Input"
-																		}
-																	],
-																	"type": "NonQuery",
-																	"text": {
-																		"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)-1\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais)-1 \nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
-																		"type": "Expression"
-																	}
-																}
-															]
-														}
-													}
-												]
-											},
-											{
-												"value": "03",
-												"activities": [
-													{
-														"name": "TrataArquivoFatDetalheKenan",
-														"type": "ExecuteDataFlow",
-														"dependsOn": [
-															{
-																"activity": "IncluiEstatisticaTabLoteArquivo_FatIDet",
-																"dependencyConditions": [
-																	"Succeeded"
-																]
-															}
-														],
-														"policy": {
-															"timeout": "1.00:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"dataflow": {
-																"referenceName": "dfGravaArquivoKenanDetalhe",
-																"type": "DataFlowReference",
-																"parameters": {
-																	"pNomeArquivo": {
-																		"value": "'@{variables('varNomeArquivo')}'",
-																		"type": "Expression"
-																	}
-																},
-																"datasetParameters": {
-																	"srcArqKenanDetalhe": {
-																		"NomeArq": {
-																			"value": "@variables('varNomeArquivo')",
-																			"type": "Expression"
-																		}
-																	},
-																	"BuscaLoteArqAtual": {},
-																	"GravaTabContestacoesAtlysRcbl": {}
-																}
-															},
-															"staging": {},
-															"integrationRuntime": {
-																"referenceName": "integrationRuntimeConv86",
-																"type": "IntegrationRuntimeReference"
-															},
-															"traceLevel": "Fine"
-														}
-													},
-													{
-														"name": "ValidacaoLayoutFatDetalheKenan",
-														"type": "ExecuteDataFlow",
-														"dependsOn": [],
-														"policy": {
-															"timeout": "1.00:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"dataflow": {
-																"referenceName": "dfValidacaoLayoutFatDetalheKenan",
-																"type": "DataFlowReference",
-																"parameters": {
-																	"pNomeArquivo": {
-																		"value": "'@{variables('varNomeArquivo')}'",
-																		"type": "Expression"
-																	},
-																	"pLoteArquivo": {
-																		"value": "'@{variables('varNovoLoteArquivo')}'",
-																		"type": "Expression"
-																	}
-																},
-																"datasetParameters": {
-																	"BuscaLinhasArqKenanFatDetalhe": {
-																		"NomeArq": {
-																			"value": "@variables('varNomeArquivo')",
-																			"type": "Expression"
-																		}
-																	},
-																	"CriaArqCorrigidoKenanFatDetalhe": {
-																		"NomeArquivoKenan": {
-																			"value": "@variables('varNomeArquivo')",
-																			"type": "Expression"
-																		}
-																	},
-																	"InsereLinhasNaoValidas": {}
-																}
-															},
-															"staging": {},
-															"integrationRuntime": {
-																"referenceName": "integrationRuntimeConv86",
-																"type": "IntegrationRuntimeReference"
-															},
-															"traceLevel": "Fine"
-														}
-													},
-													{
-														"name": "QdeLinhasValidasFatDet",
-														"type": "SetVariable",
-														"dependsOn": [
-															{
-																"activity": "ValidacaoLayoutFatDetalheKenan",
-																"dependencyConditions": [
-																	"Succeeded"
-																]
-															}
-														],
-														"userProperties": [],
-														"typeProperties": {
-															"variableName": "varQdeLinhasValidas_FatDet",
-															"value": {
-																"value": "@string(activity('ValidacaoLayoutFatDetalheKenan').output.runStatus.metrics.CriaArqCorrigidoKenanFatDetalhe.stages[0].recordsWritten)",
-																"type": "Expression"
-															}
-														}
-													},
-													{
-														"name": "QdeLinhasLidaFatDet",
-														"type": "SetVariable",
-														"dependsOn": [
-															{
-																"activity": "ValidacaoLayoutFatDetalheKenan",
-																"dependencyConditions": [
-																	"Succeeded"
-																]
-															}
-														],
-														"userProperties": [],
-														"typeProperties": {
-															"variableName": "varQdeLinhasLidas_FatDet",
-															"value": {
-																"value": "@string(activity('ValidacaoLayoutFatDetalheKenan').output.runStatus.metrics.CriaArqCorrigidoKenanFatDetalhe.stages[0].streams.CalcQdeSeparador.count)",
-																"type": "Expression"
-															}
-														}
-													},
-													{
-														"name": "IncluiEstatisticaTabLoteArquivo_FatIDet",
-														"type": "Script",
-														"dependsOn": [
-															{
-																"activity": "QdeLinhasValidasFatDet",
-																"dependencyConditions": [
-																	"Succeeded"
-																]
-															},
-															{
-																"activity": "QdeLinhasLidaFatDet",
-																"dependencyConditions": [
-																	"Succeeded"
-																]
-															}
-														],
-														"policy": {
-															"timeout": "7.00:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"linkedServiceName": {
-															"referenceName": "AzureSqlDatabaseConv86",
-															"type": "LinkedServiceReference"
-														},
-														"typeProperties": {
-															"scripts": [
-																{
-																	"parameters": [
-																		{
-																			"name": "LinhasTotais",
-																			"type": "String",
-																			"value": {
-																				"value": "@variables('varQdeLinhasLidas_FatDet')",
-																				"type": "Expression"
-																			},
-																			"direction": "Input"
-																		},
-																		{
-																			"name": "LinhasValidas",
-																			"type": "String",
-																			"value": {
-																				"value": "@variables('varQdeLinhasValidas_FatDet')",
-																				"type": "Expression"
-																			},
-																			"direction": "Input"
-																		},
-																		{
-																			"name": "ID_LOTE_ARQUIVO",
-																			"type": "String",
-																			"value": {
-																				"value": "@variables('varNovoLoteArquivo')",
-																				"type": "Expression"
-																			},
-																			"direction": "Input"
-																		}
-																	],
-																	"type": "NonQuery",
-																	"text": {
-																		"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)-1\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais)-1 \nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
-																		"type": "Expression"
-																	}
-																}
-															]
-														}
-													}
-												]
-											}
-										],
-										"defaultActivities": [
-											{
-												"name": "TrataArquivoFatContestadaKenan",
-												"type": "ExecuteDataFlow",
-												"dependsOn": [
-													{
-														"activity": "IncluiEstatisticaTabLoteArquivo_FatCon",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"timeout": "1.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"dataflow": {
-														"referenceName": "dfGravaArquivoKenanContestada",
-														"type": "DataFlowReference",
-														"parameters": {
-															"pNomeArquivo": {
-																"value": "'@{variables('varNomeArquivo')}'",
-																"type": "Expression"
-															}
-														},
-														"datasetParameters": {
-															"srcArqKenanContestada": {
-																"NomeArq": "@variables('varNomeArquivo')"
-															},
-															"BuscaLoteArqAtual": {},
-															"GravaTabFaturaConKenan": {}
-														}
-													},
-													"staging": {},
-													"integrationRuntime": {
-														"referenceName": "integrationRuntimeConv86",
-														"type": "IntegrationRuntimeReference"
-													},
-													"traceLevel": "Fine"
-												}
-											},
-											{
-												"name": "dfValidacaoLayoutFatContestadaKenan",
-												"type": "ExecuteDataFlow",
-												"dependsOn": [],
-												"policy": {
-													"timeout": "1.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"dataflow": {
-														"referenceName": "dfValidacaoLayoutFatContestadaKenan",
-														"type": "DataFlowReference",
-														"parameters": {
-															"pNomeArquivo": {
-																"value": "'@{variables('varNomeArquivo')}'",
-																"type": "Expression"
-															},
-															"pLoteArquivo": {
-																"value": "'@{variables('varNovoLoteArquivo')}'",
-																"type": "Expression"
-															}
-														},
-														"datasetParameters": {
-															"BuscaLinhasArqKenanFatContestada": {
-																"NomeArq": "@variables('varNomeArquivo')"
-															},
-															"CriaArqCorrigidoKenanFatContestada": {
-																"NomeArquivoKenan": "@variables('varNomeArquivo')"
-															},
-															"InsereLinhasNaoValidas": {}
-														}
-													},
-													"staging": {},
-													"integrationRuntime": {
-														"referenceName": "integrationRuntimeConv86",
-														"type": "IntegrationRuntimeReference"
-													},
-													"traceLevel": "Fine"
-												}
-											},
-											{
-												"name": "QdeLinhasValidasFatCon",
-												"type": "SetVariable",
-												"dependsOn": [
-													{
-														"activity": "dfValidacaoLayoutFatContestadaKenan",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"userProperties": [],
-												"typeProperties": {
-													"variableName": "varQdeLinhasValidas_FatCon",
-													"value": {
-														"value": "@string(activity('dfValidacaoLayoutFatContestadaKenan').output.runStatus.metrics.CriaArqCorrigidoKenanFatContestada.stages[0].recordsWritten)",
-														"type": "Expression"
-													}
-												}
-											},
-											{
-												"name": "QdeLinhasLidasFatCon",
-												"type": "SetVariable",
-												"dependsOn": [
-													{
-														"activity": "dfValidacaoLayoutFatContestadaKenan",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"userProperties": [],
-												"typeProperties": {
-													"variableName": "varQdeLinhasLidas_FatCon",
-													"value": {
-														"value": "@string(activity('dfValidacaoLayoutFatContestadaKenan').output.runStatus.metrics.CriaArqCorrigidoKenanFatContestada.stages[0].streams.CalcQdeSeparador.count)",
-														"type": "Expression"
-													}
-												}
-											},
-											{
-												"name": "IncluiEstatisticaTabLoteArquivo_FatCon",
-												"type": "Script",
-												"dependsOn": [
-													{
-														"activity": "QdeLinhasValidasFatCon",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													},
-													{
-														"activity": "QdeLinhasLidasFatCon",
-														"dependencyConditions": [
-															"Succeeded"
-														]
-													}
-												],
-												"policy": {
-													"timeout": "7.00:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"linkedServiceName": {
-													"referenceName": "AzureSqlDatabaseConv86",
-													"type": "LinkedServiceReference"
-												},
-												"typeProperties": {
-													"scripts": [
-														{
-															"parameters": [
-																{
-																	"name": "LinhasTotais",
-																	"type": "String",
-																	"value": {
-																		"value": "@variables('varQdeLinhasLidas_FatCon')",
-																		"type": "Expression"
-																	},
-																	"direction": "Input"
-																},
-																{
-																	"name": "LinhasValidas",
-																	"type": "String",
-																	"value": {
-																		"value": "@variables('varQdeLinhasValidas_FatCon')",
-																		"type": "Expression"
-																	},
-																	"direction": "Input"
-																},
-																{
-																	"name": "ID_LOTE_ARQUIVO",
-																	"type": "String",
-																	"value": {
-																		"value": "@variables('varNovoLoteArquivo')",
-																		"type": "Expression"
-																	},
-																	"direction": "Input"
-																}
-															],
-															"type": "NonQuery",
-															"text": {
-																"value": "UPDATE convenio.cvtb_lote_arquivo\nSET VL_REGISTROS_SUCESSO = CONVERT(NUMERIC(28), @LinhasValidas)-1\n  , QT_REGISTROS = CONVERT(NUMERIC(28), @LinhasTotais)-1 \nWHERE id_lote_arquivo = CONVERT(NUMERIC(28), @ID_LOTE_ARQUIVO)",
-																"type": "Expression"
-															}
-														}
-													]
-												}
-											}
-										]
-									}
-								},
-								{
-									"name": "Set varPeriodoReferencia",
-									"type": "SetVariable",
-									"dependsOn": [
-										{
-											"activity": "Set varNomeArquivo",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "varPeriodoReferencia",
-										"value": {
-											"value": "@replace(substring(variables('varNomeArquivo'), sub(length(variables('varNomeArquivo')), 11),7), '_', '')",
-											"type": "Expression"
-										}
-									}
-								}
-							]
-						}
-					},
-					{
-						"name": "Set varNovoLote",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "BuscaNovoLote",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "varNovoLote",
-							"value": {
-								"value": "@string(activity('BuscaNovoLote').output.firstRow.ID_LOTE)\n",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "CargaUnificadaKenan",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "ForEach1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dfCargaUnificadaKenan",
-								"type": "DataFlowReference",
-								"parameters": {
-									"pLote": {
-										"value": "'@{variables('varNovoLote')}'",
-										"type": "Expression"
-									},
-									"pMesAnoRef": {
-										"value": "'@{variables('varPeriodoReferencia')}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"TabelasKenan": {},
-									"TabelaCONTESTACAO": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "integrationRuntimeConv86",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "qryGeraNovoLote",
-						"type": "Script",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabaseConv86",
-							"type": "LinkedServiceReference"
-						},
-						"typeProperties": {
-							"scripts": [
-								{
-									"type": "NonQuery",
-									"text": "INSERT INTO CONVENIO.CVTB_LOTE\n(\nDT_INICIO_PROCESSAMENTO,\nTP_LOTE,\nFL_STATUS,\nID_SISTEMA,\nDT_CRIADO_EM,\nCD_CRIADO_POR\n)\nVALUES\n(\nDATEADD(HOUR, -3, sysdatetime()),\n'CONTESTACAO',\n'EM_PROCESSAMENTO',\n2,\nDATEADD(HOUR, -3, sysdatetime()),\n'Carga ADF - CargaArqKenan'\n);"
-								}
-							]
-						}
-					},
-					{
-						"name": "FiltraArquivosKenan",
-						"type": "Filter",
-						"dependsOn": [
-							{
-								"activity": "ListaArquivos",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('ListaArquivos').output.childItems",
-								"type": "Expression"
-							},
-							"condition": {
-								"value": "@or(or(startswith(item().Name, '01'), startswith(item().Name, '02')), startswith(item().Name, '03'))",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "BuscaNovoLote",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "qryGeraNovoLote",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "SELECT MAX(ID_LOTE) AS ID_LOTE FROM CONVENIO.CVTB_LOTE WITH (NOLOCK) WHERE CD_CRIADO_POR = 'Carga ADF - CargaArqKenan' AND FL_STATUS = 'EM_PROCESSAMENTO';\n",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "connExecQry",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "AtualizaLoteQtdContestacoes",
-						"type": "Script",
-						"dependsOn": [
-							{
-								"activity": "CargaUnificadaKenan",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabaseConv86",
-							"type": "LinkedServiceReference"
-						},
-						"typeProperties": {
-							"scripts": [
-								{
-									"parameters": [
-										{
-											"name": "pId_Lote",
-											"type": "String",
-											"value": {
-												"value": "@variables('varNovoLote')",
-												"type": "Expression"
-											},
-											"direction": "Input"
-										},
-										{
-											"name": "pVlr_QtdContestacoes",
-											"type": "String",
-											"value": {
-												"value": "@activity('CargaUnificadaKenan').output.runStatus.metrics.TabelaCONTESTACAO.rowsWritten",
-												"type": "Expression"
-											},
-											"direction": "Input"
-										}
-									],
-									"type": "NonQuery",
-									"text": {
-										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote)",
-										"type": "Expression"
-									}
-								}
-							]
-						}
-					},
-					{
-						"name": "stp_elegibilidadeKenan",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "AtualizaLoteQtdContestacoes",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[CONVENIO].[stp_elegibilidade_Kenan]",
-							"storedProcedureParameters": {
-								"pid_lote_ajuste": {
-									"value": {
-										"value": "@variables('varNovoLote')",
-										"type": "Expression"
-									},
-									"type": "Decimal"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabaseConv86",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"varNovoLote": {
-						"type": "String"
-					},
-					"varNomeArquivo": {
-						"type": "String"
-					},
-					"varNovoLoteArquivo": {
-						"type": "String"
-					},
-					"varPeriodoReferencia": {
-						"type": "String"
-					},
-					"varQdeLinhasValidas_FatCon": {
-						"type": "String"
-					},
-					"varQdeLinhasLidas_FatCon": {
-						"type": "String"
-					},
-					"varQdeLinhasValidas_FatDet": {
-						"type": "String"
-					},
-					"varQdeLinhasLidas_FatDet": {
-						"type": "String"
-					},
-					"varQdeLinhasValidas_FatIte": {
-						"type": "String"
-					},
-					"varQdeLinhasLidas_FatIte": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "CargaArquivosKenan"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-10-14T12:59:21Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutFatContestadaKenan')]",
-				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutFatItemKenan')]",
-				"[concat(variables('factoryId'), '/dataflows/dfValidacaoLayoutFatDetalheKenan')]"
 			]
 		}
 	]
