@@ -7,13 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-convenio86-production"
 		},
-		"AzureBlobStorageConv86_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageConv86'"
-		},
 		"AzureSqlDatabaseConv86_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConv86'"
+		},
+		"blob_storage_conv86_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
 		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {
 			"type": "string",
@@ -91,6 +91,37 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ListaArquivosBlobsAtlys_Originais')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Atlys"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "atlys",
+						"container": "arq-ajustes"
+					},
+					"columnDelimiter": "|",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/blob_storage_conv86')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/adf_carga_conv86')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -104,12 +135,66 @@
 					"recurrence": {
 						"frequency": "Day",
 						"interval": 1,
-						"startTime": "2022-09-14T22:00:00",
+						"startTime": "2022-10-16T21:00:00",
 						"timeZone": "E. South America Standard Time"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trExecutaPipelineRelatorios')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Este gatilho aciona a pipeline dos relatórios uma vez por dia.",
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-10-21T12:53:00",
+						"timeZone": "E. South America Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AutoResolveIntegrationRuntime')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 0,
+							"cleanup": true
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntimeConv86')]",
@@ -128,77 +213,6 @@
 						},
 						"pipelineExternalComputeScaleProperties": {
 							"timeToLive": 60
-						}
-					}
-				},
-				"managedVirtualNetwork": {
-					"type": "ManagedVirtualNetworkReference",
-					"referenceName": "default"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/default')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
-			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorageConv86')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorageConv86_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntimeConv86",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeConv86')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseConv86')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlDatabaseConv86_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntimeConv86",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeConv86')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AutoResolveIntegrationRuntime')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "Managed",
-				"typeProperties": {
-					"computeProperties": {
-						"location": "AutoResolve",
-						"dataFlowProperties": {
-							"computeType": "General",
-							"coreCount": 8,
-							"timeToLive": 0,
-							"cleanup": true
 						}
 					}
 				},
@@ -277,12 +291,50 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseConv86')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabaseConv86_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntimeConv86",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeConv86')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/blob_storage_conv86')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('blob_storage_conv86_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntimeConv86",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeConv86')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Arq_Conv115_Controle')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -316,7 +368,7 @@
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageConv86')]"
+				"[concat(variables('factoryId'), '/linkedServices/blob_storage_conv86')]"
 			]
 		},
 		{
@@ -325,7 +377,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -344,7 +396,7 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageConv86')]"
+				"[concat(variables('factoryId'), '/linkedServices/blob_storage_conv86')]"
 			]
 		},
 		{
@@ -353,7 +405,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -373,7 +425,7 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageConv86')]"
+				"[concat(variables('factoryId'), '/linkedServices/blob_storage_conv86')]"
 			]
 		},
 		{
@@ -382,7 +434,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -402,7 +454,7 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageConv86')]"
+				"[concat(variables('factoryId'), '/linkedServices/blob_storage_conv86')]"
 			]
 		},
 		{
@@ -1037,223 +1089,6 @@
 				"typeProperties": {
 					"schema": "CONVENIO",
 					"table": "CVTB_ATLYS_ADJ"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseConv86')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CVTB_ATLYS_RCBL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseConv86",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Atlys"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_ATLYS_RCBL",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "ID_LOTE_ARQUIVO",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "ID_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "NOME_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "CNPJ_CPF",
-						"type": "varchar"
-					},
-					{
-						"name": "CONTA_CLIENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "CLASSE_RECEBER",
-						"type": "varchar"
-					},
-					{
-						"name": "OPERADORA",
-						"type": "varchar"
-					},
-					{
-						"name": "CODIGO_OPERADORA",
-						"type": "varchar"
-					},
-					{
-						"name": "NUMERO_FATURA",
-						"type": "varchar"
-					},
-					{
-						"name": "MES_ANO_REFERENTE",
-						"type": "varchar"
-					},
-					{
-						"name": "VALOR_DOCTO_ORIGINAL",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "FATURA_ATRIBUIDA",
-						"type": "varchar"
-					},
-					{
-						"name": "MES_ANO_FATURA",
-						"type": "varchar"
-					},
-					{
-						"name": "VALOR_FATURA",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "SALDO_DEVIDO_ORIG",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "DATA_EMISSAO_FATURA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "VALOR_TOTAL_PAGAMENTO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "DATA_FEBRABAN",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "VALOR_ATRIBUICAO",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "UF",
-						"type": "varchar"
-					},
-					{
-						"name": "DATA_ATRIBUICAO_PGTO",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "HORA_ATRIBUICAO_PGTO",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "CONVENIO",
-					"table": "CVTB_ATLYS_RCBL"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseConv86')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CVTB_CARGA_ERRO_LAYOUT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseConv86",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_CARGA_ERRO_LAYOUT",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "ID_LOTE_ARQUIVO",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "FL_CORRIGIDO",
-						"type": "char"
-					},
-					{
-						"name": "ID_CONTESTACAO",
-						"type": "decimal",
-						"precision": 28,
-						"scale": 0
-					},
-					{
-						"name": "FL_CORRIGIDO_AUTOMATICO",
-						"type": "char"
-					},
-					{
-						"name": "DS_LINHA",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_CRIADO_EM",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "CD_CRIADO_POR",
-						"type": "varchar"
-					},
-					{
-						"name": "DT_ATUALIZADO_EM",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "CD_ATUALIZADO_POR",
-						"type": "varchar"
-					},
-					{
-						"name": "DS_TRATATIVA",
-						"type": "varchar"
-					},
-					{
-						"name": "DS_LINHA_RECUPERADA",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "CONVENIO",
-					"table": "CVTB_CARGA_ERRO_LAYOUT"
 				}
 			},
 			"dependsOn": [

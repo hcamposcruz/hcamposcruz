@@ -5,10 +5,10 @@
 		"factoryName": {
 			"value": "adf-convenio86-production"
 		},
-		"AzureBlobStorageConv86_connectionString": {
+		"AzureSqlDatabaseConv86_connectionString": {
 			"value": ""
 		},
-		"AzureSqlDatabaseConv86_connectionString": {
+		"blob_storage_conv86_connectionString": {
 			"value": ""
 		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {

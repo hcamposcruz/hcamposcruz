@@ -7,13 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-convenio86-production"
 		},
-		"AzureBlobStorageConv86_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageConv86'"
-		},
 		"AzureSqlDatabaseConv86_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConv86'"
+		},
+		"blob_storage_conv86_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'blob_storage_conv86'"
 		},
 		"AzureBlobStorage1_properties_privateLinkResourceId": {
 			"type": "string",
@@ -112,11 +112,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"AzureBlobStorageConv86_connectionString": {
-						"value": "[parameters('AzureBlobStorageConv86_connectionString')]"
-					},
 					"AzureSqlDatabaseConv86_connectionString": {
 						"value": "[parameters('AzureSqlDatabaseConv86_connectionString')]"
+					},
+					"blob_storage_conv86_connectionString": {
+						"value": "[parameters('blob_storage_conv86_connectionString')]"
 					},
 					"AzureBlobStorage1_properties_privateLinkResourceId": {
 						"value": "[parameters('AzureBlobStorage1_properties_privateLinkResourceId')]"

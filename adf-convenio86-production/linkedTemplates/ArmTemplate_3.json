@@ -13,12 +13,54 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/arq_fat_car_ajuste')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArq": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Fat"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArq",
+							"type": "Expression"
+						},
+						"folderPath": "fat/validados_a_processar",
+						"container": "arq-ajustes"
+					},
+					"columnDelimiter": "",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/arq_fat_car_ajuste_original')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -60,7 +102,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -102,7 +144,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -144,7 +186,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -186,7 +228,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -228,7 +270,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -270,7 +312,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -312,7 +354,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -350,7 +392,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -392,7 +434,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -479,7 +521,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -517,7 +559,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -555,7 +597,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -597,7 +639,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -636,7 +678,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -680,7 +722,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -719,7 +761,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -758,7 +800,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -802,7 +844,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
+					"referenceName": "blob_storage_conv86",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
@@ -826,45 +868,6 @@
 						"container": "arq-ajustes"
 					},
 					"columnDelimiter": "#|$",
-					"encodingName": "WINDOWS-1252",
-					"escapeChar": "\\",
-					"firstRowAsHeader": false,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/arq_vivonext_validados')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorageConv86",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"NomeArq": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "VivoNext"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().NomeArq",
-							"type": "Expression"
-						},
-						"folderPath": "vivonext/validados_a_processar",
-						"container": "arq-ajustes"
-					},
-					"columnDelimiter": "|",
 					"encodingName": "WINDOWS-1252",
 					"escapeChar": "\\",
 					"firstRowAsHeader": false,
