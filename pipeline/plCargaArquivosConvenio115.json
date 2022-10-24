@@ -505,8 +505,6 @@
 		"folder": {
 			"name": "CargaArquivosConv115"
 		},
-		"annotations": [],
-		"lastPublishTime": "2022-10-21T14:51:08Z"
-	},
-	"type": "Microsoft.DataFactory/factories/pipelines"
+		"annotations": []
+	}
 }

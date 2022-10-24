@@ -804,7 +804,7 @@
 							],
 							"type": "NonQuery",
 							"text": {
-								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28), @pId_Lote)",
+								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28), @pId_Lote);\n\nTRUNCATE TABLE [CONVENIO].[CVTB_ATIS_NAO_PAGO];\n\nTRUNCATE TABLE [CONVENIO].[CVTB_ATIS_PAGO];",
 								"type": "Expression"
 							}
 						}
@@ -913,7 +913,7 @@
 			"name": "CargaArquivosAtis"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-10-14T12:59:20Z"
+		"lastPublishTime": "2022-04-26T17:49:09Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

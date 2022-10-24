@@ -112,6 +112,5 @@
 			"schema": "CONVENIO",
 			"table": "CVTB_VIVO_NEXT_K17"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }

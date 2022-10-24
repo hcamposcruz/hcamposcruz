@@ -73,6 +73,5 @@
 			"schema": "CONVENIO",
 			"table": "CVTB_REL_INCONSISTENCIAS"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }
