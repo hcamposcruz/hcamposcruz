@@ -1,6 +1,10 @@
 {
 	"name": "arq_atis_nao_pago",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
 		"parameters": {
 			"NomeArq": {
 				"type": "string"

@@ -1,6 +1,10 @@
 {
 	"name": "arq_Conv115_Cadastral",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
 		"parameters": {
 			"NomeArqCadastral": {
 				"type": "string"

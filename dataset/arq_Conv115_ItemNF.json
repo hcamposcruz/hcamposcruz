@@ -1,6 +1,10 @@
 {
 	"name": "arq_Conv115_ItemNF",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_conv86",
+			"type": "LinkedServiceReference"
+		},
 		"parameters": {
 			"NomeArqItem": {
 				"type": "string"
