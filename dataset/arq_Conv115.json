@@ -1,10 +1,6 @@
 {
 	"name": "arq_Conv115",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "blob_storage_conv86",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
 			"name": "Conv115"
 		},

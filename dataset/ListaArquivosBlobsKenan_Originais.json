@@ -1,10 +1,6 @@
 {
 	"name": "ListaArquivosBlobsKenan_Originais",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "blob_storage_conv86",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
 			"name": "Kenan"
 		},

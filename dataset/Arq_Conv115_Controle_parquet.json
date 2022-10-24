@@ -1,10 +1,6 @@
 {
 	"name": "Arq_Conv115_Controle_parquet",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "blob_storage_conv86",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
 			"name": "Conv115"
 		},
