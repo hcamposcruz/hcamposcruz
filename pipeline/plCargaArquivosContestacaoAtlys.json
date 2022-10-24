@@ -880,7 +880,7 @@
 							],
 							"type": "NonQuery",
 							"text": {
-								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28), @pId_Lote)",
+								"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28), @pId_Lote);\n\nTRUNCATE TABLE [CONVENIO].[CVTB_ATLYS_ADJ];\n\nTRUNCATE TABLE [CONVENIO].[CVTB_ATLYS_RCBL];",
 								"type": "Expression"
 							}
 						}

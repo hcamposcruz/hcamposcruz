@@ -2,7 +2,7 @@
 	"name": "arq_fat_car_ajuste",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorageConv86",
+			"referenceName": "blob_storage_conv86",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {

@@ -2,7 +2,7 @@
 	"name": "arq_vivo_next_K17",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorageConv86",
+			"referenceName": "blob_storage_conv86",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {

@@ -1,0 +1,25 @@
+{
+	"name": "trExecutaPipelineRelatorios",
+	"properties": {
+		"description": "Este gatilho aciona a pipeline dos relatórios uma vez por dia.",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "plCargaRelatoriosOnline",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2022-10-21T12:53:00",
+				"timeZone": "E. South America Standard Time"
+			}
+		}
+	}
+}

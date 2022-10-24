@@ -116,9 +116,9 @@
 															}
 														}
 													},
-													"compute": {
-														"coreCount": 8,
-														"computeType": "General"
+													"integrationRuntime": {
+														"referenceName": "integrationRuntimeConv86",
+														"type": "IntegrationRuntimeReference"
 													},
 													"traceLevel": "Fine"
 												}
@@ -159,9 +159,9 @@
 															}
 														}
 													},
-													"compute": {
-														"coreCount": 8,
-														"computeType": "General"
+													"integrationRuntime": {
+														"referenceName": "integrationRuntimeConv86",
+														"type": "IntegrationRuntimeReference"
 													},
 													"traceLevel": "Fine"
 												}
@@ -202,9 +202,9 @@
 															}
 														}
 													},
-													"compute": {
-														"coreCount": 8,
-														"computeType": "General"
+													"integrationRuntime": {
+														"referenceName": "integrationRuntimeConv86",
+														"type": "IntegrationRuntimeReference"
 													},
 													"traceLevel": "Fine"
 												}
@@ -245,9 +245,9 @@
 															}
 														}
 													},
-													"compute": {
-														"coreCount": 8,
-														"computeType": "General"
+													"integrationRuntime": {
+														"referenceName": "integrationRuntimeConv86",
+														"type": "IntegrationRuntimeReference"
 													},
 													"traceLevel": "Fine"
 												}

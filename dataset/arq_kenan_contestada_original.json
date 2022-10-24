@@ -2,7 +2,7 @@
 	"name": "arq_kenan_contestada_original",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorageConv86",
+			"referenceName": "blob_storage_conv86",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
