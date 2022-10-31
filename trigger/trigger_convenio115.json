@@ -1,0 +1,17 @@
+{
+	"name": "trigger_convenio115",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 3,
+				"startTime": "2022-10-31T20:28:00",
+				"timeZone": "E. South America Standard Time"
+			}
+		}
+	}
+}
