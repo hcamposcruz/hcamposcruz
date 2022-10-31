@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-convenio86-test"
 		},
+		"AzureFileShareStorageConv86_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureFileShareStorageConv86'"
+		},
 		"AzureSqlDatabaseConv86_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConv86'"
@@ -43,6 +47,34 @@
 				"stconvenio86test.blob.core.windows.net"
 			]
 		},
+		"AzureBlobStorageEnppoint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/71cc41f4-8e37-4c60-abbb-b9003b91c554/resourceGroups/rg-convenio86-production/providers/Microsoft.Storage/storageAccounts/stconvenio86prod"
+		},
+		"AzureBlobStorageEnppoint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"AzureBlobStorageEnppoint_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"stconvenio86prod.blob.core.windows.net"
+			]
+		},
+		"AzureFileStorageEndPoint1_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test"
+		},
+		"AzureFileStorageEndPoint1_properties_groupId": {
+			"type": "string",
+			"defaultValue": "file"
+		},
+		"AzureFileStorageEndPoint1_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"stconvenio86test.file.core.windows.net"
+			]
+		},
 		"AzureSqlDatabaseConv86_properties_privateLinkResourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Sql/servers/sql-convenio86-test"
@@ -55,6 +87,20 @@
 			"type": "array",
 			"defaultValue": [
 				"sql-convenio86-test.database.windows.net"
+			]
+		},
+		"AzureSqlDatabaseEndPoint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/71cc41f4-8e37-4c60-abbb-b9003b91c554/resourceGroups/rg-convenio86-production/providers/Microsoft.Sql/servers/sql-convenio86-prod"
+		},
+		"AzureSqlDatabaseEndPoint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
+		},
+		"AzureSqlDatabaseEndPoint_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"sql-convenio86-prod.database.windows.net"
 			]
 		}
 	},
@@ -2913,7 +2959,7 @@
 									],
 									"type": "NonQuery",
 									"text": {
-										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote);\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FAT_CAR_FF];\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FAT_CAR_FNF];",
+										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote);\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FAT_CAR_FF];\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FAT_CAR_FNP];",
 										"type": "Expression"
 									}
 								}
@@ -4074,7 +4120,7 @@
 									],
 									"type": "NonQuery",
 									"text": {
-										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote);\n\nTRUNCATE[CONVENIO].[CVTB_FATURA_CON_KENAN];\n\nTRUNCATE[CONVENIO].[CVTB_FATURA_DET_KENAN];\n\nTRUNCATE[CONVENIO].[CVTB_FATURA_ITEM_KENAN];",
+										"value": "UPDATE [CONVENIO].[CVTB_LOTE] SET QT_CONTESTACOES = CONVERT(NUMERIC(18), @pVlr_QtdContestacoes) WHERE ID_LOTE = CONVERT(NUMERIC(28),@pId_Lote);\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FATURA_CON_KENAN];\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FATURA_DET_KENAN];\n\nTRUNCATE TABLE [CONVENIO].[CVTB_FATURA_ITEM_KENAN];",
 										"type": "Expression"
 									}
 								}
@@ -12668,6 +12714,26 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureFileShareStorageConv86')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFileStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureFileShareStorageConv86_connectionString')]",
+					"fileShare": "fsconvenio86"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntimeConv86",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntimeConv86')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseConv86')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -12720,7 +12786,7 @@
 					"recurrence": {
 						"frequency": "Day",
 						"interval": 1,
-						"startTime": "2022-09-14T22:00:00",
+						"startTime": "2022-10-16T21:00:00",
 						"timeZone": "E. South America Standard Time"
 					}
 				}
@@ -12742,6 +12808,54 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2022-10-21T12:53:00",
+						"timeZone": "E. South America Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger_carga_contestacao')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-10-31T20:21:00",
+						"timeZone": "E. South America Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								21
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger_convenio115')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 3,
+						"startTime": "2022-10-31T20:28:00",
 						"timeZone": "E. South America Standard Time"
 					}
 				}
@@ -12785,7 +12899,7 @@
 						"location": "Brazil South",
 						"dataFlowProperties": {
 							"computeType": "MemoryOptimized",
-							"coreCount": 48,
+							"coreCount": 32,
 							"timeToLive": 10,
 							"cleanup": false
 						},
@@ -12918,7 +13032,7 @@
 							"name": "Adaptacoes"
 						}
 					],
-					"script": "parameters{\n\tpLote as string,\n\tpMesAnoRef as string\n}\nsource(output(\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDATA_EMISSAO_NF_ORIG as timestamp,\n\t\tVALOR_NF_ORIG as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCNPJ_CPF as string,\n\t\tVALOR_FATURA as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tDT_AJUSTE as timestamp,\n\t\tDATA_ATRIBUICAO as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tCODMOTIVOAJUSTES as string,\n\t\tDATAABERTURAIMPU as timestamp,\n\t\tNUMERO_FATURA as string,\n\t\tDATA_VENC_FATURA as timestamp,\n\t\tVALOR_PAGAMENTO as decimal(15,2),\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tUF as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tDONO_RECEITA as string,\n\t\tDT_VENCTO_FATURA_FUTURA as timestamp,\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tCCM_SERVICO_CONTESTATO as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT FF.CCM_CREDITO AS NUM_ITEM_ESTORNADO, FF.NUMERO_NF AS NOTA_FISCAL_ORIG,FF.DT_EMISSAO_NF AS DATA_EMISSAO_NF_ORIG,FF.VLR_TOTAL_NF AS VALOR_NF_ORIG,FF.SERIE_NF,FF.CONTA_COBRANCA AS COD_IDENT_CLI,FF.CNPJ_CPF,NULL AS VALOR_FATURA, NULL AS VLR_ATRIBUIDO, FF.VLR_CONTESTADO AS VLR_TOTAL_ATRIBUIDO,FF.DT_OPERACAO AS DT_AJUSTE,FF.DT_VENCTO_BOLETO_ULT AS DATA_ATRIBUICAO,FF.OPERADORA AS DESCR_OPERADORA,FF.CODIGO_OPERADORA,FF.MOTIVO_CONTESTACAO AS CODMOTIVOAJUSTES,FF.DT_GERACAO AS DATAABERTURAIMPU,FF.NUMERO_FATURA_ORIGINAL AS NUMERO_FATURA,FF.DT_VENCTO_ORIGINAL AS DATA_VENC_FATURA, FF.VLR_FATURA_ORIGINAL_PAGA AS VALOR_PAGAMENTO,FF.VLR_SALDO_ABERTO AS SALDO_DEVEDOR,FF.NUMERO_FATURA_FUTURA AS FATURA_ATRIBUIDA,FF.UF_COBRANCA AS UF,CASE WHEN FF.CATEGORIA_CLIENTE = 'PF' THEN 'CPF' WHEN FF.CATEGORIA_CLIENTE = 'PJ' THEN 'CNPJ' ELSE NULL END AS TIPO_DOCUMENTO,FF.CONTACONTABIL AS CONTACONTABIL_DB,NULL AS CONTACONTABIL_CR,FF.DESCRCONTACONTABIL AS DESCR_CONTACONTABIL_DB,NULL AS DESCR_CONTACONTABIL_CR,FF.VLR_POS_CONTESTACAO AS SALDO_POS_AJUSTE,FF.TIPO_OPERACAO,FF.DONO_RECEITA,FF.DT_VENCTO_FATURA_FUTURA,FF.VLR_FATURA_FUTURA,FF.VLR_CONTESTADO_FUTURO,FF.CCM_SERVICO_CONTESTATO FROM [convenio].[cvtb_fat_car_ff] FF WITH (NOLOCK) WHERE FF.id_lote_arquivo IN ( SELECT l.id_lote_arquivo FROM [convenio].[cvtb_lote_arquivo] L WITH (NOLOCK) WHERE l.id_lote = {$pLote}) UNION ALL SELECT FNP.CCM_CONTESTATO AS NUM_ITEM_ESTORNADO, FNP.NUMERO_NF_AJUSTE AS NOTA_FISCAL_ORIG,FNP.DT_EMISSAO_NF AS DATA_EMISSAO_NF_ORIG,FNP.VLR_TOTAL_NF  AS VALOR_NF_ORIG,FNP.SERIE_NF,FNP.CONTA_COBRANCA AS COD_IDENT_CLI,FNP.CNPJ_CPF,FNP.VLR_FATURA_ORIGINAL AS VALOR_FATURA,FNP.VLR_CONSTESTADO AS VLR_ATRIBUIDO, NULL AS VLR_TOTAL_ATRIBUIDO, FNP.DT_OPERACAO AS DT_AJUSTE,FNP.DT_VENCTO_BOLETO_ULT AS DATA_ATRIBUICAO,FNP.OPERADORA AS DESCR_OPERADORA,FNP.CODIGO_OPERADORA,FNP.MOTIVO_CONTESTACAO AS CODMOTIVOAJUSTES,FNP.DT_GERACAO AS DATAABERTURAIMPU,FNP.ID_FATURA AS NUMERO_FATURA,FNP.DT_VENCTO_ORIGINAL AS DATA_VENC_FATURA, NULL AS VALOR_PAGAMENTO,FNP.VLR_SALDO_ABERTO AS SALDO_DEVEDOR,NULL AS FATURA_ATRIBUIDA,FNP.UF_COBRANCA AS UF,CASE WHEN FNP.CATEGORIA_CLIENTE = 'PF' THEN 'CPF' WHEN FNP.CATEGORIA_CLIENTE = 'PJ' THEN 'CNPJ' ELSE NULL END AS TIPO_DOCUMENTO,NULL AS CONTACONTABIL_DB,FNP.CONTACONTABIL AS CONTACONTABIL_CR,NULL AS DESCR_CONTACONTABIL_DB,FNP.DESCRCONTACONTABIL AS DESCR_CONTACONTABIL_CR,FNP.VLR_POS_CONTESTACAO AS SALDO_POS_AJUSTE,FNP.TIPO_OPERACAO,FNP.DONO_RECEITA,NULL AS DT_VENCTO_FATURA_FUTURA,NULL AS VLR_FATURA_FUTURA,NULL AS VLR_CONTESTADO_FUTURO,NULL AS CCM_SERVICO_CONTESTATO FROM [convenio].[cvtb_fat_car_fnp] FNP WITH (NOLOCK) WHERE FNP.id_lote_arquivo IN ( SELECT la.id_lote_arquivo FROM [convenio].[cvtb_lote_arquivo] la WITH (NOLOCK) WHERE la.id_lote = {$pLote})\"),\n\tformat: 'query') ~> TabelasFAT\nTabelasFAT derive(VLR_ATRIBUIDO = replace(toString(VLR_ATRIBUIDO), ',' , '.'),\n\t\tVLR_PAGAMENTO = replace(toString(VALOR_PAGAMENTO), ',' , '.'),\n\t\tVALOR_FATURA = replace(toString(VALOR_FATURA), ',' , '.'),\n\t\tID_LOTE_AJUSTE = $pLote,\n\t\tNOME_BILLING = 'FAT',\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO = replace(trim(NOTA_FISCAL_ORIG), right(NOTA_FISCAL_ORIG, 4), ''),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO = concat(trim(SERIE_NF), '123'),\n\t\tCD_CRIADO_POR = 'Carga ADF - CargaArqFAT',\n\t\tDT_CRIADO_EM = add(currentTimestamp(), hours(-3)),\n\t\tVLR_NF_ORIG = replace(toString(VALOR_NF_ORIG), ',' , '.'),\n\t\tVLR_FATURA_FUTURA = replace(toString(VLR_FATURA_FUTURA), ',' , '.'),\n\t\tVLR_CONTESTADO_FUTURO = replace(toString(VLR_CONTESTADO_FUTURO), ',' , '.'),\n\t\tSALDO_DEVEDOR = replace(toString(SALDO_DEVEDOR), ',' , '.'),\n\t\tSALDO_POS_AJUSTE = replace(toString(SALDO_POS_AJUSTE), ',' , '.'),\n\t\tVLR_TOTAL_ATRIBUIDO = replace(toString(VLR_TOTAL_ATRIBUIDO), ',' , '.'),\n\t\tMES_ANO_REF_ARQ = concat(right($pMesAnoRef, 2), left($pMesAnoRef, 4))) ~> Adaptacoes\nAdaptacoes sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_CONTESTACAO as decimal(28,0),\n\t\tID_CLIENTE as string,\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDT_EMISSAO_NF_ORIG as timestamp,\n\t\tVLR_ORIG_NSFT as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCPF_CNPJ as string,\n\t\tNOME_CLIENTE as string,\n\t\tTERMINAL as string,\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tDT_ATRIBUICAO as timestamp,\n\t\tDT_AJUSTE as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCOD_OPERADORA as string,\n\t\tCOD_MOTIVO_AJUSTE as string,\n\t\tDESC_MOTIVO_AJUSTE as string,\n\t\tNUM_CONTROLE_RECLAMACAO as string,\n\t\tCLASSE_RECEBER as string,\n\t\tCONTA_FINANCEIRA as string,\n\t\tDESC_CONTA_FINANCEIRA as string,\n\t\tNUM_FATURA_ORIGINAL as string,\n\t\tVLR_DOC_ORIGINAL as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tUF_FATURA as string,\n\t\tSEQ_RECEBIVEL as string,\n\t\tDT_EMISSAO as timestamp,\n\t\tMODELO as string,\n\t\tNUMORDEMDOITEM as decimal(3,0),\n\t\tBC_ICMS as decimal(15,2),\n\t\tICMS as decimal(15,2),\n\t\tALIQUOTA_ICMS as decimal(15,2),\n\t\tBC_ICMS_RECALCULADA as decimal(15,2),\n\t\tICMS_RECALCULADO as decimal(15,2),\n\t\tICMS_PARA_RESSARCIMENTO as decimal(15,2),\n\t\tSITUACAO as string,\n\t\tMES_APURACAO as string,\n\t\tTIPO_DOC as decimal(1,0),\n\t\tCOD_CONSUMIDOR as string,\n\t\tCHAVE_AUTENTICACAO as string,\n\t\tTOTAL_MESTRE as decimal(15,2),\n\t\tBC_ICMS_MESTRE as decimal(15,2),\n\t\tICMS_DESTACADO as decimal(15,2),\n\t\tINSCRICAO_ESTADUAL as string,\n\t\tRAZAO_SOCIAL as string,\n\t\tFL_STATUS_GERAL as string,\n\t\tID_LOTE_AJUSTE as decimal(28,0),\n\t\tID_ENTREGA_RESSARCIMENTO as decimal(28,0),\n\t\tCD_ITEM as string,\n\t\tDS_ITEM as string,\n\t\tHR_AJUSTE as string,\n\t\tHR_ATRIBUICAO as string,\n\t\tNOME_BILLING as string,\n\t\tTIPO_CLIENTE as string,\n\t\tDT_ABERTURA_IMPUG as timestamp,\n\t\tDT_FECHA_IMPUG as timestamp,\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tSALDO_FATURA_INI as decimal(15,2),\n\t\tSALDO_FATURA_FIM as decimal(15,2),\n\t\tCOD_CLIENTE as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tNOME_FANTASIA as string,\n\t\tCOD_GRUPO as string,\n\t\tNOME_GRUPO_ECONOMICO as string,\n\t\tSEGMENTO_CLIENTE as string,\n\t\tSUB_SEGMENTO_CLIENTE as string,\n\t\tSEGMENTO_VALOR as string,\n\t\tCLASSE_ELEGIBILIDADE as string,\n\t\tDESCR_SERV_AJUSTE as string,\n\t\tDESCR_SERV as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tTIPO_TERMINAL as string,\n\t\tDONO_RECEITA as string,\n\t\tSUBTYPE_CODE as decimal(19,0),\n\t\tTIPO_DESCR_SERV as string,\n\t\tDT_VENCTO_FAT_FUTURA as timestamp,\n\t\tVLR_IMPOSTO_CONTESTADO as decimal(15,2),\n\t\tVLR_IMPOSTO_ICMS as decimal(15,2),\n\t\tVLR_BRUTO_ITEM as decimal(15,2),\n\t\tVLR_OUTROS_IMPOSTOS as decimal(15,2),\n\t\tVLR_AJUSTE_ITEM as decimal(15,2),\n\t\tVLR_CREDITO_AJUSTE as decimal(15,2),\n\t\tVLR_CREDITO_ITEM as decimal(15,2),\n\t\tVLR_DEVOLUCAO as decimal(15,2),\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tLOGIN_ATENDIMENTO as string,\n\t\tDT_VENC_FATURA_ORIGINAL as timestamp,\n\t\tDT_ATRIBUICAO_PGTO as timestamp,\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tFLG_RETIFICADO as string,\n\t\tTERMINAL_115 as string,\n\t\tVALOR_ITEM_115 as decimal(15,2),\n\t\tDT_CRIADO_EM as timestamp,\n\t\tCD_CRIADO_POR as string,\n\t\tDT_ATUALIZADO_EM as timestamp,\n\t\tCD_ATUALIZADO_POR as string,\n\t\tMES_ANO_FAT_ORIGINAL as string,\n\t\tMES_ANO_FAT_AJUSTE as string,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL as decimal(15,2),\n\t\tID_ITEM_CONVENIO_115 as decimal(28,0),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO as string,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO as string,\n\t\tCOD_FAC_CD as decimal(10,0),\n\t\tCCM_SERVICO_CONTESTADO as string,\n\t\tCOD_TIPO_RCBL_FATURA as string,\n\t\tDESCR_RCBL_FATURA as string,\n\t\tDT_PAGAMENTO as timestamp,\n\t\tDEBIT_ID as string,\n\t\tDT_EMISSAO_FATURA_ORIGINAL as timestamp,\n\t\tUF_NF as string,\n\t\tVLR_PGTO_ALOCADO as decimal(15,2),\n\t\tVLR_TOTAL_PGTO as decimal(15,2),\n\t\tCREDIT_ID as string,\n\t\tDT_REFERENCIA as timestamp,\n\t\tDT_IMPORTACAO as timestamp,\n\t\tSTEP_EXECUTION_ID as decimal(18,0),\n\t\tJOB_EXECUTION_ID as decimal(18,0),\n\t\tID_MESTRE_CONVENIO_115 as decimal(28,0),\n\t\tFL_MANUAL_CONCILIACAO as string,\n\t\tDT_CONCILIACAO as timestamp,\n\t\tDT_EMISSAO_115 as timestamp,\n\t\tMES_ANO_REF_ARQ as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tNOTA_FISCAL_ORIG,\n\t\tDT_EMISSAO_NF_ORIG = DATA_EMISSAO_NF_ORIG,\n\t\tSERIE_NF,\n\t\tCOD_IDENT_CLI,\n\t\tCPF_CNPJ = CNPJ_CPF,\n\t\tVLR_ORIG_NSFT = VALOR_NF_ORIG,\n\t\tVLR_ATRIBUIDO,\n\t\tDESCR_OPERADORA,\n\t\tCOD_OPERADORA = CODIGO_OPERADORA,\n\t\tDT_ABERTURA_IMPUG = DATAABERTURAIMPU,\n\t\tNUM_FATURA_ORIGINAL = NUMERO_FATURA,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL = VALOR_PAGAMENTO,\n\t\tUF_NF = UF,\n\t\tTIPO_DOCUMENTO,\n\t\tDT_ATRIBUICAO = DATA_ATRIBUICAO,\n\t\tDT_AJUSTE,\n\t\tCOD_MOTIVO_AJUSTE = CODMOTIVOAJUSTES,\n\t\tNOME_BILLING,\n\t\tFATURA_ATRIBUIDA,\n\t\tID_LOTE_AJUSTE,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO,\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO,\n\t\tDT_CRIADO_EM,\n\t\tCD_CRIADO_POR,\n\t\tDT_VENCTO_FAT_FUTURA = DT_VENCTO_FATURA_FUTURA,\n\t\tVLR_FATURA_FUTURA,\n\t\tSALDO_DEVEDOR,\n\t\tCONTACONTABIL_DB,\n\t\tCONTACONTABIL_CR,\n\t\tDESCR_CONTACONTABIL_DB,\n\t\tDESCR_CONTACONTABIL_CR,\n\t\tDONO_RECEITA,\n\t\tTIPO_OPERACAO,\n\t\tVLR_CONTESTADO_FUTURO,\n\t\tSALDO_POS_AJUSTE,\n\t\tVLR_DOC_ORIGINAL = VALOR_NF_ORIG,\n\t\tNUM_ITEM_ESTORNADO,\n\t\tCCM_SERVICO_CONTESTADO = CCM_SERVICO_CONTESTATO,\n\t\tDT_VENC_FATURA_ORIGINAL = DATA_VENC_FATURA,\n\t\tVLR_TOTAL_ATRIBUIDO,\n\t\tMES_ANO_REF_ARQ,\n\t\tVLR_FATURA = VALOR_FATURA\n\t)) ~> TabelaCONTESTACAO"
+					"script": "parameters{\n\tpLote as string,\n\tpMesAnoRef as string\n}\nsource(output(\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDATA_EMISSAO_NF_ORIG as timestamp,\n\t\tVALOR_NF_ORIG as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCNPJ_CPF as string,\n\t\tVALOR_FATURA as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tDT_AJUSTE as timestamp,\n\t\tDATA_ATRIBUICAO as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tCODMOTIVOAJUSTES as string,\n\t\tDATAABERTURAIMPU as timestamp,\n\t\tNUMERO_FATURA as string,\n\t\tDATA_VENC_FATURA as timestamp,\n\t\tVALOR_PAGAMENTO as decimal(15,2),\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tUF as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tDONO_RECEITA as string,\n\t\tDT_VENCTO_FATURA_FUTURA as timestamp,\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tCCM_SERVICO_CONTESTATO as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT FF.CCM_CREDITO AS NUM_ITEM_ESTORNADO, FF.NUMERO_NF AS NOTA_FISCAL_ORIG,FF.DT_EMISSAO_NF AS DATA_EMISSAO_NF_ORIG,FF.VLR_TOTAL_NF AS VALOR_NF_ORIG,FF.SERIE_NF,FF.CONTA_COBRANCA AS COD_IDENT_CLI,FF.CNPJ_CPF,NULL AS VALOR_FATURA, NULL AS VLR_ATRIBUIDO, FF.VLR_CONTESTADO AS VLR_TOTAL_ATRIBUIDO,FF.DT_OPERACAO AS DT_AJUSTE,FF.DT_VENCTO_BOLETO_ULT AS DATA_ATRIBUICAO,FF.OPERADORA AS DESCR_OPERADORA,FF.CODIGO_OPERADORA,FF.MOTIVO_CONTESTACAO AS CODMOTIVOAJUSTES,FF.DT_GERACAO AS DATAABERTURAIMPU,FF.NUMERO_FATURA_ORIGINAL AS NUMERO_FATURA,FF.DT_VENCTO_ORIGINAL AS DATA_VENC_FATURA, FF.VLR_FATURA_ORIGINAL_PAGA AS VALOR_PAGAMENTO,FF.VLR_SALDO_ABERTO AS SALDO_DEVEDOR,FF.NUMERO_FATURA_FUTURA AS FATURA_ATRIBUIDA,FF.UF_COBRANCA AS UF,CASE WHEN FF.CATEGORIA_CLIENTE = 'PF' THEN 'CPF' WHEN FF.CATEGORIA_CLIENTE = 'PJ' THEN 'CNPJ' ELSE NULL END AS TIPO_DOCUMENTO,FF.CONTACONTABIL AS CONTACONTABIL_DB,NULL AS CONTACONTABIL_CR,FF.DESCRCONTACONTABIL AS DESCR_CONTACONTABIL_DB,NULL AS DESCR_CONTACONTABIL_CR,FF.VLR_POS_CONTESTACAO AS SALDO_POS_AJUSTE,FF.TIPO_OPERACAO,FF.DONO_RECEITA,FF.DT_VENCTO_FATURA_FUTURA,FF.VLR_FATURA_FUTURA,FF.VLR_CONTESTADO_FUTURO,FF.CCM_SERVICO_CONTESTATO FROM [convenio].[cvtb_fat_car_ff] FF WITH (NOLOCK) WHERE FF.id_lote_arquivo IN ( SELECT l.id_lote_arquivo FROM [convenio].[cvtb_lote_arquivo] L WITH (NOLOCK) WHERE l.id_lote = {$pLote}) UNION ALL SELECT FNP.CCM_CONTESTATO AS NUM_ITEM_ESTORNADO, FNP.NUMERO_NF_AJUSTE AS NOTA_FISCAL_ORIG,FNP.DT_EMISSAO_NF AS DATA_EMISSAO_NF_ORIG,FNP.VLR_TOTAL_NF  AS VALOR_NF_ORIG,FNP.SERIE_NF,FNP.CONTA_COBRANCA AS COD_IDENT_CLI,FNP.CNPJ_CPF,FNP.VLR_FATURA_ORIGINAL AS VALOR_FATURA,FNP.VLR_CONSTESTADO AS VLR_ATRIBUIDO, NULL AS VLR_TOTAL_ATRIBUIDO, FNP.DT_OPERACAO AS DT_AJUSTE,FNP.DT_VENCTO_BOLETO_ULT AS DATA_ATRIBUICAO,FNP.OPERADORA AS DESCR_OPERADORA,FNP.CODIGO_OPERADORA,FNP.MOTIVO_CONTESTACAO AS CODMOTIVOAJUSTES,FNP.DT_GERACAO AS DATAABERTURAIMPU,FNP.ID_FATURA AS NUMERO_FATURA,FNP.DT_VENCTO_ORIGINAL AS DATA_VENC_FATURA, NULL AS VALOR_PAGAMENTO,FNP.VLR_SALDO_ABERTO AS SALDO_DEVEDOR,NULL AS FATURA_ATRIBUIDA,FNP.UF_COBRANCA AS UF,CASE WHEN FNP.CATEGORIA_CLIENTE = 'PF' THEN 'CPF' WHEN FNP.CATEGORIA_CLIENTE = 'PJ' THEN 'CNPJ' ELSE NULL END AS TIPO_DOCUMENTO,NULL AS CONTACONTABIL_DB,FNP.CONTACONTABIL AS CONTACONTABIL_CR,NULL AS DESCR_CONTACONTABIL_DB,FNP.DESCRCONTACONTABIL AS DESCR_CONTACONTABIL_CR,FNP.VLR_POS_CONTESTACAO AS SALDO_POS_AJUSTE,FNP.TIPO_OPERACAO,FNP.DONO_RECEITA,NULL AS DT_VENCTO_FATURA_FUTURA,NULL AS VLR_FATURA_FUTURA,NULL AS VLR_CONTESTADO_FUTURO,NULL AS CCM_SERVICO_CONTESTATO FROM [convenio].[cvtb_fat_car_fnp] FNP WITH (NOLOCK) WHERE FNP.id_lote_arquivo IN ( SELECT la.id_lote_arquivo FROM [convenio].[cvtb_lote_arquivo] la WITH (NOLOCK) WHERE la.id_lote = {$pLote})\"),\n\tformat: 'query') ~> TabelasFAT\nTabelasFAT derive(VLR_ATRIBUIDO = replace(toString(VLR_ATRIBUIDO), ',' , '.'),\n\t\tVLR_PAGAMENTO = replace(toString(VALOR_PAGAMENTO), ',' , '.'),\n\t\tVALOR_FATURA = replace(toString(VALOR_FATURA), ',' , '.'),\n\t\tID_LOTE_AJUSTE = $pLote,\n\t\tNOME_BILLING = 'FAT',\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO = replace(trim(NOTA_FISCAL_ORIG), right(NOTA_FISCAL_ORIG, 4), ''),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO = concat(trim(SERIE_NF), '123'),\n\t\tCD_CRIADO_POR = 'Carga ADF - CargaArqFAT',\n\t\tDT_CRIADO_EM = add(currentTimestamp(), hours(-3)),\n\t\tVLR_NF_ORIG = replace(toString(VALOR_NF_ORIG), ',' , '.'),\n\t\tVLR_FATURA_FUTURA = replace(toString(VLR_FATURA_FUTURA), ',' , '.'),\n\t\tVLR_CONTESTADO_FUTURO = replace(toString(VLR_CONTESTADO_FUTURO), ',' , '.'),\n\t\tSALDO_DEVEDOR = replace(toString(SALDO_DEVEDOR), ',' , '.'),\n\t\tSALDO_POS_AJUSTE = replace(toString(SALDO_POS_AJUSTE), ',' , '.'),\n\t\tVLR_TOTAL_ATRIBUIDO = replace(toString(VLR_TOTAL_ATRIBUIDO), ',' , '.'),\n\t\tMES_ANO_REF_ARQ = concat(right($pMesAnoRef, 2), left($pMesAnoRef, 4))) ~> Adaptacoes\nAdaptacoes sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_CONTESTACAO as decimal(28,0),\n\t\tID_CLIENTE as string,\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDT_EMISSAO_NF_ORIG as timestamp,\n\t\tVLR_ORIG_NSFT as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCPF_CNPJ as string,\n\t\tNOME_CLIENTE as string,\n\t\tTERMINAL as string,\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tDT_ATRIBUICAO as timestamp,\n\t\tDT_AJUSTE as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCOD_OPERADORA as string,\n\t\tCOD_MOTIVO_AJUSTE as string,\n\t\tDESC_MOTIVO_AJUSTE as string,\n\t\tNUM_CONTROLE_RECLAMACAO as string,\n\t\tCLASSE_RECEBER as string,\n\t\tCONTA_FINANCEIRA as string,\n\t\tDESC_CONTA_FINANCEIRA as string,\n\t\tNUM_FATURA_ORIGINAL as string,\n\t\tVLR_DOC_ORIGINAL as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tUF_FATURA as string,\n\t\tSEQ_RECEBIVEL as string,\n\t\tDT_EMISSAO as timestamp,\n\t\tMODELO as string,\n\t\tNUMORDEMDOITEM as decimal(3,0),\n\t\tBC_ICMS as decimal(15,2),\n\t\tICMS as decimal(15,2),\n\t\tALIQUOTA_ICMS as decimal(15,2),\n\t\tBC_ICMS_RECALCULADA as decimal(15,2),\n\t\tICMS_RECALCULADO as decimal(15,2),\n\t\tICMS_PARA_RESSARCIMENTO as decimal(15,2),\n\t\tSITUACAO as string,\n\t\tMES_APURACAO as string,\n\t\tTIPO_DOC as decimal(1,0),\n\t\tCOD_CONSUMIDOR as string,\n\t\tCHAVE_AUTENTICACAO as string,\n\t\tTOTAL_MESTRE as decimal(15,2),\n\t\tBC_ICMS_MESTRE as decimal(15,2),\n\t\tICMS_DESTACADO as decimal(15,2),\n\t\tINSCRICAO_ESTADUAL as string,\n\t\tRAZAO_SOCIAL as string,\n\t\tFL_STATUS_GERAL as string,\n\t\tID_LOTE_AJUSTE as decimal(28,0),\n\t\tID_ENTREGA_RESSARCIMENTO as decimal(28,0),\n\t\tCD_ITEM as string,\n\t\tDS_ITEM as string,\n\t\tHR_AJUSTE as string,\n\t\tHR_ATRIBUICAO as string,\n\t\tNOME_BILLING as string,\n\t\tTIPO_CLIENTE as string,\n\t\tDT_ABERTURA_IMPUG as timestamp,\n\t\tDT_FECHA_IMPUG as timestamp,\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tSALDO_FATURA_INI as decimal(15,2),\n\t\tSALDO_FATURA_FIM as decimal(15,2),\n\t\tCOD_CLIENTE as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tNOME_FANTASIA as string,\n\t\tCOD_GRUPO as string,\n\t\tNOME_GRUPO_ECONOMICO as string,\n\t\tSEGMENTO_CLIENTE as string,\n\t\tSUB_SEGMENTO_CLIENTE as string,\n\t\tSEGMENTO_VALOR as string,\n\t\tCLASSE_ELEGIBILIDADE as string,\n\t\tDESCR_SERV_AJUSTE as string,\n\t\tDESCR_SERV as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tTIPO_TERMINAL as string,\n\t\tDONO_RECEITA as string,\n\t\tSUBTYPE_CODE as decimal(19,0),\n\t\tTIPO_DESCR_SERV as string,\n\t\tDT_VENCTO_FAT_FUTURA as timestamp,\n\t\tVLR_IMPOSTO_CONTESTADO as decimal(15,2),\n\t\tVLR_IMPOSTO_ICMS as decimal(15,2),\n\t\tVLR_BRUTO_ITEM as decimal(15,2),\n\t\tVLR_OUTROS_IMPOSTOS as decimal(15,2),\n\t\tVLR_AJUSTE_ITEM as decimal(15,2),\n\t\tVLR_CREDITO_AJUSTE as decimal(15,2),\n\t\tVLR_CREDITO_ITEM as decimal(15,2),\n\t\tVLR_DEVOLUCAO as decimal(15,2),\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tLOGIN_ATENDIMENTO as string,\n\t\tDT_VENC_FATURA_ORIGINAL as timestamp,\n\t\tDT_ATRIBUICAO_PGTO as timestamp,\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tFLG_RETIFICADO as string,\n\t\tTERMINAL_115 as string,\n\t\tVALOR_ITEM_115 as decimal(15,2),\n\t\tDT_CRIADO_EM as timestamp,\n\t\tCD_CRIADO_POR as string,\n\t\tDT_ATUALIZADO_EM as timestamp,\n\t\tCD_ATUALIZADO_POR as string,\n\t\tMES_ANO_FAT_ORIGINAL as string,\n\t\tMES_ANO_FAT_AJUSTE as string,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL as decimal(15,2),\n\t\tID_ITEM_CONVENIO_115 as decimal(28,0),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO as string,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO as string,\n\t\tCOD_FAC_CD as decimal(10,0),\n\t\tCCM_SERVICO_CONTESTADO as string,\n\t\tCOD_TIPO_RCBL_FATURA as string,\n\t\tDESCR_RCBL_FATURA as string,\n\t\tDT_PAGAMENTO as timestamp,\n\t\tDEBIT_ID as string,\n\t\tDT_EMISSAO_FATURA_ORIGINAL as timestamp,\n\t\tUF_NF as string,\n\t\tVLR_PGTO_ALOCADO as decimal(15,2),\n\t\tVLR_TOTAL_PGTO as decimal(15,2),\n\t\tCREDIT_ID as string,\n\t\tDT_REFERENCIA as timestamp,\n\t\tDT_IMPORTACAO as timestamp,\n\t\tSTEP_EXECUTION_ID as decimal(18,0),\n\t\tJOB_EXECUTION_ID as decimal(18,0),\n\t\tID_MESTRE_CONVENIO_115 as decimal(28,0),\n\t\tFL_MANUAL_CONCILIACAO as string,\n\t\tDT_CONCILIACAO as timestamp,\n\t\tDT_EMISSAO_115 as timestamp,\n\t\tMES_ANO_REF_ARQ as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tNOTA_FISCAL_ORIG,\n\t\tDT_EMISSAO_NF_ORIG = DATA_EMISSAO_NF_ORIG,\n\t\tSERIE_NF,\n\t\tCOD_IDENT_CLI,\n\t\tCPF_CNPJ = CNPJ_CPF,\n\t\tVLR_ORIG_NSFT = VALOR_NF_ORIG,\n\t\tVLR_ATRIBUIDO,\n\t\tDESCR_OPERADORA,\n\t\tCOD_OPERADORA = CODIGO_OPERADORA,\n\t\tDT_ABERTURA_IMPUG = DATAABERTURAIMPU,\n\t\tNUM_FATURA_ORIGINAL = NUMERO_FATURA,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL = VALOR_PAGAMENTO,\n\t\tUF_FATURA = UF,\n\t\tTIPO_DOCUMENTO,\n\t\tDT_ATRIBUICAO = DATA_ATRIBUICAO,\n\t\tDT_AJUSTE,\n\t\tCOD_MOTIVO_AJUSTE = CODMOTIVOAJUSTES,\n\t\tNOME_BILLING,\n\t\tFATURA_ATRIBUIDA,\n\t\tID_LOTE_AJUSTE,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO,\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO,\n\t\tDT_CRIADO_EM,\n\t\tCD_CRIADO_POR,\n\t\tDT_VENCTO_FAT_FUTURA = DT_VENCTO_FATURA_FUTURA,\n\t\tVLR_FATURA_FUTURA,\n\t\tSALDO_DEVEDOR,\n\t\tCONTACONTABIL_DB,\n\t\tCONTACONTABIL_CR,\n\t\tDESCR_CONTACONTABIL_DB,\n\t\tDESCR_CONTACONTABIL_CR,\n\t\tDONO_RECEITA,\n\t\tTIPO_OPERACAO,\n\t\tVLR_CONTESTADO_FUTURO,\n\t\tSALDO_POS_AJUSTE,\n\t\tVLR_DOC_ORIGINAL = VALOR_NF_ORIG,\n\t\tNUM_ITEM_ESTORNADO,\n\t\tCCM_SERVICO_CONTESTADO = CCM_SERVICO_CONTESTATO,\n\t\tDT_VENC_FATURA_ORIGINAL = DATA_VENC_FATURA,\n\t\tVLR_TOTAL_ATRIBUIDO,\n\t\tMES_ANO_REF_ARQ,\n\t\tVLR_FATURA = VALOR_FATURA\n\t)) ~> TabelaCONTESTACAO"
 				}
 			},
 			"dependsOn": [
@@ -16235,6 +16349,32 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/default/AzureBlobStorageEnppoint')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('AzureBlobStorageEnppoint_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('AzureBlobStorageEnppoint_properties_groupId')]",
+				"fqdns": "[parameters('AzureBlobStorageEnppoint_properties_fqdns')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/AzureFileStorageEndPoint1')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('AzureFileStorageEndPoint1_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('AzureFileStorageEndPoint1_properties_groupId')]",
+				"fqdns": "[parameters('AzureFileStorageEndPoint1_properties_fqdns')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/default/AzureSqlDatabaseConv86')]",
 			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
 			"apiVersion": "2018-06-01",
@@ -16242,6 +16382,19 @@
 				"privateLinkResourceId": "[parameters('AzureSqlDatabaseConv86_properties_privateLinkResourceId')]",
 				"groupId": "[parameters('AzureSqlDatabaseConv86_properties_groupId')]",
 				"fqdns": "[parameters('AzureSqlDatabaseConv86_properties_fqdns')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/AzureSqlDatabaseEndPoint')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('AzureSqlDatabaseEndPoint_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('AzureSqlDatabaseEndPoint_properties_groupId')]",
+				"fqdns": "[parameters('AzureSqlDatabaseEndPoint_properties_fqdns')]"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"

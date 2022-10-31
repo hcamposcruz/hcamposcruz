@@ -13,6 +13,222 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/arq_vivo_next_K16_original')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArq": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "VivoNext"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArq",
+							"type": "Expression"
+						},
+						"folderPath": "vivonext",
+						"container": "arq-ajustes"
+					},
+					"columnDelimiter": "#|$",
+					"encodingName": "WINDOWS-1252",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_vivo_next_K17')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArq": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "VivoNext"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArq",
+							"type": "Expression"
+						},
+						"folderPath": "vivonext/validados_a_processar",
+						"container": "arq-ajustes"
+					},
+					"columnDelimiter": "|",
+					"encodingName": "WINDOWS-1252",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_vivo_next_K17_corrigido')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArq": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "VivoNext"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArq",
+							"type": "Expression"
+						},
+						"folderPath": "vivonext/validados_a_processar",
+						"container": "arq-ajustes"
+					},
+					"columnDelimiter": "#|$",
+					"encodingName": "WINDOWS-1252",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Linha",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_vivo_next_K17_original')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArq": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "VivoNext"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArq",
+							"type": "Expression"
+						},
+						"folderPath": "vivonext",
+						"container": "arq-ajustes"
+					},
+					"columnDelimiter": "#|$",
+					"encodingName": "WINDOWS-1252",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/arq_vivonext_validados')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_conv86",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"NomeArq": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "VivoNext"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().NomeArq",
+							"type": "Expression"
+						},
+						"folderPath": "vivonext/validados_a_processar",
+						"container": "arq-ajustes"
+					},
+					"columnDelimiter": "|",
+					"encodingName": "WINDOWS-1252",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/connExecQry')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseConv86",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/cvtb_vivo_next_k16')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -360,7 +576,9 @@
 					"script": "parameters{\n\tpLote as string,\n\tpMesAnoRef as string\n}\nsource(output(\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tVLR_ORIG_NSFT as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tdescr_operadora as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCPF_CNPJ as string,\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tDT_ATRIBUICAO as timestamp,\n\t\tDT_AJUSTE as timestamp,\n\t\tCOD_MOTIVO_AJUSTE as string,\n\t\tDT_ABERTURA_IMPUG as timestamp,\n\t\tNUM_FATURA_ORIGINAL as string,\n\t\tDT_VENC_FATURA_ORIGINAL as timestamp,\n\t\tDT_EMISSAO_FATURA as timestamp,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tUF_FATURA as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tDT_VENCTO_FAT_FUTURA as timestamp,\n\t\tVLR_AJUSTE_ITEM as decimal(15,2),\n\t\tVLR_CREDITO_AJUSTE as decimal(15,2),\n\t\tVLR_DEVOLUCAO as decimal(15,2),\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tCOD_FAC_CD as decimal(10,0),\n\t\tCOD_OPERADORA as string,\n\t\treceita_operadora as string,\n\t\tCOD_CREDITO as decimal(10,2),\n\t\tNUM_FATURA_FUTURA as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT np.nota_fiscal_orig AS NOTA_FISCAL_ORIG, np.vlr_orig_nsft AS VLR_ORIG_NSFT, np.serie_nf AS SERIE_NF, np.descr_operadora,np.cod_ident_cli AS COD_IDENT_CLI,np.cpf_cnpj\tAS CPF_CNPJ,np.vlr_contestado AS VLR_ATRIBUIDO,np.dt_vencto_boleto_ult AS DT_ATRIBUICAO,np.dt_ajuste AS\tDT_AJUSTE,np.cod_motivo_ajuste AS COD_MOTIVO_AJUSTE,np.dt_abertura_impug AS\tDT_ABERTURA_IMPUG,np.num_fatura_original AS NUM_FATURA_ORIGINAL,np.dt_venc_fatura_original AS DT_VENC_FATURA_ORIGINAL, np.dt_emissao_fatura AS\tDT_EMISSAO_FATURA,np.vlr_fatura AS VLR_FATURA,np.saldo_devedor AS SALDO_DEVEDOR,np.uf_fatura AS UF_FATURA,CASE WHEN np.tipo_documento = 'PF' THEN 'CPF' WHEN np.tipo_documento = 'PJ' THEN 'CNPJ' ELSE NULL END AS TIPO_DOCUMENTO,np.contacontabil AS CONTACONTABIL_CR,np.contacontabil AS CONTACONTABIL_DB,np.descrcontacontabil AS DESCR_CONTACONTABIL_DB,np.descrcontacontabil AS DESCR_CONTACONTABIL_CR,np.saldo_pos_ajuste AS SALDO_POS_AJUSTE,np.tipo_operacao AS\tTIPO_OPERACAO,np.dt_venc_fatura_original AS DT_VENCTO_FAT_FUTURA,NULL AS\tVLR_AJUSTE_ITEM, NULL AS VLR_CREDITO_AJUSTE, NULL AS VLR_DEVOLUCAO,NULL AS\tVLR_FATURA_FUTURA,np.cod_fac_cd AS COD_FAC_CD,np.cod_operadora AS COD_OPERADORA, np.receita_operadora, null AS COD_CREDITO,null AS NUM_FATURA_FUTURA FROM convenio.cvtb_atis_nao_pago np WITH (NOLOCK)  WHERE id_lote_arquivo IN (SELECT id_lote_arquivo FROM CONVENIO.CVTB_LOTE_ARQUIVO WITH (NOLOCK)  WHERE ID_LOTE = {$pLote}) UNION ALL SELECT  ap.nota_fiscal_orig AS NOTA_FISCAL_ORIG,ap.vlr_orig_nsft AS VLR_ORIG_NSFT, ap.serie_nf AS SERIE_NF, ap.descr_operadora AS DESCR_OPERADORA, ap.cod_ident_cli AS COD_IDENT_CLI,ap.cpf_cnpj\tAS CPF_CNPJ,ap.vlr_credito_item AS\tVLR_ATRIBUIDO,ap.dt_vencto_boleto_ult AS DT_ATRIBUICAO,ap.dt_ajuste AS\tDT_AJUSTE,ap.cod_motivo_ajuste AS\tCOD_MOTIVO_AJUSTE, ap.dt_abertura_impug AS\tDT_ABERTURA_IMPUG,ap.num_fatura_original AS\tNUM_FATURA_ORIGINAL,ap.dt_venc_fatura_original AS\tDT_VENC_FATURA_ORIGINAL,ap.dt_emissao_fatura AS DT_EMISSAO_FATURA,ap.vlr_fatura AS\tVLR_FATURA,ap.saldo_devedor AS\tSALDO_DEVEDOR,ap.uf_fatura AS UF_FATURA,CASE WHEN ap.tipo_documento = 'PF' THEN 'CPF' WHEN ap.tipo_documento = 'PJ' THEN 'CNPJ' ELSE NULL END AS TIPO_DOCUMENTO,ap.contacontabil AS CONTACONTABIL_CR,ap.contacontabil AS CONTACONTABIL_DB, ap.descrcontacontabil AS DESCR_CONTACONTABIL_DB ,ap.descrcontacontabil AS DESCR_CONTACONTABIL_CR,ap.saldo_pos_ajuste\tAS SALDO_POS_AJUSTE,ap.tipo_operacao AS\tTIPO_OPERACAO,ap.dt_venc_fatura_original AS DT_VENCTO_FAT_FUTURA,ap.vlr_ajuste_item AS\tVLR_AJUSTE_ITEM,ap.vlr_credito_ajuste AS VALOR_CREDITO_AJUSTE,ap.vlr_devolucao AS\tVLR_DEVOLUCAO,ap.vlr_fatura_futura AS VLR_FATURA_FUTURA,ap.cod_fac_cd AS COD_FAC_CD,ap.cod_operadora AS\tCOD_OPERADORA,ap.receita_operadora, ap.cod_credito, ap.num_fatura_futura FROM convenio.cvtb_atis_pago ap WITH (NOLOCK)  WHERE id_lote_arquivo IN (SELECT id_lote_arquivo FROM CONVENIO.CVTB_LOTE_ARQUIVO WITH (NOLOCK)  WHERE ID_LOTE = {$pLote})\"\r),\n\tformat: 'query') ~> TabelaAtis\nTabelaAtis derive(id_lote_ajuste = $pLote,\n\t\tnome_billing = 'Atis',\n\t\tnota_fiscal_orig_normalizado = replace(trim(NOTA_FISCAL_ORIG), right(NOTA_FISCAL_ORIG, 4), ''),\n\t\tnum_controle_reclamacao_normalizado = concat(trim(SERIE_NF), '123'),\n\t\tcd_criado_por = 'Carga ADF - CargaArqAtis',\n\t\tdt_criado_em = add(currentTimestamp(), hours(-3)),\n\t\tfl_status_geral = 'NT',\n\t\tMES_ANO_REF_ARQ = concat(right($pMesAnoRef, 2), left($pMesAnoRef, 4)),\n\t\tNUM_ITEM_ESTORNADO = toDecimal(COD_CREDITO, 2)) ~> AdaptaColunas\nAdaptaColunas sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_CONTESTACAO as decimal(28,0),\n\t\tID_CLIENTE as string,\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDT_EMISSAO_NF_ORIG as timestamp,\n\t\tVLR_ORIG_NSFT as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCPF_CNPJ as string,\n\t\tNOME_CLIENTE as string,\n\t\tTERMINAL as string,\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tDT_ATRIBUICAO as timestamp,\n\t\tDT_AJUSTE as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCOD_OPERADORA as string,\n\t\tCOD_MOTIVO_AJUSTE as string,\n\t\tDESC_MOTIVO_AJUSTE as string,\n\t\tNUM_CONTROLE_RECLAMACAO as string,\n\t\tCLASSE_RECEBER as string,\n\t\tCONTA_FINANCEIRA as string,\n\t\tDESC_CONTA_FINANCEIRA as string,\n\t\tNUM_FATURA_ORIGINAL as string,\n\t\tVLR_DOC_ORIGINAL as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tUF_FATURA as string,\n\t\tSEQ_RECEBIVEL as string,\n\t\tDT_EMISSAO as timestamp,\n\t\tMODELO as string,\n\t\tNUMORDEMDOITEM as decimal(3,0),\n\t\tBC_ICMS as decimal(15,2),\n\t\tICMS as decimal(15,2),\n\t\tALIQUOTA_ICMS as decimal(15,2),\n\t\tBC_ICMS_RECALCULADA as decimal(15,2),\n\t\tICMS_RECALCULADO as decimal(15,2),\n\t\tICMS_PARA_RESSARCIMENTO as decimal(15,2),\n\t\tSITUACAO as string,\n\t\tMES_APURACAO as string,\n\t\tTIPO_DOC as decimal(1,0),\n\t\tCOD_CONSUMIDOR as string,\n\t\tCHAVE_AUTENTICACAO as string,\n\t\tTOTAL_MESTRE as decimal(15,2),\n\t\tBC_ICMS_MESTRE as decimal(15,2),\n\t\tICMS_DESTACADO as decimal(15,2),\n\t\tINSCRICAO_ESTADUAL as string,\n\t\tRAZAO_SOCIAL as string,\n\t\tFL_STATUS_GERAL as string,\n\t\tID_LOTE_AJUSTE as decimal(28,0),\n\t\tID_ENTREGA_RESSARCIMENTO as decimal(28,0),\n\t\tCD_ITEM as string,\n\t\tDS_ITEM as string,\n\t\tHR_AJUSTE as string,\n\t\tHR_ATRIBUICAO as string,\n\t\tNOME_BILLING as string,\n\t\tTIPO_CLIENTE as string,\n\t\tDT_ABERTURA_IMPUG as timestamp,\n\t\tDT_FECHA_IMPUG as timestamp,\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tSALDO_FATURA_INI as decimal(15,2),\n\t\tSALDO_FATURA_FIM as decimal(15,2),\n\t\tCOD_CLIENTE as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tNOME_FANTASIA as string,\n\t\tCOD_GRUPO as string,\n\t\tNOME_GRUPO_ECONOMICO as string,\n\t\tSEGMENTO_CLIENTE as string,\n\t\tSUB_SEGMENTO_CLIENTE as string,\n\t\tSEGMENTO_VALOR as string,\n\t\tCLASSE_ELEGIBILIDADE as string,\n\t\tDESCR_SERV_AJUSTE as string,\n\t\tDESCR_SERV as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tTIPO_TERMINAL as string,\n\t\tDONO_RECEITA as string,\n\t\tSUBTYPE_CODE as decimal(19,0),\n\t\tTIPO_DESCR_SERV as string,\n\t\tDT_VENCTO_FAT_FUTURA as timestamp,\n\t\tVLR_IMPOSTO_CONTESTADO as decimal(15,2),\n\t\tVLR_IMPOSTO_ICMS as decimal(15,2),\n\t\tVLR_BRUTO_ITEM as decimal(15,2),\n\t\tVLR_OUTROS_IMPOSTOS as decimal(15,2),\n\t\tVLR_AJUSTE_ITEM as decimal(15,2),\n\t\tVLR_CREDITO_AJUSTE as decimal(15,2),\n\t\tVLR_CREDITO_ITEM as decimal(15,2),\n\t\tVLR_DEVOLUCAO as decimal(15,2),\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tLOGIN_ATENDIMENTO as string,\n\t\tDT_VENC_FATURA_ORIGINAL as timestamp,\n\t\tDT_ATRIBUICAO_PGTO as timestamp,\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tFLG_RETIFICADO as string,\n\t\tTERMINAL_115 as string,\n\t\tVALOR_ITEM_115 as decimal(15,2),\n\t\tDT_CRIADO_EM as timestamp,\n\t\tCD_CRIADO_POR as string,\n\t\tDT_ATUALIZADO_EM as timestamp,\n\t\tCD_ATUALIZADO_POR as string,\n\t\tMES_ANO_FAT_ORIGINAL as string,\n\t\tMES_ANO_FAT_AJUSTE as string,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL as decimal(15,2),\n\t\tID_ITEM_CONVENIO_115 as decimal(28,0),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO as string,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO as string,\n\t\tCOD_FAC_CD as decimal(10,0),\n\t\tCCM_SERVICO_CONTESTADO as string,\n\t\tCOD_TIPO_RCBL_FATURA as string,\n\t\tDESCR_RCBL_FATURA as string,\n\t\tDT_PAGAMENTO as timestamp,\n\t\tDEBIT_ID as string,\n\t\tDT_EMISSAO_FATURA_ORIGINAL as timestamp,\n\t\tUF_NF as string,\n\t\tVLR_PGTO_ALOCADO as decimal(15,2),\n\t\tVLR_TOTAL_PGTO as decimal(15,2),\n\t\tCREDIT_ID as string,\n\t\tDT_REFERENCIA as timestamp,\n\t\tDT_IMPORTACAO as timestamp,\n\t\tSTEP_EXECUTION_ID as decimal(18,0),\n\t\tJOB_EXECUTION_ID as decimal(18,0),\n\t\tID_MESTRE_CONVENIO_115 as decimal(28,0),\n\t\tFL_MANUAL_CONCILIACAO as string,\n\t\tDT_CONCILIACAO as timestamp,\n\t\tDT_EMISSAO_115 as timestamp,\n\t\tMES_ANO_REF_ARQ as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tNOTA_FISCAL_ORIG,\n\t\tVLR_ORIG_NSFT,\n\t\tSERIE_NF,\n\t\tCOD_IDENT_CLI,\n\t\tCPF_CNPJ,\n\t\tVLR_ATRIBUIDO,\n\t\tDT_ATRIBUICAO,\n\t\tDT_AJUSTE,\n\t\tDESCR_OPERADORA = descr_operadora,\n\t\tCOD_OPERADORA,\n\t\tCOD_MOTIVO_AJUSTE,\n\t\tNUM_FATURA_ORIGINAL,\n\t\tDT_EMISSAO_FATURA_ORIGINAL = DT_EMISSAO_FATURA,\n\t\tVLR_FATURA,\n\t\tUF_FATURA,\n\t\tFL_STATUS_GERAL = fl_status_geral,\n\t\tID_LOTE_AJUSTE = id_lote_ajuste,\n\t\tNOME_BILLING = nome_billing,\n\t\tDT_ABERTURA_IMPUG,\n\t\tSALDO_DEVEDOR,\n\t\tTIPO_DOCUMENTO,\n\t\tCONTACONTABIL_DB,\n\t\tCONTACONTABIL_CR,\n\t\tDESCR_CONTACONTABIL_DB,\n\t\tDESCR_CONTACONTABIL_CR,\n\t\tSALDO_POS_AJUSTE,\n\t\tTIPO_OPERACAO,\n\t\tDT_VENCTO_FAT_FUTURA,\n\t\tVLR_AJUSTE_ITEM,\n\t\tVLR_CREDITO_AJUSTE,\n\t\tVLR_DEVOLUCAO,\n\t\tVLR_FATURA_FUTURA,\n\t\tDT_VENC_FATURA_ORIGINAL,\n\t\tDT_CRIADO_EM = dt_criado_em,\n\t\tCD_CRIADO_POR = cd_criado_por,\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO = num_controle_reclamacao_normalizado,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO = nota_fiscal_orig_normalizado,\n\t\tCOD_FAC_CD,\n\t\tMES_ANO_REF_ARQ,\n\t\tDONO_RECEITA = receita_operadora,\n\t\tNUM_ITEM_ESTORNADO,\n\t\tFATURA_ATRIBUIDA = NUM_FATURA_FUTURA\n\t)) ~> TabelaCONTESTACAO"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/connExecQry')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dfCargaUnificadaAtlys')]",
@@ -433,10 +651,12 @@
 							"name": "Adaptacoes"
 						}
 					],
-					"script": "parameters{\n\tpLote as string,\n\tpMesAnoRef as string\n}\nsource(output(\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDATA_EMISSAO_NF_ORIG as timestamp,\n\t\tVALOR_NF_ORIG as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCNPJ_CPF as string,\n\t\tVALOR_FATURA as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tDT_AJUSTE as timestamp,\n\t\tDATA_ATRIBUICAO as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tCODMOTIVOAJUSTES as string,\n\t\tDATAABERTURAIMPU as timestamp,\n\t\tNUMERO_FATURA as string,\n\t\tDATA_VENC_FATURA as timestamp,\n\t\tVALOR_PAGAMENTO as decimal(15,2),\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tUF as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tDONO_RECEITA as string,\n\t\tDT_VENCTO_FATURA_FUTURA as timestamp,\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tCCM_SERVICO_CONTESTATO as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT FF.CCM_CREDITO AS NUM_ITEM_ESTORNADO, FF.NUMERO_NF AS NOTA_FISCAL_ORIG,FF.DT_EMISSAO_NF AS DATA_EMISSAO_NF_ORIG,FF.VLR_TOTAL_NF AS VALOR_NF_ORIG,FF.SERIE_NF,FF.CONTA_COBRANCA AS COD_IDENT_CLI,FF.CNPJ_CPF,NULL AS VALOR_FATURA, NULL AS VLR_ATRIBUIDO, FF.VLR_CONTESTADO AS VLR_TOTAL_ATRIBUIDO,FF.DT_OPERACAO AS DT_AJUSTE,FF.DT_VENCTO_BOLETO_ULT AS DATA_ATRIBUICAO,FF.OPERADORA AS DESCR_OPERADORA,FF.CODIGO_OPERADORA,FF.MOTIVO_CONTESTACAO AS CODMOTIVOAJUSTES,FF.DT_GERACAO AS DATAABERTURAIMPU,FF.NUMERO_FATURA_ORIGINAL AS NUMERO_FATURA,FF.DT_VENCTO_ORIGINAL AS DATA_VENC_FATURA, FF.VLR_FATURA_ORIGINAL_PAGA AS VALOR_PAGAMENTO,FF.VLR_SALDO_ABERTO AS SALDO_DEVEDOR,FF.NUMERO_FATURA_FUTURA AS FATURA_ATRIBUIDA,FF.UF_COBRANCA AS UF,CASE WHEN FF.CATEGORIA_CLIENTE = 'PF' THEN 'CPF' WHEN FF.CATEGORIA_CLIENTE = 'PJ' THEN 'CNPJ' ELSE NULL END AS TIPO_DOCUMENTO,FF.CONTACONTABIL AS CONTACONTABIL_DB,NULL AS CONTACONTABIL_CR,FF.DESCRCONTACONTABIL AS DESCR_CONTACONTABIL_DB,NULL AS DESCR_CONTACONTABIL_CR,FF.VLR_POS_CONTESTACAO AS SALDO_POS_AJUSTE,FF.TIPO_OPERACAO,FF.DONO_RECEITA,FF.DT_VENCTO_FATURA_FUTURA,FF.VLR_FATURA_FUTURA,FF.VLR_CONTESTADO_FUTURO,FF.CCM_SERVICO_CONTESTATO FROM [convenio].[cvtb_fat_car_ff] FF WITH (NOLOCK) WHERE FF.id_lote_arquivo IN ( SELECT l.id_lote_arquivo FROM [convenio].[cvtb_lote_arquivo] L WITH (NOLOCK) WHERE l.id_lote = {$pLote}) UNION ALL SELECT FNP.CCM_CONTESTATO AS NUM_ITEM_ESTORNADO, FNP.NUMERO_NF_AJUSTE AS NOTA_FISCAL_ORIG,FNP.DT_EMISSAO_NF AS DATA_EMISSAO_NF_ORIG,FNP.VLR_TOTAL_NF  AS VALOR_NF_ORIG,FNP.SERIE_NF,FNP.CONTA_COBRANCA AS COD_IDENT_CLI,FNP.CNPJ_CPF,FNP.VLR_FATURA_ORIGINAL AS VALOR_FATURA,FNP.VLR_CONSTESTADO AS VLR_ATRIBUIDO, NULL AS VLR_TOTAL_ATRIBUIDO, FNP.DT_OPERACAO AS DT_AJUSTE,FNP.DT_VENCTO_BOLETO_ULT AS DATA_ATRIBUICAO,FNP.OPERADORA AS DESCR_OPERADORA,FNP.CODIGO_OPERADORA,FNP.MOTIVO_CONTESTACAO AS CODMOTIVOAJUSTES,FNP.DT_GERACAO AS DATAABERTURAIMPU,FNP.ID_FATURA AS NUMERO_FATURA,FNP.DT_VENCTO_ORIGINAL AS DATA_VENC_FATURA, NULL AS VALOR_PAGAMENTO,FNP.VLR_SALDO_ABERTO AS SALDO_DEVEDOR,NULL AS FATURA_ATRIBUIDA,FNP.UF_COBRANCA AS UF,CASE WHEN FNP.CATEGORIA_CLIENTE = 'PF' THEN 'CPF' WHEN FNP.CATEGORIA_CLIENTE = 'PJ' THEN 'CNPJ' ELSE NULL END AS TIPO_DOCUMENTO,NULL AS CONTACONTABIL_DB,FNP.CONTACONTABIL AS CONTACONTABIL_CR,NULL AS DESCR_CONTACONTABIL_DB,FNP.DESCRCONTACONTABIL AS DESCR_CONTACONTABIL_CR,FNP.VLR_POS_CONTESTACAO AS SALDO_POS_AJUSTE,FNP.TIPO_OPERACAO,FNP.DONO_RECEITA,NULL AS DT_VENCTO_FATURA_FUTURA,NULL AS VLR_FATURA_FUTURA,NULL AS VLR_CONTESTADO_FUTURO,NULL AS CCM_SERVICO_CONTESTATO FROM [convenio].[cvtb_fat_car_fnp] FNP WITH (NOLOCK) WHERE FNP.id_lote_arquivo IN ( SELECT la.id_lote_arquivo FROM [convenio].[cvtb_lote_arquivo] la WITH (NOLOCK) WHERE la.id_lote = {$pLote})\"),\n\tformat: 'query') ~> TabelasFAT\nTabelasFAT derive(VLR_ATRIBUIDO = replace(toString(VLR_ATRIBUIDO), ',' , '.'),\n\t\tVLR_PAGAMENTO = replace(toString(VALOR_PAGAMENTO), ',' , '.'),\n\t\tVALOR_FATURA = replace(toString(VALOR_FATURA), ',' , '.'),\n\t\tID_LOTE_AJUSTE = $pLote,\n\t\tNOME_BILLING = 'FAT',\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO = replace(trim(NOTA_FISCAL_ORIG), right(NOTA_FISCAL_ORIG, 4), ''),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO = concat(trim(SERIE_NF), '123'),\n\t\tCD_CRIADO_POR = 'Carga ADF - CargaArqFAT',\n\t\tDT_CRIADO_EM = add(currentTimestamp(), hours(-3)),\n\t\tVLR_NF_ORIG = replace(toString(VALOR_NF_ORIG), ',' , '.'),\n\t\tVLR_FATURA_FUTURA = replace(toString(VLR_FATURA_FUTURA), ',' , '.'),\n\t\tVLR_CONTESTADO_FUTURO = replace(toString(VLR_CONTESTADO_FUTURO), ',' , '.'),\n\t\tSALDO_DEVEDOR = replace(toString(SALDO_DEVEDOR), ',' , '.'),\n\t\tSALDO_POS_AJUSTE = replace(toString(SALDO_POS_AJUSTE), ',' , '.'),\n\t\tVLR_TOTAL_ATRIBUIDO = replace(toString(VLR_TOTAL_ATRIBUIDO), ',' , '.'),\n\t\tMES_ANO_REF_ARQ = concat(right($pMesAnoRef, 2), left($pMesAnoRef, 4))) ~> Adaptacoes\nAdaptacoes sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_CONTESTACAO as decimal(28,0),\n\t\tID_CLIENTE as string,\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDT_EMISSAO_NF_ORIG as timestamp,\n\t\tVLR_ORIG_NSFT as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCPF_CNPJ as string,\n\t\tNOME_CLIENTE as string,\n\t\tTERMINAL as string,\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tDT_ATRIBUICAO as timestamp,\n\t\tDT_AJUSTE as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCOD_OPERADORA as string,\n\t\tCOD_MOTIVO_AJUSTE as string,\n\t\tDESC_MOTIVO_AJUSTE as string,\n\t\tNUM_CONTROLE_RECLAMACAO as string,\n\t\tCLASSE_RECEBER as string,\n\t\tCONTA_FINANCEIRA as string,\n\t\tDESC_CONTA_FINANCEIRA as string,\n\t\tNUM_FATURA_ORIGINAL as string,\n\t\tVLR_DOC_ORIGINAL as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tUF_FATURA as string,\n\t\tSEQ_RECEBIVEL as string,\n\t\tDT_EMISSAO as timestamp,\n\t\tMODELO as string,\n\t\tNUMORDEMDOITEM as decimal(3,0),\n\t\tBC_ICMS as decimal(15,2),\n\t\tICMS as decimal(15,2),\n\t\tALIQUOTA_ICMS as decimal(15,2),\n\t\tBC_ICMS_RECALCULADA as decimal(15,2),\n\t\tICMS_RECALCULADO as decimal(15,2),\n\t\tICMS_PARA_RESSARCIMENTO as decimal(15,2),\n\t\tSITUACAO as string,\n\t\tMES_APURACAO as string,\n\t\tTIPO_DOC as decimal(1,0),\n\t\tCOD_CONSUMIDOR as string,\n\t\tCHAVE_AUTENTICACAO as string,\n\t\tTOTAL_MESTRE as decimal(15,2),\n\t\tBC_ICMS_MESTRE as decimal(15,2),\n\t\tICMS_DESTACADO as decimal(15,2),\n\t\tINSCRICAO_ESTADUAL as string,\n\t\tRAZAO_SOCIAL as string,\n\t\tFL_STATUS_GERAL as string,\n\t\tID_LOTE_AJUSTE as decimal(28,0),\n\t\tID_ENTREGA_RESSARCIMENTO as decimal(28,0),\n\t\tCD_ITEM as string,\n\t\tDS_ITEM as string,\n\t\tHR_AJUSTE as string,\n\t\tHR_ATRIBUICAO as string,\n\t\tNOME_BILLING as string,\n\t\tTIPO_CLIENTE as string,\n\t\tDT_ABERTURA_IMPUG as timestamp,\n\t\tDT_FECHA_IMPUG as timestamp,\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tSALDO_FATURA_INI as decimal(15,2),\n\t\tSALDO_FATURA_FIM as decimal(15,2),\n\t\tCOD_CLIENTE as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tNOME_FANTASIA as string,\n\t\tCOD_GRUPO as string,\n\t\tNOME_GRUPO_ECONOMICO as string,\n\t\tSEGMENTO_CLIENTE as string,\n\t\tSUB_SEGMENTO_CLIENTE as string,\n\t\tSEGMENTO_VALOR as string,\n\t\tCLASSE_ELEGIBILIDADE as string,\n\t\tDESCR_SERV_AJUSTE as string,\n\t\tDESCR_SERV as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tTIPO_TERMINAL as string,\n\t\tDONO_RECEITA as string,\n\t\tSUBTYPE_CODE as decimal(19,0),\n\t\tTIPO_DESCR_SERV as string,\n\t\tDT_VENCTO_FAT_FUTURA as timestamp,\n\t\tVLR_IMPOSTO_CONTESTADO as decimal(15,2),\n\t\tVLR_IMPOSTO_ICMS as decimal(15,2),\n\t\tVLR_BRUTO_ITEM as decimal(15,2),\n\t\tVLR_OUTROS_IMPOSTOS as decimal(15,2),\n\t\tVLR_AJUSTE_ITEM as decimal(15,2),\n\t\tVLR_CREDITO_AJUSTE as decimal(15,2),\n\t\tVLR_CREDITO_ITEM as decimal(15,2),\n\t\tVLR_DEVOLUCAO as decimal(15,2),\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tLOGIN_ATENDIMENTO as string,\n\t\tDT_VENC_FATURA_ORIGINAL as timestamp,\n\t\tDT_ATRIBUICAO_PGTO as timestamp,\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tFLG_RETIFICADO as string,\n\t\tTERMINAL_115 as string,\n\t\tVALOR_ITEM_115 as decimal(15,2),\n\t\tDT_CRIADO_EM as timestamp,\n\t\tCD_CRIADO_POR as string,\n\t\tDT_ATUALIZADO_EM as timestamp,\n\t\tCD_ATUALIZADO_POR as string,\n\t\tMES_ANO_FAT_ORIGINAL as string,\n\t\tMES_ANO_FAT_AJUSTE as string,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL as decimal(15,2),\n\t\tID_ITEM_CONVENIO_115 as decimal(28,0),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO as string,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO as string,\n\t\tCOD_FAC_CD as decimal(10,0),\n\t\tCCM_SERVICO_CONTESTADO as string,\n\t\tCOD_TIPO_RCBL_FATURA as string,\n\t\tDESCR_RCBL_FATURA as string,\n\t\tDT_PAGAMENTO as timestamp,\n\t\tDEBIT_ID as string,\n\t\tDT_EMISSAO_FATURA_ORIGINAL as timestamp,\n\t\tUF_NF as string,\n\t\tVLR_PGTO_ALOCADO as decimal(15,2),\n\t\tVLR_TOTAL_PGTO as decimal(15,2),\n\t\tCREDIT_ID as string,\n\t\tDT_REFERENCIA as timestamp,\n\t\tDT_IMPORTACAO as timestamp,\n\t\tSTEP_EXECUTION_ID as decimal(18,0),\n\t\tJOB_EXECUTION_ID as decimal(18,0),\n\t\tID_MESTRE_CONVENIO_115 as decimal(28,0),\n\t\tFL_MANUAL_CONCILIACAO as string,\n\t\tDT_CONCILIACAO as timestamp,\n\t\tDT_EMISSAO_115 as timestamp,\n\t\tMES_ANO_REF_ARQ as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tNOTA_FISCAL_ORIG,\n\t\tDT_EMISSAO_NF_ORIG = DATA_EMISSAO_NF_ORIG,\n\t\tSERIE_NF,\n\t\tCOD_IDENT_CLI,\n\t\tCPF_CNPJ = CNPJ_CPF,\n\t\tVLR_ORIG_NSFT = VALOR_NF_ORIG,\n\t\tVLR_ATRIBUIDO,\n\t\tDESCR_OPERADORA,\n\t\tCOD_OPERADORA = CODIGO_OPERADORA,\n\t\tDT_ABERTURA_IMPUG = DATAABERTURAIMPU,\n\t\tNUM_FATURA_ORIGINAL = NUMERO_FATURA,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL = VALOR_PAGAMENTO,\n\t\tUF_NF = UF,\n\t\tTIPO_DOCUMENTO,\n\t\tDT_ATRIBUICAO = DATA_ATRIBUICAO,\n\t\tDT_AJUSTE,\n\t\tCOD_MOTIVO_AJUSTE = CODMOTIVOAJUSTES,\n\t\tNOME_BILLING,\n\t\tFATURA_ATRIBUIDA,\n\t\tID_LOTE_AJUSTE,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO,\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO,\n\t\tDT_CRIADO_EM,\n\t\tCD_CRIADO_POR,\n\t\tDT_VENCTO_FAT_FUTURA = DT_VENCTO_FATURA_FUTURA,\n\t\tVLR_FATURA_FUTURA,\n\t\tSALDO_DEVEDOR,\n\t\tCONTACONTABIL_DB,\n\t\tCONTACONTABIL_CR,\n\t\tDESCR_CONTACONTABIL_DB,\n\t\tDESCR_CONTACONTABIL_CR,\n\t\tDONO_RECEITA,\n\t\tTIPO_OPERACAO,\n\t\tVLR_CONTESTADO_FUTURO,\n\t\tSALDO_POS_AJUSTE,\n\t\tVLR_DOC_ORIGINAL = VALOR_NF_ORIG,\n\t\tNUM_ITEM_ESTORNADO,\n\t\tCCM_SERVICO_CONTESTADO = CCM_SERVICO_CONTESTATO,\n\t\tDT_VENC_FATURA_ORIGINAL = DATA_VENC_FATURA,\n\t\tVLR_TOTAL_ATRIBUIDO,\n\t\tMES_ANO_REF_ARQ,\n\t\tVLR_FATURA = VALOR_FATURA\n\t)) ~> TabelaCONTESTACAO"
+					"script": "parameters{\n\tpLote as string,\n\tpMesAnoRef as string\n}\nsource(output(\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDATA_EMISSAO_NF_ORIG as timestamp,\n\t\tVALOR_NF_ORIG as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCNPJ_CPF as string,\n\t\tVALOR_FATURA as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tDT_AJUSTE as timestamp,\n\t\tDATA_ATRIBUICAO as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tCODMOTIVOAJUSTES as string,\n\t\tDATAABERTURAIMPU as timestamp,\n\t\tNUMERO_FATURA as string,\n\t\tDATA_VENC_FATURA as timestamp,\n\t\tVALOR_PAGAMENTO as decimal(15,2),\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tUF as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tDONO_RECEITA as string,\n\t\tDT_VENCTO_FATURA_FUTURA as timestamp,\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tCCM_SERVICO_CONTESTATO as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT FF.CCM_CREDITO AS NUM_ITEM_ESTORNADO, FF.NUMERO_NF AS NOTA_FISCAL_ORIG,FF.DT_EMISSAO_NF AS DATA_EMISSAO_NF_ORIG,FF.VLR_TOTAL_NF AS VALOR_NF_ORIG,FF.SERIE_NF,FF.CONTA_COBRANCA AS COD_IDENT_CLI,FF.CNPJ_CPF,NULL AS VALOR_FATURA, NULL AS VLR_ATRIBUIDO, FF.VLR_CONTESTADO AS VLR_TOTAL_ATRIBUIDO,FF.DT_OPERACAO AS DT_AJUSTE,FF.DT_VENCTO_BOLETO_ULT AS DATA_ATRIBUICAO,FF.OPERADORA AS DESCR_OPERADORA,FF.CODIGO_OPERADORA,FF.MOTIVO_CONTESTACAO AS CODMOTIVOAJUSTES,FF.DT_GERACAO AS DATAABERTURAIMPU,FF.NUMERO_FATURA_ORIGINAL AS NUMERO_FATURA,FF.DT_VENCTO_ORIGINAL AS DATA_VENC_FATURA, FF.VLR_FATURA_ORIGINAL_PAGA AS VALOR_PAGAMENTO,FF.VLR_SALDO_ABERTO AS SALDO_DEVEDOR,FF.NUMERO_FATURA_FUTURA AS FATURA_ATRIBUIDA,FF.UF_COBRANCA AS UF,CASE WHEN FF.CATEGORIA_CLIENTE = 'PF' THEN 'CPF' WHEN FF.CATEGORIA_CLIENTE = 'PJ' THEN 'CNPJ' ELSE NULL END AS TIPO_DOCUMENTO,FF.CONTACONTABIL AS CONTACONTABIL_DB,NULL AS CONTACONTABIL_CR,FF.DESCRCONTACONTABIL AS DESCR_CONTACONTABIL_DB,NULL AS DESCR_CONTACONTABIL_CR,FF.VLR_POS_CONTESTACAO AS SALDO_POS_AJUSTE,FF.TIPO_OPERACAO,FF.DONO_RECEITA,FF.DT_VENCTO_FATURA_FUTURA,FF.VLR_FATURA_FUTURA,FF.VLR_CONTESTADO_FUTURO,FF.CCM_SERVICO_CONTESTATO FROM [convenio].[cvtb_fat_car_ff] FF WITH (NOLOCK) WHERE FF.id_lote_arquivo IN ( SELECT l.id_lote_arquivo FROM [convenio].[cvtb_lote_arquivo] L WITH (NOLOCK) WHERE l.id_lote = {$pLote}) UNION ALL SELECT FNP.CCM_CONTESTATO AS NUM_ITEM_ESTORNADO, FNP.NUMERO_NF_AJUSTE AS NOTA_FISCAL_ORIG,FNP.DT_EMISSAO_NF AS DATA_EMISSAO_NF_ORIG,FNP.VLR_TOTAL_NF  AS VALOR_NF_ORIG,FNP.SERIE_NF,FNP.CONTA_COBRANCA AS COD_IDENT_CLI,FNP.CNPJ_CPF,FNP.VLR_FATURA_ORIGINAL AS VALOR_FATURA,FNP.VLR_CONSTESTADO AS VLR_ATRIBUIDO, NULL AS VLR_TOTAL_ATRIBUIDO, FNP.DT_OPERACAO AS DT_AJUSTE,FNP.DT_VENCTO_BOLETO_ULT AS DATA_ATRIBUICAO,FNP.OPERADORA AS DESCR_OPERADORA,FNP.CODIGO_OPERADORA,FNP.MOTIVO_CONTESTACAO AS CODMOTIVOAJUSTES,FNP.DT_GERACAO AS DATAABERTURAIMPU,FNP.ID_FATURA AS NUMERO_FATURA,FNP.DT_VENCTO_ORIGINAL AS DATA_VENC_FATURA, NULL AS VALOR_PAGAMENTO,FNP.VLR_SALDO_ABERTO AS SALDO_DEVEDOR,NULL AS FATURA_ATRIBUIDA,FNP.UF_COBRANCA AS UF,CASE WHEN FNP.CATEGORIA_CLIENTE = 'PF' THEN 'CPF' WHEN FNP.CATEGORIA_CLIENTE = 'PJ' THEN 'CNPJ' ELSE NULL END AS TIPO_DOCUMENTO,NULL AS CONTACONTABIL_DB,FNP.CONTACONTABIL AS CONTACONTABIL_CR,NULL AS DESCR_CONTACONTABIL_DB,FNP.DESCRCONTACONTABIL AS DESCR_CONTACONTABIL_CR,FNP.VLR_POS_CONTESTACAO AS SALDO_POS_AJUSTE,FNP.TIPO_OPERACAO,FNP.DONO_RECEITA,NULL AS DT_VENCTO_FATURA_FUTURA,NULL AS VLR_FATURA_FUTURA,NULL AS VLR_CONTESTADO_FUTURO,NULL AS CCM_SERVICO_CONTESTATO FROM [convenio].[cvtb_fat_car_fnp] FNP WITH (NOLOCK) WHERE FNP.id_lote_arquivo IN ( SELECT la.id_lote_arquivo FROM [convenio].[cvtb_lote_arquivo] la WITH (NOLOCK) WHERE la.id_lote = {$pLote})\"),\n\tformat: 'query') ~> TabelasFAT\nTabelasFAT derive(VLR_ATRIBUIDO = replace(toString(VLR_ATRIBUIDO), ',' , '.'),\n\t\tVLR_PAGAMENTO = replace(toString(VALOR_PAGAMENTO), ',' , '.'),\n\t\tVALOR_FATURA = replace(toString(VALOR_FATURA), ',' , '.'),\n\t\tID_LOTE_AJUSTE = $pLote,\n\t\tNOME_BILLING = 'FAT',\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO = replace(trim(NOTA_FISCAL_ORIG), right(NOTA_FISCAL_ORIG, 4), ''),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO = concat(trim(SERIE_NF), '123'),\n\t\tCD_CRIADO_POR = 'Carga ADF - CargaArqFAT',\n\t\tDT_CRIADO_EM = add(currentTimestamp(), hours(-3)),\n\t\tVLR_NF_ORIG = replace(toString(VALOR_NF_ORIG), ',' , '.'),\n\t\tVLR_FATURA_FUTURA = replace(toString(VLR_FATURA_FUTURA), ',' , '.'),\n\t\tVLR_CONTESTADO_FUTURO = replace(toString(VLR_CONTESTADO_FUTURO), ',' , '.'),\n\t\tSALDO_DEVEDOR = replace(toString(SALDO_DEVEDOR), ',' , '.'),\n\t\tSALDO_POS_AJUSTE = replace(toString(SALDO_POS_AJUSTE), ',' , '.'),\n\t\tVLR_TOTAL_ATRIBUIDO = replace(toString(VLR_TOTAL_ATRIBUIDO), ',' , '.'),\n\t\tMES_ANO_REF_ARQ = concat(right($pMesAnoRef, 2), left($pMesAnoRef, 4))) ~> Adaptacoes\nAdaptacoes sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_CONTESTACAO as decimal(28,0),\n\t\tID_CLIENTE as string,\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDT_EMISSAO_NF_ORIG as timestamp,\n\t\tVLR_ORIG_NSFT as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCPF_CNPJ as string,\n\t\tNOME_CLIENTE as string,\n\t\tTERMINAL as string,\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tDT_ATRIBUICAO as timestamp,\n\t\tDT_AJUSTE as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCOD_OPERADORA as string,\n\t\tCOD_MOTIVO_AJUSTE as string,\n\t\tDESC_MOTIVO_AJUSTE as string,\n\t\tNUM_CONTROLE_RECLAMACAO as string,\n\t\tCLASSE_RECEBER as string,\n\t\tCONTA_FINANCEIRA as string,\n\t\tDESC_CONTA_FINANCEIRA as string,\n\t\tNUM_FATURA_ORIGINAL as string,\n\t\tVLR_DOC_ORIGINAL as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tUF_FATURA as string,\n\t\tSEQ_RECEBIVEL as string,\n\t\tDT_EMISSAO as timestamp,\n\t\tMODELO as string,\n\t\tNUMORDEMDOITEM as decimal(3,0),\n\t\tBC_ICMS as decimal(15,2),\n\t\tICMS as decimal(15,2),\n\t\tALIQUOTA_ICMS as decimal(15,2),\n\t\tBC_ICMS_RECALCULADA as decimal(15,2),\n\t\tICMS_RECALCULADO as decimal(15,2),\n\t\tICMS_PARA_RESSARCIMENTO as decimal(15,2),\n\t\tSITUACAO as string,\n\t\tMES_APURACAO as string,\n\t\tTIPO_DOC as decimal(1,0),\n\t\tCOD_CONSUMIDOR as string,\n\t\tCHAVE_AUTENTICACAO as string,\n\t\tTOTAL_MESTRE as decimal(15,2),\n\t\tBC_ICMS_MESTRE as decimal(15,2),\n\t\tICMS_DESTACADO as decimal(15,2),\n\t\tINSCRICAO_ESTADUAL as string,\n\t\tRAZAO_SOCIAL as string,\n\t\tFL_STATUS_GERAL as string,\n\t\tID_LOTE_AJUSTE as decimal(28,0),\n\t\tID_ENTREGA_RESSARCIMENTO as decimal(28,0),\n\t\tCD_ITEM as string,\n\t\tDS_ITEM as string,\n\t\tHR_AJUSTE as string,\n\t\tHR_ATRIBUICAO as string,\n\t\tNOME_BILLING as string,\n\t\tTIPO_CLIENTE as string,\n\t\tDT_ABERTURA_IMPUG as timestamp,\n\t\tDT_FECHA_IMPUG as timestamp,\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tSALDO_FATURA_INI as decimal(15,2),\n\t\tSALDO_FATURA_FIM as decimal(15,2),\n\t\tCOD_CLIENTE as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tNOME_FANTASIA as string,\n\t\tCOD_GRUPO as string,\n\t\tNOME_GRUPO_ECONOMICO as string,\n\t\tSEGMENTO_CLIENTE as string,\n\t\tSUB_SEGMENTO_CLIENTE as string,\n\t\tSEGMENTO_VALOR as string,\n\t\tCLASSE_ELEGIBILIDADE as string,\n\t\tDESCR_SERV_AJUSTE as string,\n\t\tDESCR_SERV as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tTIPO_TERMINAL as string,\n\t\tDONO_RECEITA as string,\n\t\tSUBTYPE_CODE as decimal(19,0),\n\t\tTIPO_DESCR_SERV as string,\n\t\tDT_VENCTO_FAT_FUTURA as timestamp,\n\t\tVLR_IMPOSTO_CONTESTADO as decimal(15,2),\n\t\tVLR_IMPOSTO_ICMS as decimal(15,2),\n\t\tVLR_BRUTO_ITEM as decimal(15,2),\n\t\tVLR_OUTROS_IMPOSTOS as decimal(15,2),\n\t\tVLR_AJUSTE_ITEM as decimal(15,2),\n\t\tVLR_CREDITO_AJUSTE as decimal(15,2),\n\t\tVLR_CREDITO_ITEM as decimal(15,2),\n\t\tVLR_DEVOLUCAO as decimal(15,2),\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tLOGIN_ATENDIMENTO as string,\n\t\tDT_VENC_FATURA_ORIGINAL as timestamp,\n\t\tDT_ATRIBUICAO_PGTO as timestamp,\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tFLG_RETIFICADO as string,\n\t\tTERMINAL_115 as string,\n\t\tVALOR_ITEM_115 as decimal(15,2),\n\t\tDT_CRIADO_EM as timestamp,\n\t\tCD_CRIADO_POR as string,\n\t\tDT_ATUALIZADO_EM as timestamp,\n\t\tCD_ATUALIZADO_POR as string,\n\t\tMES_ANO_FAT_ORIGINAL as string,\n\t\tMES_ANO_FAT_AJUSTE as string,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL as decimal(15,2),\n\t\tID_ITEM_CONVENIO_115 as decimal(28,0),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO as string,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO as string,\n\t\tCOD_FAC_CD as decimal(10,0),\n\t\tCCM_SERVICO_CONTESTADO as string,\n\t\tCOD_TIPO_RCBL_FATURA as string,\n\t\tDESCR_RCBL_FATURA as string,\n\t\tDT_PAGAMENTO as timestamp,\n\t\tDEBIT_ID as string,\n\t\tDT_EMISSAO_FATURA_ORIGINAL as timestamp,\n\t\tUF_NF as string,\n\t\tVLR_PGTO_ALOCADO as decimal(15,2),\n\t\tVLR_TOTAL_PGTO as decimal(15,2),\n\t\tCREDIT_ID as string,\n\t\tDT_REFERENCIA as timestamp,\n\t\tDT_IMPORTACAO as timestamp,\n\t\tSTEP_EXECUTION_ID as decimal(18,0),\n\t\tJOB_EXECUTION_ID as decimal(18,0),\n\t\tID_MESTRE_CONVENIO_115 as decimal(28,0),\n\t\tFL_MANUAL_CONCILIACAO as string,\n\t\tDT_CONCILIACAO as timestamp,\n\t\tDT_EMISSAO_115 as timestamp,\n\t\tMES_ANO_REF_ARQ as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tNOTA_FISCAL_ORIG,\n\t\tDT_EMISSAO_NF_ORIG = DATA_EMISSAO_NF_ORIG,\n\t\tSERIE_NF,\n\t\tCOD_IDENT_CLI,\n\t\tCPF_CNPJ = CNPJ_CPF,\n\t\tVLR_ORIG_NSFT = VALOR_NF_ORIG,\n\t\tVLR_ATRIBUIDO,\n\t\tDESCR_OPERADORA,\n\t\tCOD_OPERADORA = CODIGO_OPERADORA,\n\t\tDT_ABERTURA_IMPUG = DATAABERTURAIMPU,\n\t\tNUM_FATURA_ORIGINAL = NUMERO_FATURA,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL = VALOR_PAGAMENTO,\n\t\tUF_FATURA = UF,\n\t\tTIPO_DOCUMENTO,\n\t\tDT_ATRIBUICAO = DATA_ATRIBUICAO,\n\t\tDT_AJUSTE,\n\t\tCOD_MOTIVO_AJUSTE = CODMOTIVOAJUSTES,\n\t\tNOME_BILLING,\n\t\tFATURA_ATRIBUIDA,\n\t\tID_LOTE_AJUSTE,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO,\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO,\n\t\tDT_CRIADO_EM,\n\t\tCD_CRIADO_POR,\n\t\tDT_VENCTO_FAT_FUTURA = DT_VENCTO_FATURA_FUTURA,\n\t\tVLR_FATURA_FUTURA,\n\t\tSALDO_DEVEDOR,\n\t\tCONTACONTABIL_DB,\n\t\tCONTACONTABIL_CR,\n\t\tDESCR_CONTACONTABIL_DB,\n\t\tDESCR_CONTACONTABIL_CR,\n\t\tDONO_RECEITA,\n\t\tTIPO_OPERACAO,\n\t\tVLR_CONTESTADO_FUTURO,\n\t\tSALDO_POS_AJUSTE,\n\t\tVLR_DOC_ORIGINAL = VALOR_NF_ORIG,\n\t\tNUM_ITEM_ESTORNADO,\n\t\tCCM_SERVICO_CONTESTADO = CCM_SERVICO_CONTESTATO,\n\t\tDT_VENC_FATURA_ORIGINAL = DATA_VENC_FATURA,\n\t\tVLR_TOTAL_ATRIBUIDO,\n\t\tMES_ANO_REF_ARQ,\n\t\tVLR_FATURA = VALOR_FATURA\n\t)) ~> TabelaCONTESTACAO"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/connExecQry')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dfCargaUnificadaKenan')]",
@@ -474,7 +694,9 @@
 					"script": "parameters{\n\tpLote as string,\n\tpMesAnoRef as string\n}\nsource(output(\n\t\taccount_no as string,\n\t\tid_fatura as string,\n\t\tid_open_item as string,\n\t\tnota_fiscal as string,\n\t\tvlr_item as decimal(15,2),\n\t\tserie_nf as string,\n\t\tsubserie_nf as string,\n\t\tconta_cobranca as string,\n\t\tvlr_total_atribuido as decimal(15,2),\n\t\tvlr_atribuido as decimal(15,2),\n\t\tdt_ajuste as timestamp,\n\t\thr_ajuste as string,\n\t\tdesc_operadora as string,\n\t\tid_operadora as string,\n\t\tdesc_motivo as string,\n\t\tid_fatura_origem as string,\n\t\tvlr_pagamento as decimal(15,2),\n\t\tdt_emissao as timestamp,\n\t\tvlr_fatura as decimal(15,2),\n\t\tuf_nf as string,\n\t\tcpf_cnpj as string,\n\t\ttipo_documento as string,\n\t\tdesc_contestacao as string,\n\t\tdesc_detalhe as string,\n\t\tcc_db_ajuste as string,\n\t\tcc_cr_ajuste as string,\n\t\ttipo_instancia as string,\n\t\tsubtype_code as decimal(19,0),\n\t\ttipo_detalhe as string,\n\t\tvlr_imposto_constestado as decimal(15,2),\n\t\tvlr_imposto_icms as decimal(15,2),\n\t\tvlr_bruto as decimal(15,2),\n\t\tvlr_outros_impostos as decimal(15,2),\n\t\tdt_vencto_original as date,\n\t\tdt_pagamento as date,\n\t\tid_detalhe as decimal(10,0),\n\t\tnum_instancia as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT d.account_no, i.id_fatura, i.id_open_item,i.nota_fiscal,i.vlr_item,i.serie_nf, i.subserie_nf,c.conta_cobranca,c.vlr_contestado as vlr_total_atribuido,d.vlr_contestado as vlr_atribuido, d.dt_contestacao as dt_ajuste,CONVERT(VARCHAR, d.dt_contestacao, 8) as hr_ajuste, d.desc_operadora, d.id_operadora,d.desc_motivo,c.id_fatura_origem, c.vlr_pagamento,c.dt_emissao,c.vlr_fatura,i.uf_nf, d.cpf_cnpj,case when len(d.cpf_cnpj) = 11 then 'CPF' when len(d.cpf_cnpj) = 14 then 'CNPJ'else null end as tipo_documento, d.desc_contestacao,d.desc_detalhe,d.cc_db_ajuste,d.cc_cr_ajuste,d.tipo_instancia, d.subtype_code,d.tipo_detalhe,d.vlr_imposto_constestado,d.vlr_imposto_icms, d.vlr_bruto, d.vlr_outros_impostos,c.dt_vencto_original,c.dt_pagamento, d.id_detalhe, d.num_instancia FROM [convenio].[CVVW_FATURA_CON_KENAN_UNIC] c , [convenio].[CVTB_FATURA_ITEM_KENAN] i WITH(NOLOCK), [convenio].[CVTB_FATURA_DET_KENAN] d WITH(NOLOCK) WHERE c.id_fatura_origem = i.id_fatura AND c.id_fatura_origem = d.id_fatura AND c.cpf_cnpj = i.cpf_cnpj AND c.cpf_cnpj = d.cpf_cnpj AND c.conta_cobranca = i.conta_cobranca AND c.conta_cobranca = d.conta_cobranca AND d.id_open_item = i.id_open_item  AND c.id_lote_arquivo in (SELECT id_lote_arquivo FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE ID_LOTE = {$pLote}) AND i.id_lote_arquivo in (SELECT id_lote_arquivo FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE ID_LOTE = {$pLote}) AND d.id_lote_arquivo in(SELECT id_lote_arquivo FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE id_lote = {$pLote})\"),\n\tformat: 'query') ~> TabelasKenan\nTabelasKenan derive(id_lote_ajuste = $pLote,\n\t\tnome_billing = 'Kenan',\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO = replace(trim(nota_fiscal), right(nota_fiscal, 3), ''),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO = concat(trim(serie_nf), '123'),\n\t\tcd_criado_por = 'Carga ADF - CargaArqKenan',\n\t\tdt_criado_em = add(currentTimestamp(), hours(-3)),\n\t\tMES_ANO_REF_ARQ = $pMesAnoRef,\n\t\tFL_STATUS_GERAL = 'NT',\n\t\tSERIE_SUBSERIE_NF = concat(coalesce(serie_nf, ''), coalesce(subserie_nf, '') )) ~> AdaptaPontuacao\nAdaptaPontuacao sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_CONTESTACAO as decimal(28,0),\n\t\tID_CLIENTE as string,\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDT_EMISSAO_NF_ORIG as timestamp,\n\t\tVLR_ORIG_NSFT as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCPF_CNPJ as string,\n\t\tNOME_CLIENTE as string,\n\t\tTERMINAL as string,\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tDT_ATRIBUICAO as timestamp,\n\t\tDT_AJUSTE as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCOD_OPERADORA as string,\n\t\tCOD_MOTIVO_AJUSTE as string,\n\t\tDESC_MOTIVO_AJUSTE as string,\n\t\tNUM_CONTROLE_RECLAMACAO as string,\n\t\tCLASSE_RECEBER as string,\n\t\tCONTA_FINANCEIRA as string,\n\t\tDESC_CONTA_FINANCEIRA as string,\n\t\tNUM_FATURA_ORIGINAL as string,\n\t\tVLR_DOC_ORIGINAL as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tUF_FATURA as string,\n\t\tSEQ_RECEBIVEL as string,\n\t\tDT_EMISSAO as timestamp,\n\t\tMODELO as string,\n\t\tNUMORDEMDOITEM as decimal(3,0),\n\t\tBC_ICMS as decimal(15,2),\n\t\tICMS as decimal(15,2),\n\t\tALIQUOTA_ICMS as decimal(15,2),\n\t\tBC_ICMS_RECALCULADA as decimal(15,2),\n\t\tICMS_RECALCULADO as decimal(15,2),\n\t\tICMS_PARA_RESSARCIMENTO as decimal(15,2),\n\t\tSITUACAO as string,\n\t\tMES_APURACAO as string,\n\t\tTIPO_DOC as decimal(1,0),\n\t\tCOD_CONSUMIDOR as string,\n\t\tCHAVE_AUTENTICACAO as string,\n\t\tTOTAL_MESTRE as decimal(15,2),\n\t\tBC_ICMS_MESTRE as decimal(15,2),\n\t\tICMS_DESTACADO as decimal(15,2),\n\t\tINSCRICAO_ESTADUAL as string,\n\t\tRAZAO_SOCIAL as string,\n\t\tFL_STATUS_GERAL as string,\n\t\tID_LOTE_AJUSTE as decimal(28,0),\n\t\tID_ENTREGA_RESSARCIMENTO as decimal(28,0),\n\t\tCD_ITEM as string,\n\t\tDS_ITEM as string,\n\t\tHR_AJUSTE as string,\n\t\tHR_ATRIBUICAO as string,\n\t\tNOME_BILLING as string,\n\t\tTIPO_CLIENTE as string,\n\t\tDT_ABERTURA_IMPUG as timestamp,\n\t\tDT_FECHA_IMPUG as timestamp,\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tSALDO_FATURA_INI as decimal(15,2),\n\t\tSALDO_FATURA_FIM as decimal(15,2),\n\t\tCOD_CLIENTE as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tNOME_FANTASIA as string,\n\t\tCOD_GRUPO as string,\n\t\tNOME_GRUPO_ECONOMICO as string,\n\t\tSEGMENTO_CLIENTE as string,\n\t\tSUB_SEGMENTO_CLIENTE as string,\n\t\tSEGMENTO_VALOR as string,\n\t\tCLASSE_ELEGIBILIDADE as string,\n\t\tDESCR_SERV_AJUSTE as string,\n\t\tDESCR_SERV as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tTIPO_TERMINAL as string,\n\t\tDONO_RECEITA as string,\n\t\tSUBTYPE_CODE as decimal(19,0),\n\t\tTIPO_DESCR_SERV as string,\n\t\tDT_VENCTO_FAT_FUTURA as timestamp,\n\t\tVLR_IMPOSTO_CONTESTADO as decimal(15,2),\n\t\tVLR_IMPOSTO_ICMS as decimal(15,2),\n\t\tVLR_BRUTO_ITEM as decimal(15,2),\n\t\tVLR_OUTROS_IMPOSTOS as decimal(15,2),\n\t\tVLR_AJUSTE_ITEM as decimal(15,2),\n\t\tVLR_CREDITO_AJUSTE as decimal(15,2),\n\t\tVLR_CREDITO_ITEM as decimal(15,2),\n\t\tVLR_DEVOLUCAO as decimal(15,2),\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tLOGIN_ATENDIMENTO as string,\n\t\tDT_VENC_FATURA_ORIGINAL as timestamp,\n\t\tDT_ATRIBUICAO_PGTO as timestamp,\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tFLG_RETIFICADO as string,\n\t\tTERMINAL_115 as string,\n\t\tVALOR_ITEM_115 as decimal(15,2),\n\t\tDT_CRIADO_EM as timestamp,\n\t\tCD_CRIADO_POR as string,\n\t\tDT_ATUALIZADO_EM as timestamp,\n\t\tCD_ATUALIZADO_POR as string,\n\t\tMES_ANO_FAT_ORIGINAL as string,\n\t\tMES_ANO_FAT_AJUSTE as string,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL as decimal(15,2),\n\t\tID_ITEM_CONVENIO_115 as decimal(28,0),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO as string,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO as string,\n\t\tCOD_FAC_CD as decimal(10,0),\n\t\tCCM_SERVICO_CONTESTADO as string,\n\t\tCOD_TIPO_RCBL_FATURA as string,\n\t\tDESCR_RCBL_FATURA as string,\n\t\tDT_PAGAMENTO as timestamp,\n\t\tDEBIT_ID as string,\n\t\tDT_EMISSAO_FATURA_ORIGINAL as timestamp,\n\t\tUF_NF as string,\n\t\tVLR_PGTO_ALOCADO as decimal(15,2),\n\t\tVLR_TOTAL_PGTO as decimal(15,2),\n\t\tCREDIT_ID as string,\n\t\tDT_REFERENCIA as timestamp,\n\t\tDT_IMPORTACAO as timestamp,\n\t\tSTEP_EXECUTION_ID as decimal(18,0),\n\t\tJOB_EXECUTION_ID as decimal(18,0),\n\t\tID_MESTRE_CONVENIO_115 as decimal(28,0),\n\t\tFL_MANUAL_CONCILIACAO as string,\n\t\tDT_CONCILIACAO as timestamp,\n\t\tDT_EMISSAO_115 as timestamp,\n\t\tMES_ANO_REF_ARQ as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_CLIENTE = account_no,\n\t\tNOTA_FISCAL_ORIG = nota_fiscal,\n\t\tVLR_ORIG_NSFT = vlr_item,\n\t\tSERIE_NF = SERIE_SUBSERIE_NF,\n\t\tCOD_IDENT_CLI = conta_cobranca,\n\t\tCPF_CNPJ = cpf_cnpj,\n\t\tVLR_TOTAL_ATRIBUIDO = vlr_total_atribuido,\n\t\tVLR_ATRIBUIDO = vlr_atribuido,\n\t\tDT_AJUSTE = dt_ajuste,\n\t\tHR_AJUSTE = hr_ajuste,\n\t\tDESCR_OPERADORA = desc_operadora,\n\t\tCOD_OPERADORA = id_operadora,\n\t\tDESC_MOTIVO_AJUSTE = desc_motivo,\n\t\tNUM_FATURA_ORIGINAL = id_fatura_origem,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL = vlr_pagamento,\n\t\tDT_EMISSAO_FATURA_ORIGINAL = dt_emissao,\n\t\tVLR_FATURA = vlr_fatura,\n\t\tUF_FATURA = uf_nf,\n\t\tTIPO_DOCUMENTO = tipo_documento,\n\t\tDESCR_SERV_AJUSTE = desc_contestacao,\n\t\tDESCR_SERV = desc_detalhe,\n\t\tCONTACONTABIL_DB = cc_db_ajuste,\n\t\tCONTACONTABIL_CR = cc_cr_ajuste,\n\t\tTIPO_TERMINAL = tipo_instancia,\n\t\tSUBTYPE_CODE = subtype_code,\n\t\tTIPO_DESCR_SERV = tipo_detalhe,\n\t\tVLR_IMPOSTO_CONTESTADO = vlr_imposto_constestado,\n\t\tVLR_IMPOSTO_ICMS = vlr_imposto_icms,\n\t\tVLR_BRUTO_ITEM = vlr_bruto,\n\t\tVLR_OUTROS_IMPOSTOS = vlr_outros_impostos,\n\t\tNOME_BILLING = nome_billing,\n\t\tDT_VENC_FATURA_ORIGINAL = dt_vencto_original,\n\t\tDT_ATRIBUICAO_PGTO = dt_pagamento,\n\t\tNUM_ITEM_ESTORNADO = id_detalhe,\n\t\tDT_CRIADO_EM = dt_criado_em,\n\t\tCD_CRIADO_POR = cd_criado_por,\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO,\n\t\tID_LOTE_AJUSTE = id_lote_ajuste,\n\t\tFL_STATUS_GERAL,\n\t\tMES_ANO_REF_ARQ,\n\t\tTERMINAL = num_instancia,\n\t\tUF_NF = uf_nf\n\t)) ~> TabelaCONTESTACAO"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/connExecQry')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dfCargaUnificadaVivoNext')]",
@@ -512,7 +734,9 @@
 					"script": "parameters{\n\tpLote as string,\n\tpMesAnoRef as string\n}\nsource(output(\n\t\tdt_emissao_fatura_2 as timestamp,\n\t\tnota_fiscal as string,\n\t\tdt_emissao_nfst as timestamp,\n\t\tvl_orig_nfst as decimal(15,2),\n\t\tserie as string,\n\t\tconta_cliente as string,\n\t\tcnpj_cpf as string,\n\t\tnome_cliente as string,\n\t\tterminal as string,\n\t\tvl_contest_ajuste as decimal(15,2),\n\t\tvl_alocado as decimal(38,2),\n\t\tdt_alocacao as timestamp,\n\t\thr_alocacao as string,\n\t\tdt_ajuste as timestamp,\n\t\thr_ajuste as string,\n\t\toperadora as string,\n\t\tcd_operadora as string,\n\t\tcd_motivo_ajuste as string,\n\t\tds_motivo_ajuste as string,\n\t\tnumero_fatura as string,\n\t\tfatu_alocada as string,\n\t\tdt_emissao_fatura as timestamp,\n\t\tmesanofatura as string,\n\t\tvl_docto_original as decimal(15,2),\n\t\tsaldo_devido_orig as decimal(15,2),\n\t\tsaldo_devedor as decimal(15,2),\n\t\tconta_contabil as string,\n\t\tds_conta_contabil as string,\n\t\tvl_fatura as decimal(15,2),\n\t\tcd_tipo_recebiveis as string,\n\t\tds_tipo_recebiveis as string,\n\t\tdebit_id as string,\n\t\tcredit_id as string,\n\t\tdt_pagamento as timestamp,\n\t\tuf as string,\n\t\tvl_pgto_alocado as decimal(15,2),\n\t\tvl_total_pagamento as decimal(15,2)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT k16.dt_emissao_fatura_2,k16.nota_fiscal,k16.dt_emissao_nfst,k16.vl_orig_nfst,k16.serie,k16.conta_cliente,k16.cnpj_cpf,k16.nome_cliente,k16.terminal,k16.vl_contest_ajuste,k16.vl_alocado,k16.dt_alocacao,k16.hr_alocacao,k16.dt_ajuste, k16.hr_ajuste,   k16.operadora,k16.cd_operadora,k16.cd_motivo_ajuste,k16.ds_motivo_ajuste,k16.numero_fatura,k16.fatu_alocada, k16.dt_emissao_fatura,k16.mesanofatura,k16.vl_docto_original,k17.saldo_devido_orig,k16.saldo_devedor,k16.conta_contabil,    k16.ds_conta_contabil,k16.vl_fatura,k16.cd_tipo_recebiveis,k16.ds_tipo_recebiveis,k16.debit_id,k17.credit_id,k17.dt_pagamento,    k16.uf,k17.vl_pgto_alocado,k17.vl_total_pagamento FROM [CONVENIO].[CVVW_VIVO_NEXT_K16_SUM] K16,      [CONVENIO].[CVVW_VIVO_NEXT_K17_UNIC] K17 WHERE K16.CONTA_CLIENTE = K17.CONTA_CLIENTE AND K16.CNPJ_CPF = K17.CNPJ_CPF AND K16.FATU_ALOCADA = K17.FATU_ALOCADA AND K16.MESANOFATURA = K17.MESANOFATURA AND K16.DEBIT_ID = K17.DEBIT_ID AND K16.CREDIT_ID = K17.CREDIT_ID AND K16.ID_LOTE_ARQUIVO IN (SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WITH (NOLOCK) WHERE ID_LOTE = {$pLote}) AND K17.ID_LOTE_ARQUIVO IN (SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WITH (NOLOCK) WHERE id_lote = {$pLote})\"),\n\tformat: 'query') ~> TabelasVivoNext\nTabelasVivoNext derive(id_lote_ajuste = $pLote,\n\t\tnome_billing = 'Vivonext',\n\t\tnum_controle_reclamacao_normalizado = concat(trim(serie), '123'),\n\t\tcd_criado_por = 'Carga ADF - CargaArqVivoNext',\n\t\tdt_criado_em = add(currentTimestamp(), hours(-3)),\n\t\tfl_status_geral = 'NT',\n\t\tMES_ANO_REF_ARQ = $pMesAnoRef,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO = nota_fiscal) ~> AdaptaColunas\nAdaptaColunas sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_CONTESTACAO as decimal(28,0),\n\t\tID_CLIENTE as string,\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tDT_EMISSAO_NF_ORIG as timestamp,\n\t\tVLR_ORIG_NSFT as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCOD_IDENT_CLI as string,\n\t\tCPF_CNPJ as string,\n\t\tNOME_CLIENTE as string,\n\t\tTERMINAL as string,\n\t\tVLR_TOTAL_ATRIBUIDO as decimal(15,2),\n\t\tVLR_ATRIBUIDO as decimal(15,2),\n\t\tDT_ATRIBUICAO as timestamp,\n\t\tDT_AJUSTE as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCOD_OPERADORA as string,\n\t\tCOD_MOTIVO_AJUSTE as string,\n\t\tDESC_MOTIVO_AJUSTE as string,\n\t\tNUM_CONTROLE_RECLAMACAO as string,\n\t\tCLASSE_RECEBER as string,\n\t\tCONTA_FINANCEIRA as string,\n\t\tDESC_CONTA_FINANCEIRA as string,\n\t\tNUM_FATURA_ORIGINAL as string,\n\t\tVLR_DOC_ORIGINAL as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tUF_FATURA as string,\n\t\tSEQ_RECEBIVEL as string,\n\t\tDT_EMISSAO as timestamp,\n\t\tMODELO as string,\n\t\tNUMORDEMDOITEM as decimal(3,0),\n\t\tBC_ICMS as decimal(15,2),\n\t\tICMS as decimal(15,2),\n\t\tALIQUOTA_ICMS as decimal(15,2),\n\t\tBC_ICMS_RECALCULADA as decimal(15,2),\n\t\tICMS_RECALCULADO as decimal(15,2),\n\t\tICMS_PARA_RESSARCIMENTO as decimal(15,2),\n\t\tSITUACAO as string,\n\t\tMES_APURACAO as string,\n\t\tTIPO_DOC as decimal(1,0),\n\t\tCOD_CONSUMIDOR as string,\n\t\tCHAVE_AUTENTICACAO as string,\n\t\tTOTAL_MESTRE as decimal(15,2),\n\t\tBC_ICMS_MESTRE as decimal(15,2),\n\t\tICMS_DESTACADO as decimal(15,2),\n\t\tINSCRICAO_ESTADUAL as string,\n\t\tRAZAO_SOCIAL as string,\n\t\tFL_STATUS_GERAL as string,\n\t\tID_LOTE_AJUSTE as decimal(28,0),\n\t\tID_ENTREGA_RESSARCIMENTO as decimal(28,0),\n\t\tCD_ITEM as string,\n\t\tDS_ITEM as string,\n\t\tHR_AJUSTE as string,\n\t\tHR_ATRIBUICAO as string,\n\t\tNOME_BILLING as string,\n\t\tTIPO_CLIENTE as string,\n\t\tDT_ABERTURA_IMPUG as timestamp,\n\t\tDT_FECHA_IMPUG as timestamp,\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tSALDO_FATURA_INI as decimal(15,2),\n\t\tSALDO_FATURA_FIM as decimal(15,2),\n\t\tCOD_CLIENTE as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tNOME_FANTASIA as string,\n\t\tCOD_GRUPO as string,\n\t\tNOME_GRUPO_ECONOMICO as string,\n\t\tSEGMENTO_CLIENTE as string,\n\t\tSUB_SEGMENTO_CLIENTE as string,\n\t\tSEGMENTO_VALOR as string,\n\t\tCLASSE_ELEGIBILIDADE as string,\n\t\tDESCR_SERV_AJUSTE as string,\n\t\tDESCR_SERV as string,\n\t\tCONTACONTABIL_DB as string,\n\t\tCONTACONTABIL_CR as string,\n\t\tDESCR_CONTACONTABIL_DB as string,\n\t\tDESCR_CONTACONTABIL_CR as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tTIPO_TERMINAL as string,\n\t\tDONO_RECEITA as string,\n\t\tSUBTYPE_CODE as decimal(19,0),\n\t\tTIPO_DESCR_SERV as string,\n\t\tDT_VENCTO_FAT_FUTURA as timestamp,\n\t\tVLR_IMPOSTO_CONTESTADO as decimal(15,2),\n\t\tVLR_IMPOSTO_ICMS as decimal(15,2),\n\t\tVLR_BRUTO_ITEM as decimal(15,2),\n\t\tVLR_OUTROS_IMPOSTOS as decimal(15,2),\n\t\tVLR_AJUSTE_ITEM as decimal(15,2),\n\t\tVLR_CREDITO_AJUSTE as decimal(15,2),\n\t\tVLR_CREDITO_ITEM as decimal(15,2),\n\t\tVLR_DEVOLUCAO as decimal(15,2),\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tLOGIN_ATENDIMENTO as string,\n\t\tDT_VENC_FATURA_ORIGINAL as timestamp,\n\t\tDT_ATRIBUICAO_PGTO as timestamp,\n\t\tNUM_ITEM_ESTORNADO as decimal(10,0),\n\t\tFLG_RETIFICADO as string,\n\t\tTERMINAL_115 as string,\n\t\tVALOR_ITEM_115 as decimal(15,2),\n\t\tDT_CRIADO_EM as timestamp,\n\t\tCD_CRIADO_POR as string,\n\t\tDT_ATUALIZADO_EM as timestamp,\n\t\tCD_ATUALIZADO_POR as string,\n\t\tMES_ANO_FAT_ORIGINAL as string,\n\t\tMES_ANO_FAT_AJUSTE as string,\n\t\tVLR_PAGAMENTO_FAT_ORIGINAL as decimal(15,2),\n\t\tID_ITEM_CONVENIO_115 as decimal(28,0),\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO as string,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO as string,\n\t\tCOD_FAC_CD as decimal(10,0),\n\t\tCCM_SERVICO_CONTESTADO as string,\n\t\tCOD_TIPO_RCBL_FATURA as string,\n\t\tDESCR_RCBL_FATURA as string,\n\t\tDT_PAGAMENTO as timestamp,\n\t\tDEBIT_ID as string,\n\t\tDT_EMISSAO_FATURA_ORIGINAL as timestamp,\n\t\tUF_NF as string,\n\t\tVLR_PGTO_ALOCADO as decimal(15,2),\n\t\tVLR_TOTAL_PGTO as decimal(15,2),\n\t\tCREDIT_ID as string,\n\t\tDT_REFERENCIA as timestamp,\n\t\tDT_IMPORTACAO as timestamp,\n\t\tSTEP_EXECUTION_ID as decimal(18,0),\n\t\tJOB_EXECUTION_ID as decimal(18,0),\n\t\tID_MESTRE_CONVENIO_115 as decimal(28,0),\n\t\tFL_MANUAL_CONCILIACAO as string,\n\t\tDT_CONCILIACAO as timestamp,\n\t\tDT_EMISSAO_115 as timestamp,\n\t\tMES_ANO_REF_ARQ as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tNOTA_FISCAL_ORIG = nota_fiscal,\n\t\tDT_EMISSAO_NF_ORIG = dt_emissao_nfst,\n\t\tVLR_ORIG_NSFT = vl_orig_nfst,\n\t\tSERIE_NF = serie,\n\t\tCOD_IDENT_CLI = conta_cliente,\n\t\tCPF_CNPJ = cnpj_cpf,\n\t\tNOME_CLIENTE = nome_cliente,\n\t\tTERMINAL = terminal,\n\t\tVLR_TOTAL_ATRIBUIDO = vl_contest_ajuste,\n\t\tVLR_ATRIBUIDO = vl_alocado,\n\t\tDT_ATRIBUICAO = dt_alocacao,\n\t\tDT_AJUSTE = dt_ajuste,\n\t\tDESCR_OPERADORA = operadora,\n\t\tCOD_OPERADORA = cd_operadora,\n\t\tCOD_MOTIVO_AJUSTE = cd_motivo_ajuste,\n\t\tDESC_MOTIVO_AJUSTE = ds_motivo_ajuste,\n\t\tNUM_FATURA_ORIGINAL = numero_fatura,\n\t\tVLR_DOC_ORIGINAL = vl_docto_original,\n\t\tFATURA_ATRIBUIDA = fatu_alocada,\n\t\tDT_EMISSAO = dt_emissao_fatura_2,\n\t\tFL_STATUS_GERAL = fl_status_geral,\n\t\tID_LOTE_AJUSTE = id_lote_ajuste,\n\t\tHR_AJUSTE = hr_ajuste,\n\t\tHR_ATRIBUICAO = hr_alocacao,\n\t\tNOME_BILLING = nome_billing,\n\t\tSALDO_FATURA_FIM = saldo_devedor,\n\t\tCONTACONTABIL_DB = conta_contabil,\n\t\tDESCR_CONTACONTABIL_DB = ds_conta_contabil,\n\t\tVLR_FATURA_FUTURA = vl_fatura,\n\t\tDT_CRIADO_EM = dt_criado_em,\n\t\tCD_CRIADO_POR = cd_criado_por,\n\t\tMES_ANO_FAT_AJUSTE = mesanofatura,\n\t\tNUM_CONTROLE_RECLAMACAO_NORMALIZADO = num_controle_reclamacao_normalizado,\n\t\tCOD_TIPO_RCBL_FATURA = cd_tipo_recebiveis,\n\t\tDESCR_RCBL_FATURA = ds_tipo_recebiveis,\n\t\tDT_PAGAMENTO = dt_pagamento,\n\t\tDEBIT_ID = debit_id,\n\t\tDT_EMISSAO_FATURA_ORIGINAL = dt_emissao_fatura,\n\t\tUF_NF = uf,\n\t\tCREDIT_ID = credit_id,\n\t\tMES_ANO_REF_ARQ,\n\t\tNOME_BILLING = nome_billing,\n\t\tNOTA_FISCAL_ORIG_NORMALIZADO\n\t)) ~> TabelaCONTESTACAO"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/connExecQry')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dfGeraRelEstoqueContestacao')]",
@@ -781,7 +1005,9 @@
 					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tvalue as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['atis/validados_a_processar','atis/processados']) ~> srcArqAtisNaoPago\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(38,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqAtisNaoPago derive(SyntheticKey = 1,\n\t\tCONTA_COBRANCA = trim(substring(value, 1, 11)),\n\t\tCPF_CNPJ = trim(substring(value, 13, 14)),\n\t\tCATEGORIA_CLIENTE = trim(substring(value, 27, 2)),\n\t\tUF_COBRANCA = trim(substring(value, 29, 2)),\n\t\tID_FATURA = trim(substring(value, 31, 25)),\n\t\tDATA_GERACAO = toTimestamp(trim(substring(value, 56, 8)), 'yyyyMMdd'),\n\t\tDATA_VENCTO_ORIGINAL = toTimestamp(trim(substring(value, 64, 8)), 'yyyyMMdd'),\n\t\tDATA_VENCTO_BOLETO_ULT = toTimestamp(trim(substring(value, 72, 8)), 'yyyyMMdd'),\n\t\tVALOR_FATURA_ORIGINAL = (toDecimal(trim(substring(value, 80, 17))))/100,\n\t\tCOD_FAC_CD = toDecimal(trim(substring(value, 97, 9))),\n\t\tVALOR_CONTESTACAO = (toDecimal(trim(substring(value, 106, 17))))/100,\n\t\tDATA_OPERACAO = toTimestamp(trim(substring(value, 123, 8)), 'yyyyMMdd'),\n\t\tOPERADORA = trim(substring(value, 131, 20)),\n\t\tCODIGO_OPERADORA = trim(substring(value, 151, 3)),\n\t\tMOTIVO_OPERACAO = trim(substring(value, 154, 15)),\n\t\tRECEITA_OPERADORA = trim(substring(value, 169, 3)),\n\t\tCONTACONTABIL = trim(substring(value, 172, 11)),\n\t\tDESCRCONTACONTABIL = trim(substring(value, 183, 40)),\n\t\tVALOR_POS_CONTESTACAO = (toDecimal(trim(substring(value, 223, 17))))/100,\n\t\tVALOR_SALDO_ABERTO = (toDecimal(trim(substring(value, 240, 17))))/100,\n\t\tFAMILIA_PRODUTOS = trim(substring(value, 257, 14)),\n\t\tMOTIVO_CONTESTACAO = trim(substring(value, 271, 2)),\n\t\tNUMERO_NOTA_FISCAL = trim(substring(value, 273, 13)),\n\t\tSERIE_NOTA_FISCAL = trim(substring(value, 286, 2)),\n\t\tDATA_EMISSAO = toTimestamp(trim(substring(value, 288, 8)), 'yyyyMMdd'),\n\t\tVALOR_TOTAL = (toDecimal(trim(substring(value, 296, 17))))/100,\n\t\tTIPO_OPERACAO = trim(substring(value, 313, 30)),\n\t\tDATA_FECHAMENTO = toTimestamp(trim(substring(value, 343, 8)), 'yyyyMMdd'),\n\t\tDATA_CONTA = toTimestamp(trim(substring(value,351, 8)), 'yyyyMMdd')) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_ATIS_NAO_PAGO as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tCOD_IDENT_CLI as string,\n\t\tCPF_CNPJ as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tUF_FATURA as string,\n\t\tNUM_FATURA_ORIGINAL as string,\n\t\tDT_ABERTURA_IMPUG as timestamp,\n\t\tDT_VENC_FATURA_ORIGINAL as timestamp,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tCOD_FAC_CD as decimal(10,0),\n\t\tVLR_CONTESTADO as decimal(15,2),\n\t\tDT_AJUSTE as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCOD_OPERADORA as string,\n\t\tCONTACONTABIL as string,\n\t\tDESCRCONTACONTABIL as string,\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tCOD_MOTIVO_AJUSTE as string,\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tSERIE_NF as string,\n\t\tDT_EMISSAO_FATURA as timestamp,\n\t\tVLR_ORIG_NSFT as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tFAMILIA_PRODUTOS as string,\n\t\tDT_FECHAMENTO as timestamp,\n\t\tDT_CONTA as timestamp,\n\t\tRECEITA_OPERADORA as string,\n\t\tDT_VENCTO_BOLETO_ULT as timestamp,\n\t\tMOTIVO_OPERACAO as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tCOD_IDENT_CLI = CONTA_COBRANCA,\n\t\tCPF_CNPJ,\n\t\tTIPO_DOCUMENTO = CATEGORIA_CLIENTE,\n\t\tUF_FATURA = UF_COBRANCA,\n\t\tNUM_FATURA_ORIGINAL = ID_FATURA,\n\t\tDT_ABERTURA_IMPUG = DATA_GERACAO,\n\t\tDT_VENC_FATURA_ORIGINAL = DATA_VENCTO_ORIGINAL,\n\t\tVLR_FATURA = VALOR_FATURA_ORIGINAL,\n\t\tCOD_FAC_CD,\n\t\tVLR_CONTESTADO = VALOR_CONTESTACAO,\n\t\tDT_AJUSTE = DATA_OPERACAO,\n\t\tDESCR_OPERADORA = OPERADORA,\n\t\tCOD_OPERADORA = CODIGO_OPERADORA,\n\t\tCONTACONTABIL,\n\t\tDESCRCONTACONTABIL,\n\t\tSALDO_POS_AJUSTE = VALOR_POS_CONTESTACAO,\n\t\tSALDO_DEVEDOR = VALOR_SALDO_ABERTO,\n\t\tCOD_MOTIVO_AJUSTE = MOTIVO_CONTESTACAO,\n\t\tNOTA_FISCAL_ORIG = NUMERO_NOTA_FISCAL,\n\t\tSERIE_NF = SERIE_NOTA_FISCAL,\n\t\tDT_EMISSAO_FATURA = DATA_EMISSAO,\n\t\tVLR_ORIG_NSFT = VALOR_TOTAL,\n\t\tTIPO_OPERACAO,\n\t\tFAMILIA_PRODUTOS,\n\t\tDT_FECHAMENTO = DATA_FECHAMENTO,\n\t\tDT_CONTA = DATA_CONTA,\n\t\tRECEITA_OPERADORA,\n\t\tDT_VENCTO_BOLETO_ULT = DATA_VENCTO_BOLETO_ULT,\n\t\tMOTIVO_OPERACAO\n\t)) ~> GravaTabAtisNaoPago"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/connExecQry')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dfGravaArquivoAtisPago')]",
@@ -832,7 +1058,9 @@
 					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tvalue as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['atis/validados_a_processar','atis/processados']) ~> srcArqAtisPago\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(28,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqAtisPago derive(SyntheticKey = 1,\n\t\tCONTA_COBRANCA = trim(substring(value, 1, 11)),\n\t\tCPF_CNPJ = trim(substring(value, 13, 14)),\n\t\tCATEGORIA_CLIENTE = trim(substring(value, 27, 2)),\n\t\tUF_COBRANCA = trim(substring(value, 29, 2)),\n\t\tID_FATURA = trim(substring(value, 31, 25)),\n\t\tDT_GERACAO = toTimestamp(trim(substring(value, 56, 8)), 'yyyyMMdd'),\n\t\tDT_VENCTO_ORIGINAL = toTimestamp(trim(substring(value, 64, 8)), 'yyyyMMdd'),\n\t\tDT_VENCTO_BOLETO_ULT = toTimestamp(trim(substring(value, 72, 8)), 'yyyyMMdd'),\n\t\tVLR_FATURA_ORIGINAL = (toDecimal(trim(substring(value, 80, 17))))/100,\n\t\tCOD_FAC_CD = toDecimal(trim(substring(value, 97, 9))),\n\t\tCOD_CREDITO = toDecimal(trim(substring(value, 106, 9))),\n\t\tVLR_CONTESTADO = (toDecimal(trim(substring(value, 115, 17))))/100,\n\t\tNUM_FATURA_FUTURA = trim(substring(value, 132, 25)),\n\t\tDT_OPERACAO = toTimestamp(trim(substring(value, 157, 8)), 'yyyyMMdd'),\n\t\tDT_VENCTO_FUTURA = toTimestamp(trim(substring(value, 165, 8)), 'yyyyMMdd'),\n\t\tVLR_FATURA_FUTURA = (toDecimal(trim(substring(value, 173, 17))))/100,\n\t\tOPERADORA = trim(substring(value, 190, 20)),\n\t\tCOD_OPERADORA = trim(substring(value, 210, 3)),\n\t\tMOTIVO_OPERACAO = trim(substring(value, 213, 15)),\n\t\tRECEITA_OPERADORA = trim(substring(value, 228, 3)),\n\t\tCONTA_CONTABIL = trim(substring(value, 231, 11)),\n\t\tDESCR_CONTA_CONTABIL = trim(substring(value, 242, 40)),\n\t\tVLR_POS_CONTESTACAO = (toDecimal(trim(substring(value, 282, 17))))/100,\n\t\tVLR_SALDO_ABERTO = (toDecimal(trim(substring(value, 299, 17))))/100,\n\t\tFAMILIA_PRODUTOS = trim(substring(value, 316, 14)),\n\t\tMOTIVO_CONTESTACAO = trim(substring(value, 330, 2)),\n\t\tNOTA_FISCAL = trim(substring(value, 332, 13)),\n\t\tSERIE_NF = trim(substring(value, 345, 2)),\n\t\tDT_EMISSAO = toTimestamp(trim(substring(value, 347, 8)), 'yyyyMMdd'),\n\t\tVLR_TOTAL = (toDecimal(trim(substring(value, 355, 17))))/100,\n\t\tTIPO_OPERACAO = trim(substring(value, 372, 30)),\n\t\tDT_FECHAMENTO = toTimestamp(trim(substring(value, 402, 8)), 'yyyyMMdd'),\n\t\tVLR_DEVOLUCAO = (toDecimal(trim(substring(value, 410, 17))))/100,\n\t\tVLR_CREDITO_AJUSTE = (toDecimal(trim(substring(value, 427, 17))))/100,\n\t\tVLR_AJUSTE_ITEM = (toDecimal(trim(substring(value, 444, 17)))) /100,\n\t\tVLR_CREDITO_ITEM = (toDecimal(trim(substring(value, 461, 17))))/100) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_ATIS_PAGO as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tCOD_IDENT_CLI as string,\n\t\tCPF_CNPJ as string,\n\t\tTIPO_DOCUMENTO as string,\n\t\tUF_FATURA as string,\n\t\tNUM_FATURA_ORIGINAL as string,\n\t\tDT_ABERTURA_IMPUG as timestamp,\n\t\tDT_VENC_FATURA_ORIGINAL as timestamp,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tCOD_FAC_CD as decimal(10,0),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tDT_AJUSTE as timestamp,\n\t\tDESCR_OPERADORA as string,\n\t\tCOD_OPERADORA as string,\n\t\tCONTACONTABIL as string,\n\t\tDESCRCONTACONTABIL as string,\n\t\tCOD_MOTIVO_AJUSTE as string,\n\t\tNOTA_FISCAL_ORIG as string,\n\t\tSERIE_NF as string,\n\t\tDT_EMISSAO_FATURA as timestamp,\n\t\tVLR_ORIG_NSFT as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tVLR_DEVOLUCAO as decimal(15,2),\n\t\tVLR_CREDITO_AJUSTE as decimal(15,2),\n\t\tVLR_AJUSTE_ITEM as decimal(15,2),\n\t\tVLR_CREDITO_ITEM as decimal(15,2),\n\t\tFAMILIA_PRODUTOS as string,\n\t\tDT_FECHAMENTO as timestamp,\n\t\tDT_VENCTO_FUTURA as timestamp,\n\t\tRECEITA_OPERADORA as string,\n\t\tDT_VENCTO_BOLETO_ULT as timestamp,\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tSALDO_POS_AJUSTE as decimal(15,2),\n\t\tVLR_CONTESTADO as decimal(15,2),\n\t\tCOD_CREDITO as decimal(10,0),\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tNUM_FATURA_FUTURA as string,\n\t\tMOTIVO_OPERACAO as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tCOD_IDENT_CLI = CONTA_COBRANCA,\n\t\tCPF_CNPJ,\n\t\tTIPO_DOCUMENTO = CATEGORIA_CLIENTE,\n\t\tUF_FATURA = UF_COBRANCA,\n\t\tNUM_FATURA_ORIGINAL = ID_FATURA,\n\t\tDT_ABERTURA_IMPUG = DT_GERACAO,\n\t\tDT_VENC_FATURA_ORIGINAL = DT_VENCTO_ORIGINAL,\n\t\tVLR_FATURA = VLR_FATURA_ORIGINAL,\n\t\tCOD_FAC_CD,\n\t\tMOTIVO_OPERACAO,\n\t\tDT_AJUSTE = DT_OPERACAO,\n\t\tDESCR_OPERADORA = OPERADORA,\n\t\tCOD_OPERADORA,\n\t\tCONTACONTABIL = CONTA_CONTABIL,\n\t\tDESCRCONTACONTABIL = DESCR_CONTA_CONTABIL,\n\t\tCOD_MOTIVO_AJUSTE = MOTIVO_CONTESTACAO,\n\t\tNOTA_FISCAL_ORIG = NOTA_FISCAL,\n\t\tSERIE_NF,\n\t\tDT_EMISSAO_FATURA = DT_EMISSAO,\n\t\tVLR_ORIG_NSFT = VLR_TOTAL,\n\t\tTIPO_OPERACAO,\n\t\tVLR_DEVOLUCAO,\n\t\tVLR_CREDITO_AJUSTE,\n\t\tVLR_AJUSTE_ITEM,\n\t\tVLR_CREDITO_ITEM,\n\t\tFAMILIA_PRODUTOS,\n\t\tDT_FECHAMENTO,\n\t\tRECEITA_OPERADORA,\n\t\tDT_VENCTO_BOLETO_ULT,\n\t\tSALDO_DEVEDOR = VLR_SALDO_ABERTO,\n\t\tSALDO_POS_AJUSTE = VLR_POS_CONTESTACAO,\n\t\tVLR_CONTESTADO,\n\t\tCOD_CREDITO,\n\t\tVLR_FATURA_FUTURA,\n\t\tNUM_FATURA_FUTURA,\n\t\tDT_VENCTO_FUTURA,\n\t\tMOTIVO_OPERACAO\n\t)) ~> GravaTabAtis"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/connExecQry')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dfGravaArquivoContestacaoAtlys')]",
@@ -883,7 +1111,9 @@
 					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tCLIENTE_ID as string,\n\t\tNOTA_FISCAL as string,\n\t\tDTEMISSAONF as date 'yyyyMMdd',\n\t\tVALOR_ORIG_NFST as string,\n\t\tSERIE as string,\n\t\tCONTA_CLIENTE as string,\n\t\tCNPJ_CPF as string,\n\t\tNOMECLIENTE as string,\n\t\tTERMINAL as string,\n\t\tVALOR_CONTEST_AJUSTE as string,\n\t\tVALOR_ATRIBUIDO as string,\n\t\tDATA_ATRIBUICAO as date 'yyyyMMdd',\n\t\tHORA_ATRIBUICAO as string,\n\t\tDATA_AJUSTE as date 'yyyyMMdd',\n\t\tHORA_AJUSTE as string,\n\t\tOPERADORA as string,\n\t\t{CODIGO OPERADORA} as string,\n\t\tCODMOTIVOAJUSTES as string,\n\t\tDESCMOTIVOAJUSTE as string,\n\t\tDATAABERTURAIMPU as date 'yyyyMMdd',\n\t\tDATAFECHIMPUG as date 'yyyyMMdd',\n\t\tDSPUT_ID as string,\n\t\tTP_NOTA_FISCAL as string,\n\t\tCLASSE_RECEBER as string,\n\t\tCONTACONTABIL as string,\n\t\tDESCRCONTACONTABIL as string,\n\t\tNUMERO_FATURA as string,\n\t\tVALOR_DOCTO_ORIGINAL as string,\n\t\tMES_ANO_REFERENTE as string,\n\t\tDATAVENCFATUR as date 'yyyyMMdd',\n\t\tVALOR_PAGAMENTO as string,\n\t\tDATA_ATRIBUICAO_PGTO as date 'yyyyMMdd',\n\t\tFATU_ATRIBUIDA as string,\n\t\tDTEMISSAOFATURA as date 'yyyyMMdd',\n\t\tMESANOFATURA as string,\n\t\tVALOR_FATURA as string,\n\t\tSALDO_DEVEDOR as string,\n\t\tUF as string,\n\t\tOPERADORA_REAL as string,\n\t\tSALDO_FATURA_INI as string,\n\t\tSALDO_FATURA_FIM as string,\n\t\tSEQ_RECEBIVEL as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['atlys/validados_a_processar','atlys/processados']) ~> srcArqAtlysAdj\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(28,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqAtlysAdj derive(SyntheticKey = 1,\n\t\tNEW_VLR_ORIG_NFST = replace(VALOR_ORIG_NFST, \",\", \".\"),\n\t\tNEW_VALOR_CONTEST_AJUSTE = replace(VALOR_CONTEST_AJUSTE, \",\", \".\"),\n\t\tNEW_VALOR_ATRIBUIDO = replace(VALOR_ATRIBUIDO, \",\", \".\"),\n\t\tNEW_VALOR_DOCTO_ORIGINAL = replace(VALOR_DOCTO_ORIGINAL, \",\", \".\"),\n\t\tNEW_VALOR_PAGAMENTO = replace(VALOR_PAGAMENTO, \",\", \".\"),\n\t\tNEW_VALOR_FATURA = replace(VALOR_FATURA, \",\", \".\"),\n\t\tNEW_SALDO_DEVEDOR = replace(SALDO_DEVEDOR, \",\", \".\"),\n\t\tNEW_SALDO_FATURA_INI = replace(SALDO_FATURA_INI, \",\", \".\"),\n\t\tNEW_SALDO_FATURA_FIM = replace(SALDO_FATURA_FIM, \",\", \".\")) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_ATLYS_ADJ as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tID_CLIENTE as string,\n\t\tNOTA_FISCAL as string,\n\t\tDT_EMISSAO_NF as timestamp,\n\t\tVLR_ORIG_NFST as decimal(10,2),\n\t\tSERIE as string,\n\t\tCONTA_CLIENTE as string,\n\t\tCNPJ_CPF as string,\n\t\tNOM_CLIENTE as string,\n\t\tNUM_TERMINAL as string,\n\t\tVLR_CONTEST_AJUSTE as decimal(10,2),\n\t\tVLR_ATRIBUIDO as decimal(10,2),\n\t\tDT_ATRIBUICAO as timestamp,\n\t\tHR_ATRIBUICAO as string,\n\t\tDT_AJUSTE as timestamp,\n\t\tHR_AJUSTE as string,\n\t\tOPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tCOD_MOTIVO_AJUSTES as string,\n\t\tDESC_MOTIVO_AJUSTE as string,\n\t\tDATA_ABERTURA_IMPU as timestamp,\n\t\tDATA_FECH_IMPUG as timestamp,\n\t\tDSPUT_ID as string,\n\t\tTP_NOTA_FISCAL as string,\n\t\tCLASSE_RECEBER as string,\n\t\tCONTA_CONTABIL as string,\n\t\tDESCR_CONTA_CONTABIL as string,\n\t\tNUMERO_FATURA as string,\n\t\tVALOR_DOCTO_ORIGINAL as decimal(15,2),\n\t\tMES_ANO_REFERENTE as string,\n\t\tDATA_VENC_FATUR as timestamp,\n\t\tVALOR_PAGAMENTO as decimal(15,2),\n\t\tDATA_ATRIBUICAO_PGTO as timestamp,\n\t\tFATU_ATRIBUIDA as string,\n\t\tDT_EMISSAO_FATURA as timestamp,\n\t\tMES_ANO_FATURA as string,\n\t\tVALOR_FATURA as decimal(15,2),\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tUF as string,\n\t\tOPERADORA_REAL as string,\n\t\tSALDO_FATURA_INI as decimal(15,2),\n\t\tSALDO_FATURA_FIM as decimal(15,2),\n\t\tSEQ_RECEBIVEL as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tID_CLIENTE = CLIENTE_ID,\n\t\tNOTA_FISCAL,\n\t\tDT_EMISSAO_NF = DTEMISSAONF,\n\t\tVLR_ORIG_NFST = NEW_VLR_ORIG_NFST,\n\t\tSERIE,\n\t\tCONTA_CLIENTE,\n\t\tCNPJ_CPF,\n\t\tNOM_CLIENTE = NOMECLIENTE,\n\t\tNUM_TERMINAL = TERMINAL,\n\t\tVLR_CONTEST_AJUSTE = NEW_VALOR_CONTEST_AJUSTE,\n\t\tVLR_ATRIBUIDO = NEW_VALOR_ATRIBUIDO,\n\t\tDT_ATRIBUICAO = DATA_ATRIBUICAO,\n\t\tHR_ATRIBUICAO = HORA_ATRIBUICAO,\n\t\tDT_AJUSTE = DATA_AJUSTE,\n\t\tHR_AJUSTE = HORA_AJUSTE,\n\t\tOPERADORA,\n\t\tCODIGO_OPERADORA = {CODIGO OPERADORA},\n\t\tCOD_MOTIVO_AJUSTES = CODMOTIVOAJUSTES,\n\t\tDESC_MOTIVO_AJUSTE = DESCMOTIVOAJUSTE,\n\t\tDATA_ABERTURA_IMPU = DATAABERTURAIMPU,\n\t\tDATA_FECH_IMPUG = DATAFECHIMPUG,\n\t\tDSPUT_ID,\n\t\tTP_NOTA_FISCAL,\n\t\tCLASSE_RECEBER,\n\t\tCONTA_CONTABIL = CONTACONTABIL,\n\t\tDESCR_CONTA_CONTABIL = DESCRCONTACONTABIL,\n\t\tNUMERO_FATURA,\n\t\tVALOR_DOCTO_ORIGINAL = NEW_VALOR_DOCTO_ORIGINAL,\n\t\tMES_ANO_REFERENTE,\n\t\tDATA_VENC_FATUR = DATAVENCFATUR,\n\t\tVALOR_PAGAMENTO = NEW_VALOR_PAGAMENTO,\n\t\tDATA_ATRIBUICAO_PGTO,\n\t\tFATU_ATRIBUIDA,\n\t\tDT_EMISSAO_FATURA = DTEMISSAOFATURA,\n\t\tMES_ANO_FATURA = MESANOFATURA,\n\t\tVALOR_FATURA = NEW_VALOR_FATURA,\n\t\tSALDO_DEVEDOR = NEW_SALDO_DEVEDOR,\n\t\tUF,\n\t\tOPERADORA_REAL,\n\t\tSALDO_FATURA_INI = NEW_SALDO_FATURA_INI,\n\t\tSALDO_FATURA_FIM = NEW_SALDO_FATURA_FIM,\n\t\tSEQ_RECEBIVEL\n\t)) ~> GravaTabContestacoesAtlysAdj"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/connExecQry')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dfGravaArquivoFatCarFF')]",
@@ -934,7 +1164,9 @@
 					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tvalue as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['fat/validados_a_processar','fat/processados']) ~> srcArqFatFF\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(28,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqFatFF derive(SyntheticKey = 1,\n\t\tCONTA_COBRANCA = trim(substring(value, 1, 11)),\n\t\tCPF_CNPJ = trim(substring(value, 13, 14)),\n\t\tCATEGORIA_CLIENTE = trim(substring(value, 27, 2)),\n\t\tNUMERO_FATURA_ORIGINAL = trim(substring(value, 31, 25)),\n\t\tUF_COBRANCA = trim(substring(value, 29, 2)),\n\t\tDT_GERACAO = toTimestamp(trim(substring(value, 56, 8)), 'yyyyMMdd'),\n\t\tDT_VENCTO_ORIGINAL = toTimestamp(trim(substring(value, 64, 8)), 'yyyyMMdd'),\n\t\tDT_VENCTO_BOLETO_ULT = toTimestamp(trim(substring(value, 72, 8)), 'yyyyMMdd'),\n\t\tVLR_FATURA_ORIGINAL_PAGA = (toDecimal(trim(substring(value, 80, 17))))/100,\n\t\tCCM_SERVICO_CONTESTATO = trim(substring(value, 97, 9)),\n\t\tCMM_CREDITO = trim(substring(value, 106, 9)),\n\t\tVLR_CONTESTADO = (toDecimal(trim(substring(value, 115, 17))))/100,\n\t\tNUMERO_FATURA_FUTURA = trim(substring(value, 132, 25)),\n\t\tDT_OPERACAO = toTimestamp(trim(substring(value, 157, 8)), 'yyyyMMdd'),\n\t\tDT_VENCTO_FATURA_FUTURA = toTimestamp(trim(substring(value, 165, 8)), 'yyyyMMdd'),\n\t\tVLR_FATURA_FUTURA = (toDecimal(trim(substring(value, 173, 17))))/100,\n\t\tOPERADORA = trim(substring(value, 190, 20)),\n\t\tCODIGO_OPERADORA = trim(substring(value, 210, 3)),\n\t\tMOTIVO_OPERACAO = trim(substring(value, 213, 15)),\n\t\tDONO_RECEITA = trim(substring(value, 228, 3)),\n\t\tCONTACONTABIL = trim(substring(value, 231, 11)),\n\t\tDESCRCONTACONTABIL = trim(substring(value, 242, 40)),\n\t\tVLR_POS_CONTESTACAO = (toDecimal(trim(substring(value, 282, 17))))/100,\n\t\tVLR_SALDO_ABERTO = (toDecimal(trim(substring(value, 299, 17))))/100,\n\t\tMOTIVO_CONTESTACAO = trim(substring(value, 330, 2)),\n\t\tNUMERO_NF = trim(substring(value, 332, 13)),\n\t\tSERIE_NF = trim(substring(value, 345, 2)),\n\t\tDT_EMISSAO = toTimestamp(trim(substring(value, 347, 8)), 'yyyyMMdd'),\n\t\tVLR_TOTAL_NF = (toDecimal(trim(substring(value, 355, 17))))/100,\n\t\tTIPO_OPERACAO = trim(substring(value, 372, 30)),\n\t\tVLR_CONTESTADO_FUTURO = (toDecimal(trim(substring(value, 410, 17))))/100,\n\t\tFAMILIA_PRODUTOS = trim(substring(value, 316, 14)),\n\t\tDT_FECHAMENTO_FATURA = toTimestamp(trim(substring(value, 402, 8)), 'yyyyMMdd')) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_FAT_CAR_FF as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tNUMERO_NF as string,\n\t\tDT_EMISSAO_NF as timestamp,\n\t\tVLR_TOTAL_NF as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCONTA_COBRANCA as string,\n\t\tCNPJ_CPF as string,\n\t\tVLR_CONTESTADO as decimal(15,2),\n\t\tDT_OPERACAO as timestamp,\n\t\tOPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tMOTIVO_CONTESTACAO as string,\n\t\tDT_GERACAO as timestamp,\n\t\tNUMERO_FATURA_ORIGINAL as string,\n\t\tDT_VENCTO_ORIGINAL as timestamp,\n\t\tVLR_FATURA_ORIGINAL_PAGA as decimal(15,2),\n\t\tNUMERO_FATURA_FUTURA as string,\n\t\tUF_COBRANCA as string,\n\t\tCATEGORIA_CLIENTE as string,\n\t\tCONTACONTABIL as string,\n\t\tDESCRCONTACONTABIL as string,\n\t\tTIPO_OPERACAO as string,\n\t\tDONO_RECEITA as string,\n\t\tDT_VENCTO_FATURA_FUTURA as timestamp,\n\t\tVLR_FATURA_FUTURA as decimal(15,2),\n\t\tVLR_CONTESTADO_FUTURO as decimal(15,2),\n\t\tCCM_SERVICO_CONTESTATO as string,\n\t\tDT_VENCTO_BOLETO_ULT as timestamp,\n\t\tCCM_CREDITO as string,\n\t\tMOTIVO_OPERACAO as string,\n\t\tVLR_POS_CONTESTACAO as decimal(15,2),\n\t\tVLR_SALDO_ABERTO as decimal(15,2),\n\t\tFAMILIA_PRODUTOS as string,\n\t\tDT_FECHAMENTO_FATURA as timestamp,\n\t\tREFERENCIA as string,\n\t\tVLR_CONTESTADO_FUTSUM as decimal(15,2)\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tNUMERO_NF,\n\t\tDT_EMISSAO_NF = DT_EMISSAO,\n\t\tVLR_TOTAL_NF,\n\t\tSERIE_NF,\n\t\tCONTA_COBRANCA,\n\t\tCNPJ_CPF = CPF_CNPJ,\n\t\tVLR_CONTESTADO,\n\t\tDT_OPERACAO,\n\t\tOPERADORA,\n\t\tCODIGO_OPERADORA,\n\t\tMOTIVO_CONTESTACAO,\n\t\tDT_GERACAO,\n\t\tNUMERO_FATURA_ORIGINAL,\n\t\tDT_VENCTO_ORIGINAL,\n\t\tVLR_FATURA_ORIGINAL_PAGA,\n\t\tNUMERO_FATURA_FUTURA,\n\t\tUF_COBRANCA,\n\t\tCATEGORIA_CLIENTE,\n\t\tCONTACONTABIL,\n\t\tDESCRCONTACONTABIL,\n\t\tTIPO_OPERACAO,\n\t\tDONO_RECEITA,\n\t\tDT_VENCTO_FATURA_FUTURA,\n\t\tVLR_FATURA_FUTURA,\n\t\tVLR_CONTESTADO_FUTURO,\n\t\tCCM_SERVICO_CONTESTATO,\n\t\tDT_VENCTO_BOLETO_ULT,\n\t\tCCM_CREDITO = CMM_CREDITO,\n\t\tMOTIVO_OPERACAO,\n\t\tVLR_POS_CONTESTACAO,\n\t\tVLR_SALDO_ABERTO,\n\t\tFAMILIA_PRODUTOS,\n\t\tDT_FECHAMENTO_FATURA,\n\t\tVLR_CONTESTADO_FUTSUM = VLR_CONTESTADO\n\t)) ~> GravaTabFatCarFF"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/connExecQry')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dfGravaArquivoFatCarFNP')]",
@@ -985,322 +1217,8 @@
 					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tvalue as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['fat/validados_a_processar','fat/processados']) ~> srcArqFatFNP\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(38,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqFatFNP derive(SyntheticKey = 1,\n\t\tCONTA_COBRANCA = trim(substring(value, 1, 11)),\n\t\tCNPJ_CPF = trim(substring(value, 13, 14)),\n\t\tCATEGORIA_CLIENTE = trim(substring(value, 27, 2)),\n\t\tUF_COBRANCA = trim(substring(value, 29, 2)),\n\t\tID_FATURA = trim(substring(value, 31, 25)),\n\t\tDATA_GERACAO = toTimestamp(trim(substring(value, 56, 8)), 'yyyyMMdd'),\n\t\tDATA_VENCTO_ORIGINAL = toTimestamp(trim(substring(value, 64, 8)), 'yyyyMMdd'),\n\t\tDATA_VENCTO_BOLETO_ULT = toTimestamp(trim(substring(value, 72, 8)), 'yyyyMMdd'),\n\t\tVALOR_FATURA_ORIGINAL = (toDecimal(trim(substring(value, 80, 17))))/100,\n\t\tVALOR_CONTESTADO = (toDecimal(trim(substring(value, 106, 17))))/100,\n\t\tDATA_OPERACAO = toTimestamp(trim(substring(value, 123, 8)), 'yyyyMMdd'),\n\t\tOPERADORA = trim(substring(value, 131, 20)),\n\t\tCODIGO_OPERADORA = trim(substring(value, 151, 3)),\n\t\tMOTIVO_OPERACAO = trim(substring(value, 154, 15)),\n\t\tDONO_RECEITA = trim(substring(value, 169, 3)),\n\t\tCONTA_CONTABIL = trim(substring(value, 172, 11)),\n\t\tDESCR_CONTA_CONTABIL = trim(substring(value, 183, 40)),\n\t\tVALOR_POS_CONTESTACAO = (toDecimal(trim(substring(value, 223, 17))))/100,\n\t\tVALOR_SALDO_ABERTO = (toDecimal(trim(substring(value, 240, 17))))/100,\n\t\tFAMILIA_PRODUTOS = trim(substring(value, 257, 14)),\n\t\tMOTIVO_CONTESTACAO = trim(substring(value, 271, 2)),\n\t\tNUMERO_NF_AJUSTE = trim(substring(value, 273, 13)),\n\t\tSERIE_NF = trim(substring(value, 286, 2)),\n\t\tDATA_EMISSAO_NF = toTimestamp(trim(substring(value, 288, 8)), 'yyyyMMdd'),\n\t\tVALOR_TOTAL_NF = (toDecimal(trim(substring(value, 296, 17))))/100,\n\t\tTIPO_OPERACAO = trim(substring(value, 313, 30)),\n\t\tDATA_FECHAMENTO_FATURA = toTimestamp(trim(substring(value, 343, 8)), 'yyyyMMdd'),\n\t\tCONTA = trim(substring(value, 351, 6)),\n\t\tCCM_CONTESTATO = toDecimal(trim(substring(value, 97, 9)))) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_FAT_CAR_FNP as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tNUMERO_NF_AJUSTE as string,\n\t\tDT_EMISSAO_NF as timestamp,\n\t\tVLR_TOTAL_NF as decimal(15,2),\n\t\tSERIE_NF as string,\n\t\tCONTA_COBRANCA as string,\n\t\tCNPJ_CPF as string,\n\t\tDT_VENCTO_BOLETO_ULT as timestamp,\n\t\tDT_OPERACAO as timestamp,\n\t\tOPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tMOTIVO_CONTESTACAO as string,\n\t\tDT_GERACAO as timestamp,\n\t\tVLR_SALDO_ABERTO as decimal(15,2),\n\t\tUF_COBRANCA as string,\n\t\tCATEGORIA_CLIENTE as string,\n\t\tCONTACONTABIL as string,\n\t\tDESCRCONTACONTABIL as string,\n\t\tVLR_POS_CONTESTACAO as decimal(15,2),\n\t\tTIPO_OPERACAO as string,\n\t\tDONO_RECEITA as string,\n\t\tMOTIVO_OPERACAO as string,\n\t\tFAMILIA_PRODUTOS as string,\n\t\tDT_FECHAMENTO_FATURA as timestamp,\n\t\tDT_VENCTO_ORIGINAL as timestamp,\n\t\tID_FATURA as string,\n\t\tVLR_CONSTESTADO as decimal(15,2),\n\t\tVLR_FATURA_ORIGINAL as decimal(15,2),\n\t\tCCM_CONTESTATO as decimal(10,0),\n\t\tCONTA as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tNUMERO_NF_AJUSTE,\n\t\tDT_EMISSAO_NF = DATA_EMISSAO_NF,\n\t\tVLR_TOTAL_NF = VALOR_TOTAL_NF,\n\t\tSERIE_NF,\n\t\tCONTA_COBRANCA,\n\t\tCNPJ_CPF,\n\t\tDT_VENCTO_BOLETO_ULT = DATA_VENCTO_BOLETO_ULT,\n\t\tDT_OPERACAO = DATA_OPERACAO,\n\t\tOPERADORA,\n\t\tCODIGO_OPERADORA,\n\t\tMOTIVO_CONTESTACAO,\n\t\tDT_GERACAO = DATA_GERACAO,\n\t\tVLR_SALDO_ABERTO = VALOR_SALDO_ABERTO,\n\t\tUF_COBRANCA,\n\t\tCATEGORIA_CLIENTE,\n\t\tCONTACONTABIL = CONTA_CONTABIL,\n\t\tDESCRCONTACONTABIL = DESCR_CONTA_CONTABIL,\n\t\tVLR_POS_CONTESTACAO = VALOR_POS_CONTESTACAO,\n\t\tTIPO_OPERACAO,\n\t\tDONO_RECEITA,\n\t\tMOTIVO_OPERACAO,\n\t\tFAMILIA_PRODUTOS,\n\t\tDT_FECHAMENTO_FATURA = DATA_FECHAMENTO_FATURA,\n\t\tDT_VENCTO_ORIGINAL = DATA_VENCTO_ORIGINAL,\n\t\tID_FATURA,\n\t\tVLR_CONSTESTADO = VALOR_CONTESTADO,\n\t\tVLR_FATURA_ORIGINAL = VALOR_FATURA_ORIGINAL,\n\t\tCCM_CONTESTATO,\n\t\tCONTA\n\t)) ~> GravaTabFatCarFNP"
 				}
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dfGravaArquivoKenanContestada')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "Kenan"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "arq_kenan_contestada",
-								"type": "DatasetReference"
-							},
-							"name": "srcArqKenanContestada"
-						},
-						{
-							"dataset": {
-								"referenceName": "connExecQry",
-								"type": "DatasetReference"
-							},
-							"name": "BuscaLoteArqAtual"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "CVTB_FATURA_CON_KENAN",
-								"type": "DatasetReference"
-							},
-							"name": "GravaTabFaturaConKenan"
-						}
-					],
-					"transformations": [
-						{
-							"name": "FakeKey2"
-						},
-						{
-							"name": "FakeKey1"
-						},
-						{
-							"name": "Join"
-						}
-					],
-					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tCONTA_COBRANCA as string,\n\t\tCNPJ_CPF as string,\n\t\tCATEGORIA_CLIENTE as string,\n\t\t{UF_COBRANÃ‡A} as string,\n\t\tID_FATURA as string,\n\t\tID_FATURA_ORIGEM as string,\n\t\tDATA_VENCTO_ORIGINAL as date 'dd/MM/yyyy',\n\t\tDATA_VENCTO_BOLETO_OU_BAIXA as date 'dd/MM/yyyy',\n\t\tVALOR_FATURA as string,\n\t\tVALOR_CONTESTADO as string,\n\t\tVALOR_PAGAMENTO as string,\n\t\tVALOR_PAGTO_CREDITO_ANTERIOR as string,\n\t\tDATA_PAGTO as date 'dd/MM/yyyy',\n\t\tDATA_FECHAMENTO_FATURA as timestamp 'dd/MM/yyyy HH:mm:ss',\n\t\tDATA_EMISSAO as timestamp 'dd/MM/yyyy HH:mm:ss',\n\t\tDATA_AJUSTE as date 'dd/MM/yyyy'\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['kenan/validados_a_processar','kenan/processados']) ~> srcArqKenanContestada\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(28,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqKenanContestada derive(SyntheticKey = 1,\n\t\tVALOR_FATURA = toDecimal(replace(toString(VALOR_FATURA), ',' , '.')),\n\t\tVALOR_CONTESTADO = toDecimal(replace(toString(VALOR_CONTESTADO), ',' , '.')),\n\t\tVALOR_PAGAMENTO = toDecimal(replace(toString(VALOR_PAGAMENTO), ',' , '.')),\n\t\tVALOR_PAGTO_CREDITO_ANTERIOR = toDecimal(replace(toString(VALOR_PAGTO_CREDITO_ANTERIOR), ',' , '.'))) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_FATURA_CON_KENAN as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tCONTA_COBRANCA as string,\n\t\tCPF_CNPJ as string,\n\t\tCATEGORIA_CLIENTE as string,\n\t\tUF_COBRANCA as string,\n\t\tID_FATURA as string,\n\t\tID_FATURA_ORIGEM as string,\n\t\tDT_VENCTO_ORIGINAL as date,\n\t\tDT_VENCTO_BOLETO_BAIXA as date,\n\t\tVLR_FATURA as decimal(15,2),\n\t\tVLR_CONTESTADO as decimal(15,2),\n\t\tVLR_PAGAMENTO as decimal(15,2),\n\t\tVLR_PGTO_CREDITO_ANT as decimal(15,2),\n\t\tDT_PAGAMENTO as date,\n\t\tDT_FECHA_FATURA as timestamp,\n\t\tDT_EMISSAO as timestamp,\n\t\tDT_AJUSTE as date,\n\t\tSTEP_EXECUTION_ID as decimal(19,0),\n\t\tJOB_EXECUTION_ID as decimal(19,0),\n\t\tDT_REFERENCIA as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tCONTA_COBRANCA,\n\t\tCPF_CNPJ = CNPJ_CPF,\n\t\tCATEGORIA_CLIENTE,\n\t\tID_FATURA,\n\t\tID_FATURA_ORIGEM,\n\t\tDT_VENCTO_ORIGINAL = DATA_VENCTO_ORIGINAL,\n\t\tDT_VENCTO_BOLETO_BAIXA = DATA_VENCTO_BOLETO_OU_BAIXA,\n\t\tVLR_FATURA = VALOR_FATURA,\n\t\tVLR_CONTESTADO = VALOR_CONTESTADO,\n\t\tVLR_PAGAMENTO = VALOR_PAGAMENTO,\n\t\tVLR_PGTO_CREDITO_ANT = VALOR_PAGTO_CREDITO_ANTERIOR,\n\t\tDT_PAGAMENTO = DATA_PAGTO,\n\t\tDT_FECHA_FATURA = DATA_FECHAMENTO_FATURA,\n\t\tDT_EMISSAO = DATA_EMISSAO,\n\t\tDT_AJUSTE = DATA_AJUSTE,\n\t\tUF_COBRANCA = {UF_COBRANÃ‡A}\n\t)) ~> GravaTabFaturaConKenan"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dfGravaArquivoKenanDetalhe')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "Kenan"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "arq_kenan_detalhe",
-								"type": "DatasetReference"
-							},
-							"name": "srcArqKenanDetalhe"
-						},
-						{
-							"dataset": {
-								"referenceName": "connExecQry",
-								"type": "DatasetReference"
-							},
-							"name": "BuscaLoteArqAtual"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "CVTB_FATURA_DET_KENAN",
-								"type": "DatasetReference"
-							},
-							"name": "GravaTabContestacoesAtlysRcbl"
-						}
-					],
-					"transformations": [
-						{
-							"name": "FakeKey2"
-						},
-						{
-							"name": "FakeKey1"
-						},
-						{
-							"name": "Join"
-						}
-					],
-					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tCONTA_COBRANCA as string,\n\t\tCNPJ_CPF as string,\n\t\tID_FATURA as string,\n\t\tOPEN_ITEM_ID as string,\n\t\tID_DETALHE as string,\n\t\tID_OPERADORA as string,\n\t\tDESCR_OPERADORA as string,\n\t\tTIPO_DETALHE as string,\n\t\tDESCR_DETALHE as string,\n\t\tTIPO_INSTANCIA as string,\n\t\tINSTANCIA as string,\n\t\tVALOR_BRUTO as string,\n\t\tVALOR_CONTESTADO as string,\n\t\tVALOR_IMPOSTO_ICMS as string,\n\t\tVALOR_OUTROS_IMPOSTOS as string,\n\t\tVALOR_IMPOSTO_CONTESTADO as string,\n\t\tCC_CR_AJUSTE as string,\n\t\tCC_DB_AJUSTE as string,\n\t\tCC_CREDITO_FAT as string,\n\t\tCC_DEBITO_FAT as string,\n\t\tCC_CREDITO_IMPOSTO as string,\n\t\tCC_DEBITO_IMPOSTO as string,\n\t\tDESCR_CONTESTACAO as string,\n\t\tDESCR_MOTIVO as string,\n\t\tDATA_CONTESTACAO as timestamp 'dd/MM/yyyy HH:mm:ss',\n\t\tACCOUNT_NO as string,\n\t\tSUBTYPE_CODE as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['kenan/validados_a_processar','kenan/processados']) ~> srcArqKenanDetalhe\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(38,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqKenanDetalhe derive(SyntheticKey = 1,\n\t\tID_DETALHE = toDecimal(replace(toString(ID_DETALHE), ',' , '.')),\n\t\tVALOR_BRUTO = toDecimal(replace(toString(VALOR_BRUTO), ',' , '.')),\n\t\tVALOR_CONTESTADO = toDecimal(replace(toString(VALOR_CONTESTADO), ',' , '.')),\n\t\tVALOR_IMPOSTO_ICMS = toDecimal(replace(toString(VALOR_IMPOSTO_ICMS), ',' , '.')),\n\t\tVALOR_OUTROS_IMPOSTOS = toDecimal(replace(toString(VALOR_OUTROS_IMPOSTOS), ',' , '.')),\n\t\tVALOR_IMPOSTO_CONTESTADO = toDecimal(replace(toString(VALOR_IMPOSTO_CONTESTADO), ',' , '.')),\n\t\tSUBTYPE_CODE = toDecimal(replace(toString(SUBTYPE_CODE), ',' , '.'))) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_FATURA_DET_KENAN as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tCONTA_COBRANCA as string,\n\t\tCPF_CNPJ as string,\n\t\tID_FATURA as string,\n\t\tID_OPEN_ITEM as string,\n\t\tID_DETALHE as decimal(10,0),\n\t\tID_OPERADORA as string,\n\t\tDESC_OPERADORA as string,\n\t\tTIPO_DETALHE as string,\n\t\tDESC_DETALHE as string,\n\t\tTIPO_INSTANCIA as string,\n\t\tNUM_INSTANCIA as string,\n\t\tVLR_BRUTO as decimal(15,2),\n\t\tVLR_CONTESTADO as decimal(15,2),\n\t\tVLR_IMPOSTO_ICMS as decimal(15,2),\n\t\tVLR_OUTROS_IMPOSTOS as decimal(15,2),\n\t\tVLR_IMPOSTO_CONSTESTADO as decimal(15,2),\n\t\tCC_CR_AJUSTE as string,\n\t\tCC_DB_AJUSTE as string,\n\t\tCC_CREDITO_FAT as string,\n\t\tCC_DEBITO_FAT as string,\n\t\tCC_CREDITO_IMPOSTO as string,\n\t\tCC_DEBITO_IMPOSTO as string,\n\t\tDESC_CONTESTACAO as string,\n\t\tDESC_MOTIVO as string,\n\t\tDT_CONTESTACAO as date,\n\t\tACCOUNT_NO as string,\n\t\tSUBTYPE_CODE as decimal(19,0),\n\t\tSTEP_EXECUTION_ID as decimal(19,0),\n\t\tJOB_EXECUTION_ID as decimal(19,0)\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tCONTA_COBRANCA,\n\t\tCPF_CNPJ = CNPJ_CPF,\n\t\tID_FATURA,\n\t\tID_OPEN_ITEM = OPEN_ITEM_ID,\n\t\tID_DETALHE,\n\t\tID_OPERADORA,\n\t\tDESC_OPERADORA = DESCR_OPERADORA,\n\t\tTIPO_DETALHE,\n\t\tDESC_DETALHE = DESCR_DETALHE,\n\t\tTIPO_INSTANCIA,\n\t\tNUM_INSTANCIA = INSTANCIA,\n\t\tVLR_BRUTO = VALOR_BRUTO,\n\t\tVLR_CONTESTADO = VALOR_CONTESTADO,\n\t\tVLR_IMPOSTO_ICMS = VALOR_IMPOSTO_ICMS,\n\t\tVLR_OUTROS_IMPOSTOS = VALOR_OUTROS_IMPOSTOS,\n\t\tVLR_IMPOSTO_CONSTESTADO = VALOR_IMPOSTO_CONTESTADO,\n\t\tCC_CR_AJUSTE,\n\t\tCC_DB_AJUSTE,\n\t\tCC_CREDITO_FAT,\n\t\tCC_DEBITO_FAT,\n\t\tCC_CREDITO_IMPOSTO,\n\t\tCC_DEBITO_IMPOSTO,\n\t\tDESC_CONTESTACAO = DESCR_CONTESTACAO,\n\t\tDESC_MOTIVO = DESCR_MOTIVO,\n\t\tDT_CONTESTACAO = DATA_CONTESTACAO,\n\t\tACCOUNT_NO,\n\t\tSUBTYPE_CODE\n\t)) ~> GravaTabContestacoesAtlysRcbl"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dfGravaArquivoKenanItem')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "Kenan"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "arq_kenan_Item",
-								"type": "DatasetReference"
-							},
-							"name": "srcArqKenanItem"
-						},
-						{
-							"dataset": {
-								"referenceName": "connExecQry",
-								"type": "DatasetReference"
-							},
-							"name": "BuscaLoteArqAtual"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "CVTB_FATURA_ITEM_KENAN",
-								"type": "DatasetReference"
-							},
-							"name": "GravaTabContestacoesAtlysRcbl"
-						}
-					],
-					"transformations": [
-						{
-							"name": "FakeKey2"
-						},
-						{
-							"name": "FakeKey1"
-						},
-						{
-							"name": "Join"
-						}
-					],
-					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tCONTA_COBRANCA as string,\n\t\tCNPJ_CPF as string,\n\t\tNUMERO_FATURA as string,\n\t\tOPEN_ITEM_ID as string,\n\t\tDESCR_OPEN_ITEM as string,\n\t\tVALOR_ITEM as string,\n\t\tVALOR_CONTESTADO as string,\n\t\tVALOR_PAGO_ITEM as string,\n\t\tFECHAMENTO_SALDO_ABERTO_ITEM as timestamp 'dd/MM/yyyy HH:mm:ss',\n\t\tNOTA_FISCAL as string,\n\t\tUF_NF as string,\n\t\tSERIE_NF as string,\n\t\tSUBSERIE_NF as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['kenan/validados_a_processar','kenan/processados']) ~> srcArqKenanItem\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(38,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqKenanItem derive(SyntheticKey = 1,\n\t\tVALOR_ITEM = toDecimal(replace(toString(VALOR_ITEM), ',' , '.')),\n\t\tVALOR_CONTESTADO = toDecimal(replace(toString(VALOR_CONTESTADO), ',' , '.')),\n\t\tVALOR_PAGO_ITEM = toDecimal(replace(toString(VALOR_PAGO_ITEM), ',' , '.'))) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_FATURA_ITEM_KENAN as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tCONTA_COBRANCA as string,\n\t\tCPF_CNPJ as string,\n\t\tID_FATURA as string,\n\t\tID_OPEN_ITEM as string,\n\t\tDESC_OPEN_ITEM as string,\n\t\tVLR_ITEM as decimal(15,2),\n\t\tVLR_CONTESTADO as decimal(15,2),\n\t\tVLR_PAGO_ITEM as decimal(15,2),\n\t\tDT_FECHA_SALDO_ITEM as date,\n\t\tNOTA_FISCAL as string,\n\t\tUF_NF as string,\n\t\tSERIE_NF as string,\n\t\tSUBSERIE_NF as string,\n\t\tSTEP_EXECUTION_ID as decimal(19,0),\n\t\tJOB_EXECUTION_ID as decimal(19,0)\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tCONTA_COBRANCA,\n\t\tCPF_CNPJ = CNPJ_CPF,\n\t\tID_FATURA = NUMERO_FATURA,\n\t\tID_OPEN_ITEM = OPEN_ITEM_ID,\n\t\tDESC_OPEN_ITEM = DESCR_OPEN_ITEM,\n\t\tVLR_ITEM = VALOR_ITEM,\n\t\tVLR_CONTESTADO = VALOR_CONTESTADO,\n\t\tVLR_PAGO_ITEM = VALOR_PAGO_ITEM,\n\t\tDT_FECHA_SALDO_ITEM = FECHAMENTO_SALDO_ABERTO_ITEM,\n\t\tNOTA_FISCAL,\n\t\tUF_NF,\n\t\tSERIE_NF,\n\t\tSUBSERIE_NF\n\t)) ~> GravaTabContestacoesAtlysRcbl"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dfGravaArquivoRecebiveisAtlys')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "Atlys"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "arq_atlys_rcbl",
-								"type": "DatasetReference"
-							},
-							"name": "srcArqAtlysRcbl"
-						},
-						{
-							"dataset": {
-								"referenceName": "connExecQry",
-								"type": "DatasetReference"
-							},
-							"name": "BuscaLoteArqAtual"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "CVTB_ATLYS_RCBL",
-								"type": "DatasetReference"
-							},
-							"name": "GravaTabContestacoesAtlysRcbl"
-						}
-					],
-					"transformations": [
-						{
-							"name": "FakeKey2"
-						},
-						{
-							"name": "FakeKey1"
-						},
-						{
-							"name": "Join"
-						}
-					],
-					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tCLIENTE_ID as string,\n\t\tNOMECLIENTE as string,\n\t\tCNPJ_CPF as string,\n\t\tCONTA_CLIENTE as string,\n\t\tCLASSE_RECEBER as string,\n\t\tOPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tNUMERO_FATURA as string,\n\t\tMES_ANO_REFERENTE as string,\n\t\tVALOR_DOCTO_ORIGINAL as string,\n\t\tFATURA_ATRIBUIDA as string,\n\t\tMESANOFATURA as string,\n\t\tVALOR_FATURA as string,\n\t\tSALDO_DEVIDO_ORIG as string,\n\t\tDATA_EMISSAO_FATURA as date 'yyyyMMdd',\n\t\tVALOR_TOTAL_PAGAMENTO as string,\n\t\tDATA_FEBRABAN as date 'yyyyMMdd',\n\t\tVALOR_ATRIBUICAO as string,\n\t\tUF as string,\n\t\tDATA_ATRIBUICAO_PGTO as date 'yyyyMMdd',\n\t\tHORA_ATRIBUICAO_PGTO as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['atlys/validados_a_processar','atlys/processados']) ~> srcArqAtlysRcbl\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(38,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nsrcArqAtlysRcbl derive(SyntheticKey = 1,\n\t\tNEW_VALOR_DOCTO_ORIGINAL = replace(VALOR_DOCTO_ORIGINAL, ',' , '.'),\n\t\tNEW_VALOR_FATURA = replace(VALOR_FATURA, ',' , '.'),\n\t\tNEW_SALDO_DEVIDO_ORIG = replace(SALDO_DEVIDO_ORIG, ',' , '.'),\n\t\tNEW_VALOR_TOTAL_PAGAMENTO = replace(VALOR_TOTAL_PAGAMENTO, ',' , '.'),\n\t\tNEW_VALOR_ATRIBUICAO = replace(VALOR_ATRIBUICAO, ',' , '.')) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_ATLYS_RCBL as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tID_CLIENTE as string,\n\t\tNOME_CLIENTE as string,\n\t\tCNPJ_CPF as string,\n\t\tCONTA_CLIENTE as string,\n\t\tCLASSE_RECEBER as string,\n\t\tOPERADORA as string,\n\t\tCODIGO_OPERADORA as string,\n\t\tNUMERO_FATURA as string,\n\t\tMES_ANO_REFERENTE as string,\n\t\tVALOR_DOCTO_ORIGINAL as decimal(15,2),\n\t\tFATURA_ATRIBUIDA as string,\n\t\tMES_ANO_FATURA as string,\n\t\tVALOR_FATURA as decimal(15,2),\n\t\tSALDO_DEVIDO_ORIG as decimal(15,2),\n\t\tDATA_EMISSAO_FATURA as timestamp,\n\t\tVALOR_TOTAL_PAGAMENTO as decimal(15,2),\n\t\tDATA_FEBRABAN as timestamp,\n\t\tVALOR_ATRIBUICAO as decimal(15,2),\n\t\tUF as string,\n\t\tDATA_ATRIBUICAO_PGTO as timestamp,\n\t\tHORA_ATRIBUICAO_PGTO as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tID_CLIENTE = CLIENTE_ID,\n\t\tNOME_CLIENTE = NOMECLIENTE,\n\t\tCNPJ_CPF,\n\t\tCONTA_CLIENTE,\n\t\tCLASSE_RECEBER,\n\t\tOPERADORA,\n\t\tCODIGO_OPERADORA,\n\t\tNUMERO_FATURA,\n\t\tMES_ANO_REFERENTE,\n\t\tVALOR_DOCTO_ORIGINAL = NEW_VALOR_DOCTO_ORIGINAL,\n\t\tFATURA_ATRIBUIDA,\n\t\tMES_ANO_FATURA = MESANOFATURA,\n\t\tVALOR_FATURA = NEW_VALOR_FATURA,\n\t\tSALDO_DEVIDO_ORIG = NEW_SALDO_DEVIDO_ORIG,\n\t\tDATA_EMISSAO_FATURA,\n\t\tVALOR_TOTAL_PAGAMENTO = NEW_VALOR_TOTAL_PAGAMENTO,\n\t\tDATA_FEBRABAN,\n\t\tVALOR_ATRIBUICAO = NEW_VALOR_ATRIBUICAO,\n\t\tUF,\n\t\tDATA_ATRIBUICAO_PGTO,\n\t\tHORA_ATRIBUICAO_PGTO\n\t)) ~> GravaTabContestacoesAtlysRcbl"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dfGravaArquivoVivoNextK16')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "VivoNext"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "arq_vivo_next_K16",
-								"type": "DatasetReference"
-							},
-							"name": "srcArqVivoNextK16"
-						},
-						{
-							"dataset": {
-								"referenceName": "connExecQry",
-								"type": "DatasetReference"
-							},
-							"name": "BuscaLoteArqAtual"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "cvtb_vivo_next_k16",
-								"type": "DatasetReference"
-							},
-							"name": "GravaTabVivoNextK16"
-						}
-					],
-					"transformations": [
-						{
-							"name": "FakeKey2"
-						},
-						{
-							"name": "FakeKey1"
-						},
-						{
-							"name": "Join"
-						},
-						{
-							"name": "SelecaoColunas"
-						}
-					],
-					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\tProp_0 as string,\n\t\tProp_1 as string,\n\t\tProp_2 as string,\n\t\tProp_3 as string,\n\t\tProp_4 as string,\n\t\tProp_5 as string,\n\t\tProp_6 as string,\n\t\tProp_7 as string,\n\t\tProp_8 as string,\n\t\tProp_9 as string,\n\t\tProp_10 as string,\n\t\tProp_11 as string,\n\t\tProp_12 as string,\n\t\tProp_13 as string,\n\t\tProp_14 as string,\n\t\tProp_15 as string,\n\t\tProp_16 as string,\n\t\tProp_17 as string,\n\t\tProp_18 as string,\n\t\tProp_19 as string,\n\t\tProp_20 as string,\n\t\tProp_21 as string,\n\t\tProp_22 as string,\n\t\tProp_23 as string,\n\t\tProp_24 as string,\n\t\tProp_25 as string,\n\t\tProp_26 as string,\n\t\tProp_27 as string,\n\t\tProp_28 as string,\n\t\tProp_29 as string,\n\t\tProp_30 as string,\n\t\tProp_31 as string,\n\t\tProp_32 as string,\n\t\tProp_33 as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['vivonext/validados_a_processar','vivonext/processados'],\n\tpreferredFractionalType: 'decimal') ~> srcArqVivoNextK16\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(28,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nSelecaoColunas derive(SyntheticKey = 1,\n\t\tVALOR_ORIG_NFST = toDecimal(replace(toString(VALOR_ORIG_NFST), ',' , '.')),\n\t\tVALOR_CONTEST_AJUSTE_CANC = toDecimal(replace(toString(VALOR_CONTEST_AJUSTE_CANC), ',' , '.')),\n\t\tVALOR_ALOCADO = toDecimal(replace(toString(VALOR_ALOCADO), ',' , '.')),\n\t\tVALOR_DOCTO_ORIGINAL = toDecimal(replace(toString(VALOR_DOCTO_ORIGINAL), ',' , '.')),\n\t\tVALOR_FATURA = toDecimal(replace(toString(VALOR_FATURA), ',' , '.')),\n\t\tSALDO_DEVEDOR = toDecimal(replace(toString(SALDO_DEVEDOR), ',' , '.')),\n\t\tDATA_EMISSAO_NFST = toTimestamp(DATA_EMISSAO_NFST, 'yyyyMMdd'),\n\t\tDATA_AJUSTE = toTimestamp(DATA_AJUSTE, 'yyyyMMdd'),\n\t\tDATA_ALOCACAO = toTimestamp(DATA_AJUSTE, 'yyyyMMdd'),\n\t\tDATA_EMISSAO_FATURA_2 = toTimestamp(DATA_EMISSAO_FATURA_2, 'yyyyMMdd'),\n\t\tDATA_EMISSAO_FATURA = toTimestamp(DATA_EMISSAO_FATURA, 'yyyyMMdd')) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nsrcArqVivoNextK16 select(mapColumn(\n\t\tCLIENTE_ID = Prop_0,\n\t\tNOTA_FISCAL = Prop_1,\n\t\tDATA_EMISSAO_NFST = Prop_2,\n\t\tVALOR_ORIG_NFST = Prop_3,\n\t\tSERIE = Prop_4,\n\t\tUF = Prop_5,\n\t\tCONTA_CLIENTE = Prop_6,\n\t\tCNPJ_CPF = Prop_7,\n\t\tNOME_CLIENTE = Prop_8,\n\t\tTERMINAL = Prop_9,\n\t\tVALOR_CONTEST_AJUSTE_CANC = Prop_10,\n\t\tDATA_AJUSTE = Prop_11,\n\t\tHORA_AJUSTE = Prop_12,\n\t\tVALOR_ALOCADO = Prop_13,\n\t\tDATA_ALOCACAO = Prop_14,\n\t\tHORA_ALOCACAO = Prop_15,\n\t\tOPERADORA = Prop_16,\n\t\tCODIGO_OPERADORA = Prop_17,\n\t\tCODIGO_MOTIVO_AJUSTE = Prop_18,\n\t\tDESCRITIVO_MOTIVO_AJUSTE = Prop_19,\n\t\tCREDIT_ID = Prop_20,\n\t\tCONTA_CONTABIL = Prop_21,\n\t\tDESCR_CONTA_CONTABIL = Prop_22,\n\t\tNUMERO_FATURA = Prop_23,\n\t\tVALOR_DOCTO_ORIGINAL = Prop_24,\n\t\tDATA_EMISSAO_FATURA = Prop_25,\n\t\tFATU_ALOCADA = Prop_26,\n\t\tDATA_EMISSAO_FATURA_2 = Prop_27,\n\t\tMESANOFATURA = Prop_28,\n\t\tVALOR_FATURA = Prop_29,\n\t\tSALDO_DEVEDOR = Prop_30,\n\t\tDEBIT_ID = Prop_31,\n\t\tCOD_TIPO_RECEBIVEIS = Prop_32,\n\t\tDESCR_TIPO_RECEBIVEIS = Prop_33\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelecaoColunas\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_VIVO_NEXT_K16 as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tCLIENTE_ID as string,\n\t\tNOTA_FISCAL as string,\n\t\tDT_EMISSAO_NFST as timestamp,\n\t\tVL_ORIG_NFST as decimal(15,2),\n\t\tSERIE as string,\n\t\tCONTA_CLIENTE as string,\n\t\tCNPJ_CPF as string,\n\t\tNOME_CLIENTE as string,\n\t\tTERMINAL as string,\n\t\tVL_CONTEST_AJUSTE as decimal(15,2),\n\t\tVL_ALOCADO as decimal(15,2),\n\t\tDT_ALOCACAO as timestamp,\n\t\tHR_ALOCACAO as string,\n\t\tDT_AJUSTE as timestamp,\n\t\tHR_AJUSTE as string,\n\t\tOPERADORA as string,\n\t\tCD_OPERADORA as string,\n\t\tCD_MOTIVO_AJUSTE as string,\n\t\tDS_MOTIVO_AJUSTE as string,\n\t\tNUMERO_FATURA as string,\n\t\tFATU_ALOCADA as string,\n\t\tDT_EMISSAO_FATURA as timestamp,\n\t\tMESANOFATURA as string,\n\t\tVL_DOCTO_ORIGINAL as decimal(15,2),\n\t\tSALDO_DEVEDOR as decimal(15,2),\n\t\tCONTA_CONTABIL as string,\n\t\tDS_CONTA_CONTABIL as string,\n\t\tVL_FATURA as decimal(15,2),\n\t\tCD_TIPO_RECEBIVEIS as string,\n\t\tDS_TIPO_RECEBIVEIS as string,\n\t\tDEBIT_ID as string,\n\t\tCREDIT_ID as string,\n\t\tUF as string,\n\t\tDT_EMISSAO_FATURA_2 as timestamp\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tCLIENTE_ID,\n\t\tNOTA_FISCAL,\n\t\tDT_EMISSAO_NFST = DATA_EMISSAO_NFST,\n\t\tVL_ORIG_NFST = VALOR_ORIG_NFST,\n\t\tSERIE,\n\t\tCONTA_CLIENTE,\n\t\tCNPJ_CPF,\n\t\tNOME_CLIENTE,\n\t\tTERMINAL,\n\t\tVL_CONTEST_AJUSTE = VALOR_CONTEST_AJUSTE_CANC,\n\t\tVL_ALOCADO = VALOR_ALOCADO,\n\t\tDT_ALOCACAO = DATA_ALOCACAO,\n\t\tHR_ALOCACAO = HORA_ALOCACAO,\n\t\tDT_AJUSTE = DATA_AJUSTE,\n\t\tHR_AJUSTE = HORA_AJUSTE,\n\t\tOPERADORA,\n\t\tCD_OPERADORA = CODIGO_OPERADORA,\n\t\tCD_MOTIVO_AJUSTE = CODIGO_MOTIVO_AJUSTE,\n\t\tDS_MOTIVO_AJUSTE = DESCRITIVO_MOTIVO_AJUSTE,\n\t\tNUMERO_FATURA,\n\t\tFATU_ALOCADA,\n\t\tDT_EMISSAO_FATURA = DATA_EMISSAO_FATURA,\n\t\tMESANOFATURA,\n\t\tVL_DOCTO_ORIGINAL = VALOR_DOCTO_ORIGINAL,\n\t\tSALDO_DEVEDOR,\n\t\tCONTA_CONTABIL,\n\t\tDS_CONTA_CONTABIL = DESCR_CONTA_CONTABIL,\n\t\tVL_FATURA = VALOR_FATURA,\n\t\tCD_TIPO_RECEBIVEIS = COD_TIPO_RECEBIVEIS,\n\t\tDS_TIPO_RECEBIVEIS = DESCR_TIPO_RECEBIVEIS,\n\t\tDEBIT_ID,\n\t\tCREDIT_ID,\n\t\tUF,\n\t\tDT_EMISSAO_FATURA_2 = DATA_EMISSAO_FATURA_2\n\t)) ~> GravaTabVivoNextK16"
-				}
-			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/cvtb_vivo_next_k16')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dfGravaArquivoVivoNextK17')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "VivoNext"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "arq_vivo_next_K17",
-								"type": "DatasetReference"
-							},
-							"name": "srcArqVivoNextK17"
-						},
-						{
-							"dataset": {
-								"referenceName": "connExecQry",
-								"type": "DatasetReference"
-							},
-							"name": "BuscaLoteArqAtual"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "cvtb_vivo_next_k17",
-								"type": "DatasetReference"
-							},
-							"name": "GravaTabVivoNextK17"
-						}
-					],
-					"transformations": [
-						{
-							"name": "FakeKey2"
-						},
-						{
-							"name": "FakeKey1"
-						},
-						{
-							"name": "Join"
-						},
-						{
-							"name": "select1"
-						}
-					],
-					"script": "parameters{\n\tpNomeArquivo as string\n}\nsource(output(\n\t\t{_col0_} as string,\n\t\t{_col1_} as string,\n\t\t{_col2_} as string,\n\t\t{_col3_} as string,\n\t\t{_col4_} as string,\n\t\t{_col5_} as string,\n\t\t{_col6_} as string,\n\t\t{_col7_} as string,\n\t\t{_col8_} as string,\n\t\t{_col9_} as string,\n\t\t{_col10_} as string,\n\t\t{_col11_} as string,\n\t\t{_col12_} as string,\n\t\t{_col13_} as string,\n\t\t{_col14_} as string,\n\t\t{_col15_} as string,\n\t\t{_col16_} as string,\n\t\t{_col17_} as string,\n\t\t{_col18_} as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['vivonext/validados_a_processar','vivonext/processados']) ~> srcArqVivoNextK17\nsource(output(\n\t\tID_LOTE_ARQUIVO as decimal(38,0)\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT ID_LOTE_ARQUIVO FROM CONVENIO.CVTB_LOTE_ARQUIVO WHERE NM_ARQUIVO = '{$pNomeArquivo}'\"),\n\tformat: 'query') ~> BuscaLoteArqAtual\nBuscaLoteArqAtual derive(SyntheticKey = 1) ~> FakeKey2\nselect1 derive(SyntheticKey = 1,\n\t\tVALOR_FATURA = toDecimal(replace(toString(VALOR_FATURA), ',' , '.')),\n\t\tSALDO_DEVIDO_ORIG = toDecimal(replace(toString(SALDO_DEVIDO_ORIG), ',' , '.')),\n\t\tVALOR_TOTAL_PAGAMENTO = toDecimal(replace(toString(VALOR_TOTAL_PAGAMENTO), ',' , '.')),\n\t\tVALOR_PGTO_ALOCADO = toDecimal(replace(toString(VALOR_PGTO_ALOCADO), ',' , '.')),\n\t\tMES_ANO_FATURA = trim(MES_ANO_FATURA),\n\t\tDATA_EMISSAO_FATURA = toTimestamp(DATA_EMISSAO_FATURA, 'yyyyMMdd'),\n\t\tDATA_PAGAMENTO = toTimestamp(DATA_PAGAMENTO, 'yyyyMMdd')) ~> FakeKey1\nFakeKey1, FakeKey2 join(FakeKey1@SyntheticKey == FakeKey2@SyntheticKey,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> Join\nsrcArqVivoNextK17 select(mapColumn(\n\t\tCLIENTE_ID = {_col0_},\n\t\tNOME_CLIENTE = {_col1_},\n\t\tCNPJ_CPF = {_col2_},\n\t\tCONTA_CLIENTE = {_col3_},\n\t\tMES_ANO_FATURA = {_col4_},\n\t\tVALOR_FATURA = {_col5_},\n\t\tSALDO_DEVIDO_ORIG = {_col6_},\n\t\tDATA_EMISSAO_FATURA = {_col7_},\n\t\tVALOR_TOTAL_PAGAMENTO = {_col8_},\n\t\tDATA_PAGAMENTO = {_col9_},\n\t\tVALOR_PGTO_ALOCADO = {_col10_},\n\t\tCOD_TIPO_RECEBIVEIS = {_col11_},\n\t\tDESCR_TIPO_RECEBIVEIS = {_col12_},\n\t\tOPERADORA = {_col13_},\n\t\tCOD_OPERADORA = {_col14_},\n\t\tFATU_ALOCADA = {_col15_},\n\t\tDEBIT_ID = {_col16_},\n\t\tCREDIT_ID = {_col17_}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> select1\nJoin sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tID_VIVO_NEXT_K17 as decimal(28,0),\n\t\tID_LOTE_ARQUIVO as decimal(28,0),\n\t\tCLIENTE_ID as string,\n\t\tCONTA_CLIENTE as string,\n\t\tCNPJ_CPF as string,\n\t\tNOME_CLIENTE as string,\n\t\tOPERADORA as string,\n\t\tCD_OPERADORA as string,\n\t\tFATU_ALOCADA as string,\n\t\tDT_EMISSAO_FATURA as timestamp,\n\t\tMESANOFATURA as string,\n\t\tSALDO_DEVIDO_ORIG as decimal(15,2),\n\t\tVL_FATURA as decimal(15,2),\n\t\tCD_TIPO_RECEBIVEIS as string,\n\t\tDS_TIPO_RECEBIVEIS as string,\n\t\tDEBIT_ID as string,\n\t\tCREDIT_ID as string,\n\t\tDT_PAGAMENTO as timestamp,\n\t\tVL_PGTO_ALOCADO as decimal(15,2),\n\t\tVL_TOTAL_PAGAMENTO as decimal(15,2)\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tID_LOTE_ARQUIVO,\n\t\tCLIENTE_ID,\n\t\tCONTA_CLIENTE,\n\t\tCNPJ_CPF,\n\t\tNOME_CLIENTE,\n\t\tOPERADORA,\n\t\tCD_OPERADORA = COD_OPERADORA,\n\t\tFATU_ALOCADA,\n\t\tDT_EMISSAO_FATURA = DATA_EMISSAO_FATURA,\n\t\tMESANOFATURA = MES_ANO_FATURA,\n\t\tSALDO_DEVIDO_ORIG,\n\t\tVL_FATURA = VALOR_FATURA,\n\t\tCD_TIPO_RECEBIVEIS = COD_TIPO_RECEBIVEIS,\n\t\tDS_TIPO_RECEBIVEIS = DESCR_TIPO_RECEBIVEIS,\n\t\tDEBIT_ID,\n\t\tCREDIT_ID,\n\t\tDT_PAGAMENTO = DATA_PAGAMENTO,\n\t\tVL_PGTO_ALOCADO = VALOR_PGTO_ALOCADO,\n\t\tVL_TOTAL_PAGAMENTO = VALOR_TOTAL_PAGAMENTO\n\t)) ~> GravaTabVivoNextK17"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/cvtb_vivo_next_k17')]"
+				"[concat(variables('factoryId'), '/datasets/connExecQry')]"
 			]
 		}
 	]
