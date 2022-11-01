@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "adf-convenio86-production"
 		},
+		"AzureFileShareStorageConv86_connectionString": {
+			"value": ""
+		},
 		"AzureSqlDatabaseConv86_connectionString": {
 			"value": ""
 		},
@@ -42,6 +45,17 @@
 		"AzureBlobStorageEnppoint_properties_fqdns": {
 			"value": [
 				"stconvenio86prod.blob.core.windows.net"
+			]
+		},
+		"AzureFileStorageEndPoint1_properties_privateLinkResourceId": {
+			"value": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test"
+		},
+		"AzureFileStorageEndPoint1_properties_groupId": {
+			"value": "file"
+		},
+		"AzureFileStorageEndPoint1_properties_fqdns": {
+			"value": [
+				"stconvenio86test.file.core.windows.net"
 			]
 		},
 		"AzureSqlDatabaseConv86_properties_privateLinkResourceId": {

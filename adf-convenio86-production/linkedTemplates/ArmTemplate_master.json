@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-convenio86-production"
 		},
+		"AzureFileShareStorageConv86_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureFileShareStorageConv86'"
+		},
 		"AzureSqlDatabaseConv86_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseConv86'"
@@ -55,6 +59,20 @@
 			"type": "array",
 			"defaultValue": [
 				"stconvenio86prod.blob.core.windows.net"
+			]
+		},
+		"AzureFileStorageEndPoint1_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/cd4ed2c4-eb6d-48d7-98b7-e6db50218b71/resourceGroups/rg-convenio86-test/providers/Microsoft.Storage/storageAccounts/stconvenio86test"
+		},
+		"AzureFileStorageEndPoint1_properties_groupId": {
+			"type": "string",
+			"defaultValue": "file"
+		},
+		"AzureFileStorageEndPoint1_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"stconvenio86test.file.core.windows.net"
 			]
 		},
 		"AzureSqlDatabaseConv86_properties_privateLinkResourceId": {
@@ -112,6 +130,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureFileShareStorageConv86_connectionString": {
+						"value": "[parameters('AzureFileShareStorageConv86_connectionString')]"
+					},
 					"AzureSqlDatabaseConv86_connectionString": {
 						"value": "[parameters('AzureSqlDatabaseConv86_connectionString')]"
 					},
@@ -144,6 +165,15 @@
 					},
 					"AzureBlobStorageEnppoint_properties_fqdns": {
 						"value": "[parameters('AzureBlobStorageEnppoint_properties_fqdns')]"
+					},
+					"AzureFileStorageEndPoint1_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureFileStorageEndPoint1_properties_privateLinkResourceId')]"
+					},
+					"AzureFileStorageEndPoint1_properties_groupId": {
+						"value": "[parameters('AzureFileStorageEndPoint1_properties_groupId')]"
+					},
+					"AzureFileStorageEndPoint1_properties_fqdns": {
+						"value": "[parameters('AzureFileStorageEndPoint1_properties_fqdns')]"
 					},
 					"AzureSqlDatabaseConv86_properties_privateLinkResourceId": {
 						"value": "[parameters('AzureSqlDatabaseConv86_properties_privateLinkResourceId')]"
